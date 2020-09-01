@@ -1,0 +1,34 @@
+- hosts: DC1_FABRIC
+
+  tasks:
+
+    - name: generate intented variables
+      import_role:
+         name: arista.avd.eos_l3ls_evpn
+
+    - name: generate device intended config and documention
+      import_role:
+         name: arista.avd.eos_cli_config_gen
+
+    - name: deploy configuration to device
+      import_role:
+         name: arista.avd.eos_config_deploy_eapi
+
+    - name: Force replace configuration with intended configuration
+      eos_config:
+        src: "{{root_dir}}/intended/configs/{{ inventory_hostname }}.cfg"
+        replace: config
+        save_when: modified
+      tags: [provision]
+
+    - name: backup configuration
+      eos_config:
+        backup: yes
+        backup_options:
+          filename: "{{ inventory_hostname }}_running-config.conf"
+          dir_path: "{{ root_dir }}/config_backup/"
+      tags: [provision]
+
+    # - name: validate states on EOS devices
+    #   import_role:
+    #      name: arista.avd.eos_validate_state
