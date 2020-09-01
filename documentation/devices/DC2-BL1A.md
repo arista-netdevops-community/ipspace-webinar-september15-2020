@@ -241,14 +241,14 @@ vrf instance MGMT
 
 | Interface | Description | MTU | Type | Mode | Allowed VLANs (trunk) | Trunk Group | MLAG ID | EVPN ESI | VRF | IP Address | IPv6 Address |
 | --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | ------- | -------- | --- | ---------- | ------------ |
-| Port-Channel4 | MLAG_PEER_DC2-BL1B_Po4 | 1500 | switched | trunk | 2-4094 | LEAF_PEER_L3<br> MLAG | - | - | - | - | - |
+| Port-Channel3 | MLAG_PEER_DC2-BL1B_Po3 | 1500 | switched | trunk | 2-4094 | LEAF_PEER_L3<br> MLAG | - | - | - | - | - |
 
 ### Port-Channel Interfaces Device Configuration
 
 ```eos
 !
-interface Port-Channel4
-   description MLAG_PEER_DC2-BL1B_Po4
+interface Port-Channel3
+   description MLAG_PEER_DC2-BL1B_Po3
    switchport trunk allowed vlan 2-4094
    switchport mode trunk
    switchport trunk group LEAF_PEER_L3
@@ -263,8 +263,8 @@ interface Port-Channel4
 | --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | --- | ---------- | ---------------- | ------------------ |
 | Ethernet1 | P2P_LINK_TO_DC2-SPINE1_Ethernet3 | 1500 | routed | access | - | - | - | 172.31.252.9/31 | - | - |
 | Ethernet2 | P2P_LINK_TO_DC2-SPINE2_Ethernet3 | 1500 | routed | access | - | - | - | 172.31.252.11/31 | - | - |
-| Ethernet4 | MLAG_PEER_DC2-BL1B_Ethernet4 | *1500 | *switched | *trunk | *2-4094 | *LEAF_PEER_L3<br> *MLAG | - | - | 4 | active |
-| Ethernet5 | MLAG_PEER_DC2-BL1B_Ethernet5 | *1500 | *switched | *trunk | *2-4094 | *LEAF_PEER_L3<br> *MLAG | - | - | 4 | active |
+| Ethernet3 | MLAG_PEER_DC2-BL1B_Ethernet3 | *1500 | *switched | *trunk | *2-4094 | *LEAF_PEER_L3<br> *MLAG | - | - | 3 | active |
+| Ethernet4 | MLAG_PEER_DC2-BL1B_Ethernet4 | *1500 | *switched | *trunk | *2-4094 | *LEAF_PEER_L3<br> *MLAG | - | - | 3 | active |
 
 *Inherited from Port-Channel Interface
 
@@ -282,13 +282,13 @@ interface Ethernet2
    no switchport
    ip address 172.31.252.11/31
 !
+interface Ethernet3
+   description MLAG_PEER_DC2-BL1B_Ethernet3
+   channel-group 3 mode active
+!
 interface Ethernet4
    description MLAG_PEER_DC2-BL1B_Ethernet4
-   channel-group 4 mode active
-!
-interface Ethernet5
-   description MLAG_PEER_DC2-BL1B_Ethernet5
-   channel-group 4 mode active
+   channel-group 3 mode active
 ```
 
 ## Loopback Interfaces
@@ -486,7 +486,7 @@ IPv6 Prefix lists not defined
 
 | domain-id | local-interface | peer-address | peer-link |
 | --------- | --------------- | ------------ | --------- |
-| DC2_BL1 | Vlan4094 | 10.255.254.5 | Port-Channel4 |
+| DC2_BL1 | Vlan4094 | 10.255.254.5 | Port-Channel3 |
 
 Dual primary detection is enabled. The detection delay is 5 seconds.
 
@@ -499,7 +499,7 @@ mlag configuration
    local-interface Vlan4094
    peer-address 10.255.254.5
    peer-address heartbeat 192.168.200.156 vrf MGMT
-   peer-link Port-Channel4
+   peer-link Port-Channel3
    dual-primary detection delay 5 action errdisable all-interfaces
    reload-delay mlag 300
    reload-delay non-mlag 330

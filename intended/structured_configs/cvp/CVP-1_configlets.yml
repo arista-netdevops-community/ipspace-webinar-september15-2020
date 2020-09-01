@@ -12,15 +12,15 @@ CVP_CONFIGLETS:
     !\nusername admin privilege 15 role network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
     !\nvlan 4093\n   name LEAF_PEER_L3\n   trunk group LEAF_PEER_L3\n!\nvlan 4094\n\
-    \   name MLAG_PEER\n   trunk group MLAG\n!\nvrf instance MGMT\n!\ninterface Port-Channel4\n\
-    \   description MLAG_PEER_DC2-BL1B_Po4\n   switchport trunk allowed vlan 2-4094\n\
+    \   name MLAG_PEER\n   trunk group MLAG\n!\nvrf instance MGMT\n!\ninterface Port-Channel3\n\
+    \   description MLAG_PEER_DC2-BL1B_Po3\n   switchport trunk allowed vlan 2-4094\n\
     \   switchport mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport\
     \ trunk group MLAG\n!\ninterface Ethernet1\n   description P2P_LINK_TO_DC2-SPINE1_Ethernet3\n\
     \   no switchport\n   ip address 172.31.252.9/31\n!\ninterface Ethernet2\n   description\
     \ P2P_LINK_TO_DC2-SPINE2_Ethernet3\n   no switchport\n   ip address 172.31.252.11/31\n\
-    !\ninterface Ethernet4\n   description MLAG_PEER_DC2-BL1B_Ethernet4\n   channel-group\
-    \ 4 mode active\n!\ninterface Ethernet5\n   description MLAG_PEER_DC2-BL1B_Ethernet5\n\
-    \   channel-group 4 mode active\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n\
+    !\ninterface Ethernet3\n   description MLAG_PEER_DC2-BL1B_Ethernet3\n   channel-group\
+    \ 3 mode active\n!\ninterface Ethernet4\n   description MLAG_PEER_DC2-BL1B_Ethernet4\n\
+    \   channel-group 3 mode active\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n\
     \   ip address 192.168.253.5/32\n!\ninterface Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n\
     \   ip address 192.168.254.5/32\n!\ninterface Management1\n   description oob_management\n\
     \   vrf MGMT\n   ip address 192.168.200.155/24\n!\ninterface Vlan4093\n   description\
@@ -34,7 +34,7 @@ CVP_CONFIGLETS:
     \   seq 10 permit 172.31.252.0/24 le 31\n   seq 20 permit 10.255.253.0/24 le 31\n\
     !\nmlag configuration\n   domain-id DC2_BL1\n   local-interface Vlan4094\n   peer-address\
     \ 10.255.254.5\n   peer-address heartbeat 192.168.200.156 vrf MGMT\n   peer-link\
-    \ Port-Channel4\n   dual-primary detection delay 5 action errdisable all-interfaces\n\
+    \ Port-Channel3\n   dual-primary detection delay 5 action errdisable all-interfaces\n\
     \   reload-delay mlag 300\n   reload-delay non-mlag 330\n!\nip route vrf MGMT\
     \ 0.0.0.0/0 192.168.200.1\n!\nroute-map RM-CONN-2-BGP permit 10\n   match ip address\
     \ prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nrouter bfd\n   multihop interval 1200\
@@ -75,15 +75,15 @@ CVP_CONFIGLETS:
     !\nusername admin privilege 15 role network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
     !\nvlan 4093\n   name LEAF_PEER_L3\n   trunk group LEAF_PEER_L3\n!\nvlan 4094\n\
-    \   name MLAG_PEER\n   trunk group MLAG\n!\nvrf instance MGMT\n!\ninterface Port-Channel4\n\
-    \   description MLAG_PEER_DC2-BL1A_Po4\n   switchport trunk allowed vlan 2-4094\n\
+    \   name MLAG_PEER\n   trunk group MLAG\n!\nvrf instance MGMT\n!\ninterface Port-Channel3\n\
+    \   description MLAG_PEER_DC2-BL1A_Po3\n   switchport trunk allowed vlan 2-4094\n\
     \   switchport mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport\
     \ trunk group MLAG\n!\ninterface Ethernet1\n   description P2P_LINK_TO_DC2-SPINE1_Ethernet4\n\
     \   no switchport\n   ip address 172.31.252.13/31\n!\ninterface Ethernet2\n  \
     \ description P2P_LINK_TO_DC2-SPINE2_Ethernet4\n   no switchport\n   ip address\
-    \ 172.31.252.15/31\n!\ninterface Ethernet4\n   description MLAG_PEER_DC2-BL1A_Ethernet4\n\
-    \   channel-group 4 mode active\n!\ninterface Ethernet5\n   description MLAG_PEER_DC2-BL1A_Ethernet5\n\
-    \   channel-group 4 mode active\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n\
+    \ 172.31.252.15/31\n!\ninterface Ethernet3\n   description MLAG_PEER_DC2-BL1A_Ethernet3\n\
+    \   channel-group 3 mode active\n!\ninterface Ethernet4\n   description MLAG_PEER_DC2-BL1A_Ethernet4\n\
+    \   channel-group 3 mode active\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n\
     \   ip address 192.168.253.6/32\n!\ninterface Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n\
     \   ip address 192.168.254.5/32\n!\ninterface Management1\n   description oob_management\n\
     \   vrf MGMT\n   ip address 192.168.200.156/24\n!\ninterface Vlan4093\n   description\
@@ -97,7 +97,7 @@ CVP_CONFIGLETS:
     \   seq 10 permit 172.31.252.0/24 le 31\n   seq 20 permit 10.255.253.0/24 le 31\n\
     !\nmlag configuration\n   domain-id DC2_BL1\n   local-interface Vlan4094\n   peer-address\
     \ 10.255.254.4\n   peer-address heartbeat 192.168.200.155 vrf MGMT\n   peer-link\
-    \ Port-Channel4\n   dual-primary detection delay 5 action errdisable all-interfaces\n\
+    \ Port-Channel3\n   dual-primary detection delay 5 action errdisable all-interfaces\n\
     \   reload-delay mlag 300\n   reload-delay non-mlag 330\n!\nip route vrf MGMT\
     \ 0.0.0.0/0 192.168.200.1\n!\nroute-map RM-CONN-2-BGP permit 10\n   match ip address\
     \ prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nrouter bfd\n   multihop interval 1200\

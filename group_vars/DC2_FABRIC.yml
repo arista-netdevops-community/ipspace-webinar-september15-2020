@@ -56,7 +56,7 @@ l3leaf:
     platform: vEOS-LAB
     spines: [ DC2-SPINE1, DC2-SPINE2 ]
     uplink_to_spine_interfaces: [ Ethernet1, Ethernet2 ]
-    mlag_interfaces: [ Ethernet4, Ethernet5 ]
+    mlag_interfaces: [ Ethernet3, Ethernet4 ]
     spanning_tree_mode: mstp
     spanning_tree_priority: 4096
     virtual_router_mac_address : 00:dc:00:00:00:0b
