@@ -1,0 +1,31 @@
+---
+# tasks file for eos_dci
+
+- name: include device intended structure configuration variables
+  include_vars: '{{inventory_dir}}/intended/structured_configs//{{ inventory_hostname }}.yml'
+  delegate_to: localhost
+
+- name: Update router_bgp.peer_groups in cli_config_gen variables
+  set_fact:
+    router_bgp: "{{ router_bgp | combine(dci_bgp, recursive=true) }}"
+  when: 'dci_bgp is defined'
+
+- name: Update ethernet_interfaces in cli_config_gen variables
+  set_fact:
+    ethernet_interfaces: "{{ ethernet_interfaces | combine(dci_ethernet_interfaces, recursive=true) }}"
+  when: 'dci_ethernet_interfaces is defined'
+
+# - name: Print all variables
+#   debug:
+#     msg: '{{ ethernet_interfaces | to_nice_json }}'
+#   when:
+#     - 'dci_ethernet_interfaces is defined'
+#     - 'dci_bgp is defined'
+
+- name: Generate eos intended configuration
+  template:
+    src: dci_stretched_border.conf.j2
+    dest: '{{inventory_dir}}/intended/structured_configs/{{ inventory_hostname }}.yml'
+  when:
+    - 'dci_ethernet_interfaces is defined'
+    - 'dci_bgp is defined'
