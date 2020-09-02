@@ -1,61 +1,109 @@
 ---
 CVP_DEVICES:
-  DC2-SPINE1:
-    name: DC2-SPINE1
-    parentContainerName: DC2_SPINES
+  DC1-SPINE1:
+    name: DC1-SPINE1
+    parentContainerName: DC1_SPINES
     configlets:
-      - DC2-AVD_DC2-SPINE1
+      - DC1-AVD_DC1-SPINE1
     imageBundle: []
-  DC2-SPINE2:
-    name: DC2-SPINE2
-    parentContainerName: DC2_SPINES
+  DC1-SPINE2:
+    name: DC1-SPINE2
+    parentContainerName: DC1_SPINES
     configlets:
-      - DC2-AVD_DC2-SPINE2
+      - DC1-AVD_DC1-SPINE2
     imageBundle: []
-  DC2-L2LEAF1A:
-    name: DC2-L2LEAF1A
-    parentContainerName: DC2_L2LEAF1
+  DC1-SPINE3:
+    name: DC1-SPINE3
+    parentContainerName: DC1_SPINES
     configlets:
-      - DC2-AVD_DC2-L2LEAF1A
+      - DC1-AVD_DC1-SPINE3
     imageBundle: []
-  DC2-LEAF1A:
-    name: DC2-LEAF1A
-    parentContainerName: DC2_LEAF1
+  DC1-SPINE4:
+    name: DC1-SPINE4
+    parentContainerName: DC1_SPINES
     configlets:
-      - DC2-AVD_DC2-LEAF1A
+      - DC1-AVD_DC1-SPINE4
     imageBundle: []
-  DC2-LEAF1B:
-    name: DC2-LEAF1B
-    parentContainerName: DC2_LEAF1
+  DC1-L2LEAF1A:
+    name: DC1-L2LEAF1A
+    parentContainerName: DC1_L2LEAF1
     configlets:
-      - DC2-AVD_DC2-LEAF1B
+      - DC1-AVD_DC1-L2LEAF1A
     imageBundle: []
-  DC2-BL1A:
-    name: DC2-BL1A
-    parentContainerName: DC2_BL1
+  DC1-L2LEAF2A:
+    name: DC1-L2LEAF2A
+    parentContainerName: DC1_L2LEAF2
     configlets:
-      - DC2-AVD_DC2-BL1A
+      - DC1-AVD_DC1-L2LEAF2A
     imageBundle: []
-  DC2-BL1B:
-    name: DC2-BL1B
-    parentContainerName: DC2_BL1
+  DC1-L2LEAF2B:
+    name: DC1-L2LEAF2B
+    parentContainerName: DC1_L2LEAF2
     configlets:
-      - DC2-AVD_DC2-BL1B
+      - DC1-AVD_DC1-L2LEAF2B
+    imageBundle: []
+  DC1-LEAF1A:
+    name: DC1-LEAF1A
+    parentContainerName: DC1_LEAF1
+    configlets:
+      - DC1-AVD_DC1-LEAF1A
+    imageBundle: []
+  DC1-LEAF2A:
+    name: DC1-LEAF2A
+    parentContainerName: DC1_LEAF2
+    configlets:
+      - DC1-AVD_DC1-LEAF2A
+    imageBundle: []
+  DC1-LEAF2B:
+    name: DC1-LEAF2B
+    parentContainerName: DC1_LEAF2
+    configlets:
+      - DC1-AVD_DC1-LEAF2B
+    imageBundle: []
+  DC1-SVC3A:
+    name: DC1-SVC3A
+    parentContainerName: DC1_SVC3
+    configlets:
+      - DC1-AVD_DC1-SVC3A
+    imageBundle: []
+  DC1-SVC3B:
+    name: DC1-SVC3B
+    parentContainerName: DC1_SVC3
+    configlets:
+      - DC1-AVD_DC1-SVC3B
+    imageBundle: []
+  DC1-BL1A:
+    name: DC1-BL1A
+    parentContainerName: DC1_BL1
+    configlets:
+      - DC1-AVD_DC1-BL1A
+    imageBundle: []
+  DC1-BL1B:
+    name: DC1-BL1B
+    parentContainerName: DC1_BL1
+    configlets:
+      - DC1-AVD_DC1-BL1B
     imageBundle: []
 CVP_CONTAINERS:
-  DC2_FABRIC:
+  DC1_FABRIC:
     parent_container: Tenant
     configlets:
-      - DC2-CUSTOM_ALIASES
-  DC2_L2LEAFS:
-    parent_container: DC2_FABRIC
-  DC2_L2LEAF1:
-    parent_container: DC2_L2LEAFS
-  DC2_LEAFS:
-    parent_container: DC2_FABRIC
-  DC2_BL1:
-    parent_container: DC2_LEAFS
-  DC2_LEAF1:
-    parent_container: DC2_LEAFS
-  DC2_SPINES:
-    parent_container: DC2_FABRIC
+      - DC1-CUSTOM_ALIASES
+  DC1_L2LEAFS:
+    parent_container: DC1_FABRIC
+  DC1_L2LEAF1:
+    parent_container: DC1_L2LEAFS
+  DC1_L2LEAF2:
+    parent_container: DC1_L2LEAFS
+  DC1_LEAFS:
+    parent_container: DC1_FABRIC
+  DC1_BL1:
+    parent_container: DC1_LEAFS
+  DC1_LEAF1:
+    parent_container: DC1_LEAFS
+  DC1_LEAF2:
+    parent_container: DC1_LEAFS
+  DC1_SVC3:
+    parent_container: DC1_LEAFS
+  DC1_SPINES:
+    parent_container: DC1_FABRIC

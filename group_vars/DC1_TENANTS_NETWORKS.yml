@@ -18,11 +18,11 @@ tenants:
             tags: [ opzone ]
             enabled: true
             ip_address_virtual: 10.1.10.1/24
-          111:
-            name: Tenant_A_OP_Zone_2
-            tags: [ opzone ]
-            enabled: true
-            ip_address_virtual: 10.1.11.1/24
+          # 111:
+          #   name: Tenant_A_OP_Zone_2
+          #   tags: [ opzone ]
+          #   enabled: true
+          #   ip_address_virtual: 10.1.11.1/24
 # virtual ip address router-virtual
           112:
             name: Tenant_A_OP_Zone_3
@@ -71,19 +71,19 @@ tenants:
             tags: [ app ]
             enabled: true
             ip_address_virtual: 10.1.31.1/24
-      Tenant_A_DB_Zone:
-        vrf_vni: 13
-        svis:
-          140:
-            name: Tenant_A_DB_BZone_1
-            tags: [ db, erp1 ]
-            enabled: true
-            ip_address_virtual: 10.1.40.1/24
-          141:
-            name: Tenant_A_DB_Zone_2
-            tags: [ db ]
-            enabled: true
-            ip_address_virtual: 10.1.41.1/24
+      # Tenant_A_DB_Zone:
+      #   vrf_vni: 13
+      #   svis:
+      #     140:
+      #       name: Tenant_A_DB_BZone_1
+      #       tags: [ db, erp1 ]
+      #       enabled: true
+      #       ip_address_virtual: 10.1.40.1/24
+      #     141:
+      #       name: Tenant_A_DB_Zone_2
+      #       tags: [ db ]
+      #       enabled: true
+      #       ip_address_virtual: 10.1.41.1/24
       Tenant_A_WAN_Zone:
         vrf_vni: 14
         svis:

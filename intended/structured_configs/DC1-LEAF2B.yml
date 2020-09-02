@@ -11,9 +11,9 @@ leaf_id: 3
 switch_mgmt_ip: 192.168.200.107/24
 leaf_filter_tenants: ['Tenant_A', 'Tenant_B', 'Tenant_C']
 leaf_filter_tags: ['opzone', 'web', 'app', 'db', 'vmotion', 'nfs']
-leaf_allowed_vrfs: ['Tenant_A_APP_Zone', 'Tenant_A_DB_Zone', 'Tenant_A_OP_Zone', 'Tenant_A_WEB_Zone']
-leaf_allowed_svis: [130, 131, 140, 141, 110, 111, 112, 120, 121]
-leaf_allowed_vlans: [130, 131, 140, 141, 110, 111, 112, 120, 121, 160, 161]
+leaf_allowed_vrfs: ['Tenant_A_APP_Zone', 'Tenant_A_OP_Zone', 'Tenant_A_WEB_Zone']
+leaf_allowed_svis: [130, 131, 110, 112, 120, 121]
+leaf_allowed_vlans: [130, 131, 110, 112, 120, 121, 160, 161]
 leaf_mlag: True
 leaf_mlag_group: DC1_LEAF2
 leaf_mlag_role: secondary
@@ -130,23 +130,9 @@ vlans:
     name: MLAG_iBGP_Tenant_A_APP_Zone
     trunk_groups:
       - LEAF_PEER_L3
-  140:
-    tenant: Tenant_A
-    name: Tenant_A_DB_BZone_1
-  141:
-    tenant: Tenant_A
-    name: Tenant_A_DB_Zone_2
-  3012:
-    tenant: Tenant_A
-    name: MLAG_iBGP_Tenant_A_DB_Zone
-    trunk_groups:
-      - LEAF_PEER_L3
   110:
     tenant: Tenant_A
     name: Tenant_A_OP_Zone_1
-  111:
-    tenant: Tenant_A
-    name: Tenant_A_OP_Zone_2
   112:
     tenant: Tenant_A
     name: Tenant_A_OP_Zone_3
@@ -181,9 +167,6 @@ vrfs:
   Tenant_A_APP_Zone:
     tenant: Tenant_A
     ip_routing: true
-  Tenant_A_DB_Zone:
-    tenant: Tenant_A
-    ip_routing: true
   Tenant_A_OP_Zone:
     tenant: Tenant_A
     ip_routing: true
@@ -202,7 +185,7 @@ port_channel_interfaces:
 ## L2 LEAF Uplink DC1_L2LEAF1 ##
   Port-Channel7:
     description: DC1_L2LEAF1_Po1
-    vlans: 110-111,120-121,130-131
+    vlans: 110,120-121,130-131
     mode: trunk
     mlag: 7
 ## mlag peer-link ##
@@ -359,36 +342,12 @@ vlan_interfaces:
     description: "MLAG_PEER_L3_iBGP: vrf Tenant_A_APP_Zone"
     vrf: Tenant_A_APP_Zone
     ip_address: 10.255.251.3/31
-  Vlan140:
-    tenant: Tenant_A
-    tags: ['db', 'erp1']
-    description: Tenant_A_DB_BZone_1
-    vrf: Tenant_A_DB_Zone
-    ip_address_virtual: 10.1.40.1/24
-  Vlan141:
-    tenant: Tenant_A
-    tags: ['db']
-    description: Tenant_A_DB_Zone_2
-    vrf: Tenant_A_DB_Zone
-    ip_address_virtual: 10.1.41.1/24
-  Vlan3012:
-    tenant: Tenant_A
-    type: underlay_peering
-    description: "MLAG_PEER_L3_iBGP: vrf Tenant_A_DB_Zone"
-    vrf: Tenant_A_DB_Zone
-    ip_address: 10.255.251.3/31
   Vlan110:
     tenant: Tenant_A
     tags: ['opzone']
     description: Tenant_A_OP_Zone_1
     vrf: Tenant_A_OP_Zone
     ip_address_virtual: 10.1.10.1/24
-  Vlan111:
-    tenant: Tenant_A
-    tags: ['opzone']
-    description: Tenant_A_OP_Zone_2
-    vrf: Tenant_A_OP_Zone
-    ip_address_virtual: 10.1.11.1/24
   Vlan112:
     tenant: Tenant_A
     tags: ['DC1_LEAF2']
@@ -436,14 +395,8 @@ vxlan_tunnel_interface:
           vni: 10130
         131:
           vni: 10131
-        140:
-          vni: 10140
-        141:
-          vni: 10141
         110:
           vni: 10110
-        111:
-          vni: 10111
         112:
           vni: 10112
         120:
@@ -458,8 +411,6 @@ vxlan_tunnel_interface:
 ## Tenant_A ##
         Tenant_A_APP_Zone:
           vni: 12
-        Tenant_A_DB_Zone:
-          vni: 13
         Tenant_A_OP_Zone:
           vni: 10
         Tenant_A_WEB_Zone:
@@ -598,14 +549,6 @@ router_bgp:
       redistribute_routes:
         - learned
       vlan: 130-131
-    Tenant_A_DB_Zone:
-      rd: "192.168.251.7:13"
-      route_targets:
-        both:
-          - "13:13"
-      redistribute_routes:
-        - learned
-      vlan: 140-141
     Tenant_A_OP_Zone:
       rd: "192.168.251.7:10"
       route_targets:
@@ -613,7 +556,7 @@ router_bgp:
           - "10:10"
       redistribute_routes:
         - learned
-      vlan: 110-112
+      vlan: 110,112
     Tenant_A_WEB_Zone:
       rd: "192.168.251.7:11"
       route_targets:
@@ -653,21 +596,6 @@ router_bgp:
         export:
           evpn:
             - "12:12"
-      neighbors:
-        10.255.251.2:
-          peer_group: MLAG-IPv4-UNDERLAY-PEER
-      redistribute_routes:
-        - connected
-    Tenant_A_DB_Zone:
-      router_id: 192.168.251.7
-      rd: "192.168.251.7:13"
-      route_targets:
-        import:
-          evpn:
-            - "13:13"
-        export:
-          evpn:
-            - "13:13"
       neighbors:
         10.255.251.2:
           peer_group: MLAG-IPv4-UNDERLAY-PEER

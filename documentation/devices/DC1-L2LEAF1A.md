@@ -204,7 +204,6 @@ username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAW
 | VLAN ID | Name | Trunk Groups |
 | ------- | ---- | ------------ |
 | 110 | Tenant_A_OP_Zone_1 | none  |
-| 111 | Tenant_A_OP_Zone_2 | none  |
 | 120 | Tenant_A_WEB_Zone_1 | none  |
 | 121 | Tenant_A_WEBZone_2 | none  |
 | 130 | Tenant_A_APP_Zone_1 | none  |
@@ -216,9 +215,6 @@ username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAW
 !
 vlan 110
    name Tenant_A_OP_Zone_1
-!
-vlan 111
-   name Tenant_A_OP_Zone_2
 !
 vlan 120
    name Tenant_A_WEB_Zone_1
@@ -254,7 +250,7 @@ vrf instance MGMT
 
 | Interface | Description | MTU | Type | Mode | Allowed VLANs (trunk) | Trunk Group | MLAG ID | EVPN ESI | VRF | IP Address | IPv6 Address |
 | --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | ------- | -------- | --- | ---------- | ------------ |
-| Port-Channel1 | DC1-LEAF2A_Po7 | 1500 | switched | trunk | 110-111,120-121,130-131 | - | 1 | - | - | - | - |
+| Port-Channel1 | DC1-LEAF2A_Po7 | 1500 | switched | trunk | 110,120-121,130-131 | - | 1 | - | - | - | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -262,7 +258,7 @@ vrf instance MGMT
 !
 interface Port-Channel1
    description DC1-LEAF2A_Po7
-   switchport trunk allowed vlan 110-111,120-121,130-131
+   switchport trunk allowed vlan 110,120-121,130-131
    switchport mode trunk
    mlag 1
 ```
@@ -273,8 +269,8 @@ interface Port-Channel1
 
 | Interface | Description | MTU | Type | Mode | Allowed VLANs (Trunk) | Trunk Group | VRF | IP Address | Channel-Group ID | Channel-Group Type |
 | --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | --- | ---------- | ---------------- | ------------------ |
-| Ethernet1 | DC1-LEAF2A_Ethernet7 | *1500 | *switched | *trunk | *110-111,120-121,130-131 | - | - | - | 1 | active |
-| Ethernet2 | DC1-LEAF2B_Ethernet7 | *1500 | *switched | *trunk | *110-111,120-121,130-131 | - | - | - | 1 | active |
+| Ethernet1 | DC1-LEAF2A_Ethernet7 | *1500 | *switched | *trunk | *110,120-121,130-131 | - | - | - | 1 | active |
+| Ethernet2 | DC1-LEAF2B_Ethernet7 | *1500 | *switched | *trunk | *110,120-121,130-131 | - | - | - | 1 | active |
 
 *Inherited from Port-Channel Interface
 
