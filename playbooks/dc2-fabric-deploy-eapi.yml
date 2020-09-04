@@ -12,10 +12,17 @@
     - name: generate intented variables
       import_role:
          name: arista.avd.eos_l3ls_evpn
+      tags: [build]
+
+    - name: update with dci information
+      import_role:
+         name: eos_dci
+      tags: [build]
 
     - name: generate device intended config and documention
       import_role:
          name: arista.avd.eos_cli_config_gen
+      tags: [build]
 
     - name: deploy configuration to device
       import_role:
