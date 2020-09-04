@@ -1,0 +1,51 @@
+all:
+  children:
+    AVD_LAB:
+      children:
+        CVP:
+          hosts:
+            CVP-1:
+# DC2 Fabric
+        DC2_FABRIC:
+          children:
+            DC2_SPINES:
+              hosts:
+                DC2-SPINE1:
+                  ansible_host: 192.168.200.151
+                DC2-SPINE2:
+                  ansible_host: 192.168.200.152
+            DC2_LEAFS:
+              children:
+                DC2_LEAF1:
+                  hosts:
+                    DC2-LEAF1A:
+                      ansible_host: 192.168.200.153
+                    DC2-LEAF1B:
+                      ansible_host: 192.168.200.154
+                DC2_BL1:
+                  hosts:
+                    DC2-BL1A:
+                      ansible_host: 192.168.200.155
+                    DC2-BL1B:
+                      ansible_host: 192.168.200.156
+            DC2_L2LEAFS:
+              children:
+                DC2_L2LEAF1:
+                  hosts:
+                    DC2-L2LEAF1A:
+                      ansible_host: 192.168.200.157
+
+
+        EOS:
+          children:
+            DC2_FABRIC:
+
+        DC2_TENANTS_NETWORKS:
+          children:
+            DC2_LEAFS:
+            DC2_L2LEAFS:
+
+        DC2_SERVERS:
+          children:
+            DC2_LEAFS:
+            DC2_L2LEAFS:

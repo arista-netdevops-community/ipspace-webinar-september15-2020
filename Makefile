@@ -1,0 +1,78 @@
+# Makefile for ipSpace Webinar
+
+.PHONY: help
+help: ## Display help message (*: main entry points / []: part of an entry point)
+	@grep -E '^[0-9a-zA-Z_-]+\.*[0-9a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
+#######################
+#   Summary Commands  #
+#######################
+
+.PHONY: dc-build
+dc-build:
+	make dc1-build
+	make dc2-build
+
+.PHONY: dc-deploy-eapi
+dc-deploy-eapi:
+	make dc1-deploy-eapi
+	make dc2-deploy-eapi
+
+.PHONY: dc-deploy-cvp
+dc-deploy-cvp:
+	make dc1-deploy-cvp
+	make dc2-deploy-cvp
+
+.PHONY: dc-reset-cvp
+dc-reset-cvp: ## Reset CVP
+	make dc1-reset-cvp
+	make dc2-reset-cvp
+
+#################
+#   DC1 Fabric  #
+#################
+
+.PHONY: dc1-build
+dc1-build: ## Run ansible playbook to build EVPN Fabric configuration with DC1 and CV
+	ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --tags build -i inventories/DC1/inventory.yml --diff
+
+.PHONY: dc1-deploy-eapi
+dc1-deploy-eapi: ## Run ansible playbook to deploy EVPN Fabric using EOS eAPI.
+	ansible-playbook playbooks/dc1-fabric-deploy-eapi.yml --tags provision -i inventories/DC1/inventory.yml --diff
+
+.PHONY: dc1-deploy-cvp
+dc1-deploy-cvp: ## Run ansible playbook to deploy EVPN Fabric using CVP.
+	ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --tags provision -i inventories/DC1/inventory.yml --diff
+
+.PHONY: dc1-validate-state
+dc1-validate-state: ## Run ansible playbook to validate EVPN Fabric State.
+	ansible-playbook playbooks/dc1-fabric-validate-state -i inventories/DC1/inventory.yml --diff
+
+.PHONY: dc1-reset-cvp
+dc1-reset-cvp: ## Reset CVP
+	ansible-playbook playbooks/dc1-fabric-reset-cvp.yml -i inventories/DC1/inventory.yml --diff
+
+
+#################
+#   DC2 Fabric  #
+#################
+
+.PHONY: dc2-build
+dc2-build: ## Run ansible playbook to build EVPN Fabric configuration with dc2 and CV
+	ansible-playbook playbooks/dc2-fabric-deploy-cvp.yml --tags build -i inventories/DC2/inventory.yml --diff
+
+.PHONY: dc2-deploy-eapi
+dc2-deploy-eapi: ## Run ansible playbook to deploy EVPN Fabric using EOS eAPI.
+	ansible-playbook playbooks/dc2-fabric-deploy-eapi.yml --tags provision -i inventories/DC2/inventory.yml --diff
+
+.PHONY: dc2-deploy-cvp
+dc2-deploy-cvp: ## Run ansible playbook to deploy EVPN Fabric using CVP.
+	ansible-playbook playbooks/dc2-fabric-deploy-cvp.yml --tags provision -i inventories/DC2/inventory.yml --diff
+
+.PHONY: dc2-validate-state
+dc2-validate-state: ## Run ansible playbook to validate EVPN Fabric State.
+	ansible-playbook playbooks/dc2-fabric-validate-state -i inventories/DC2/inventory.yml --diff
+
+.PHONY: dc2-reset-cvp
+dc2-reset-cvp: ## Reset CVP
+	ansible-playbook playbooks/dc2-fabric-reset-cvp.yml -i inventories/DC2/inventory.yml --diff
