@@ -9,22 +9,22 @@ help: ## Display help message (*: main entry points / []: part of an entry point
 #######################
 
 .PHONY: dc-build
-dc-build:
+dc-build:  ## Build configuration for all DCs
 	make dc1-build
 	make dc2-build
 
 .PHONY: dc-deploy-eapi
-dc-deploy-eapi:
+dc-deploy-eapi:  ## Deploy configuration using eAPI protocol for both DCs
 	make dc1-deploy-eapi
 	make dc2-deploy-eapi
 
 .PHONY: dc-deploy-cvp
-dc-deploy-cvp:
+dc-deploy-cvp:  ## Deploy configuration using CVP with REST APIs for both DCs
 	make dc1-deploy-cvp
 	make dc2-deploy-cvp
 
 .PHONY: dc-reset-cvp
-dc-reset-cvp: ## Reset CVP
+dc-reset-cvp: ## DANGEROUS ! Reset CVP provisioning and all devices to ZTP for all DCs
 	make dc1-reset-cvp
 	make dc2-reset-cvp
 
@@ -49,7 +49,7 @@ dc1-validate-state: ## Run ansible playbook to validate EVPN Fabric State.
 	ansible-playbook playbooks/dc1-fabric-validate-state -i inventories/DC1/inventory.yml --diff
 
 .PHONY: dc1-reset-cvp
-dc1-reset-cvp: ## Reset CVP
+dc1-reset-cvp: ## DANGEROUS ! Reset CVP provisioning and all devices to ZTP for DC1
 	ansible-playbook playbooks/dc1-fabric-reset-cvp.yml -i inventories/DC1/inventory.yml --diff
 
 
@@ -74,5 +74,5 @@ dc2-validate-state: ## Run ansible playbook to validate EVPN Fabric State.
 	ansible-playbook playbooks/dc2-fabric-validate-state -i inventories/DC2/inventory.yml --diff
 
 .PHONY: dc2-reset-cvp
-dc2-reset-cvp: ## Reset CVP
+dc2-reset-cvp: ## ## DANGEROUS ! Reset CVP provisioning and all devices to ZTP for DC2
 	ansible-playbook playbooks/dc2-fabric-reset-cvp.yml -i inventories/DC2/inventory.yml --diff
