@@ -1,29 +1,29 @@
 ---
 dci_ethernet_interfaces:
     Ethernet10:
-      peer: DC2-BL1B
+      peer: DC1-BL1B
       peer_interface: Ethernet10
       peer_type: leaf
-      description: P2P_LINK_TO_DC2-BL1B_Ethernet10
+      description: P2P_LINK_TO_DC1-BL1B_Ethernet10
       mtu: 1500
       type: routed
-      ip_address: 172.31.0.2/31
+      ip_address: 172.31.0.3/31
 dci_bgp:
   neighbors:
-    172.31.0.3:
+    172.31.0.2:
       peer_group: DCI-IPv4-UNDERLAY-PEERS
-    192.168.253.6:
+    192.168.251.11:
       peer_group: DCI-EVPN-OVERLAY-PEERS
   peer_groups:
       DCI-IPv4-UNDERLAY-PEERS:
         type: ipv4
-        remote_as: 65202
+        remote_as: 65104
         # password: "AQQvKeimxJu+uGQ/yYvv9w=="
         maximum_routes: 12000
         send_community: true
       DCI-EVPN-OVERLAY-PEERS:
         type: evpn
-        remote_as: 65202
+        remote_as: 65104
         update_source: Loopback0
         bfd: true
         ebgp_multihop: 3

@@ -1,16 +1,16 @@
 ---
 dci_ethernet_interfaces:
-    Ethernet6:
+    Ethernet10:
       peer: DC2-BL1A
-      peer_interface: Ethernet6
+      peer_interface: Ethernet10
       peer_type: leaf
-      description: P2P_LINK_TO_DC2-BL1A_Ethernet6
+      description: P2P_LINK_TO_DC2-BL1A_Ethernet10
       mtu: 1500
       type: routed
-      ip_address: 172.255.0.0/31
+      ip_address: 172.31.0.0/31
 dci_bgp:
   neighbors:
-    172.255.0.1:
+    172.31.0.1:
       peer_group: DCI-IPv4-UNDERLAY-PEERS
     192.168.253.5:
       peer_group: DCI-EVPN-OVERLAY-PEERS
