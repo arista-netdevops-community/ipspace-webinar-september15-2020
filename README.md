@@ -2,7 +2,7 @@
 
 # Ansible Arista Validated Design
 
-__Content used during ipSpace webinar
+__Content used for ipSpace webinar / Work In Progress__
 
 <!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
 

@@ -2,7 +2,7 @@
 name: Ansible Code Execution
 on: [push]
 jobs:
-  ansible_ci:
+  'ansible CI':
     name: Run Ansible Playbooks
     runs-on: ubuntu-latest
     container: avdteam/base:3.6
