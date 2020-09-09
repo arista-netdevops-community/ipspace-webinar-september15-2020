@@ -9,24 +9,34 @@ help: ## Display help message (*: main entry points / []: part of an entry point
 #######################
 
 .PHONY: dc-build
-dc-build:  ## Build configuration for all DCs
-	make dc1-build
-	make dc2-build
+dc-build: dc1-build dc2-build ## Build configuration for all DCs
 
 .PHONY: dc-deploy-eapi
-dc-deploy-eapi:  ## Deploy configuration using eAPI protocol for both DCs
-	make dc1-deploy-eapi
-	make dc2-deploy-eapi
+dc-deploy-eapi: dc1-deploy-eapi dc2-deploy-eapi ## Deploy configuration using eAPI protocol for both DCs
 
 .PHONY: dc-deploy-cvp
-dc-deploy-cvp:  ## Deploy configuration using CVP with REST APIs for both DCs
-	make dc1-deploy-cvp
-	make dc2-deploy-cvp
+dc-deploy-cvp: dc1-deploy-cvp dc2-deploy-cvp ## Deploy configuration using CVP with REST APIs for both DCs
 
 .PHONY: dc-reset-cvp
-dc-reset-cvp: ## DANGEROUS ! Reset CVP provisioning and all devices to ZTP for all DCs
-	make dc1-reset-cvp
+dc-reset-cvp: dc1-reset-cvp dc2-makereset-cvp ## DANGEROUS ! Reset CVP provisioning and all devices to ZTP for all DCs
+	make
 	make dc2-reset-cvp
+
+######################################
+#		Demo configuration			 #
+######################################
+
+.PHONY: install
+install: ## Install Ansible collections
+	git clone https://github.com/aristanetworks/ansible-avd.git
+	git clone https://github.com/aristanetworks/ansible-cvp.git
+
+.PHONY: shell
+shell: ## Start docker to get a preconfigured shell
+	docker pull $(CONTAINER) && \
+	docker run --rm -it \
+		-v $(HOME_DIR)/:/projects \
+		-v /etc/hosts:/etc/hosts $(CONTAINER)
 
 #################
 #   DC1 Fabric  #
