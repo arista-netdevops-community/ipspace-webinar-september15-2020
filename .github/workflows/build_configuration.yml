@@ -6,6 +6,9 @@ jobs:
     name: Run Ansible Playbooks
     runs-on: ubuntu-latest
     container: avdteam/base:centos-8
+    env:
+      PY_COLORS: 1 # allows Ansible colors to be passed to GitHub Actions
+      ANSIBLE_FORCE_COLOR: 1 # allows ansible colors to be passed to GitHub Actions
     steps:
       - uses: actions/checkout@master
       - name: 'Install collections'
@@ -18,7 +21,7 @@ jobs:
       - name: 'Save Python libs version'
         run: |
           pip3 freeze
-          pip3 freeze > inventory/intended/pip-version.txt
+          pip3 freeze > inventories/pip-version.txt
 
       - uses: actions/upload-artifact@v1
         with:

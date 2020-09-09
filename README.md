@@ -1,6 +1,6 @@
 ![](https://img.shields.io/badge/Arista-EOS%20Automation-blue) ![GitHub](https://img.shields.io/github/license/aristanetworks/ansible-avd)
 
-# Ansible Arista Validated Design
+# ipSpace Webinar with Ansible Arista Validated Design
 
 __Content used for ipSpace webinar / Work In Progress__
 
@@ -8,7 +8,7 @@ __Content used for ipSpace webinar / Work In Progress__
 
 <!-- code_chunk_output -->
 
-- [Ansible Arista Validated Design](#ansible-arista-validated-design)
+- [ipSpace Webinar with Ansible Arista Validated Design](#ipspace-webinar-with-ansible-arista-validated-design)
   - [Lab Topology](#lab-topology)
   - [Quick Start](#quick-start)
   - [Requirements](#requirements)
@@ -46,7 +46,7 @@ $ vim inventories/DC{1|2}/group_vars/DC1_FABRIC.yml
 
 # Run ansible playbooks
 
-< TO BE DESIGNED >
+< TO BE UPDATED >
 
 ```
 
