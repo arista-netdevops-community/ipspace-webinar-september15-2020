@@ -6,12 +6,9 @@ jobs:
   'pre-commit':
     name: Run pre-commit validation hooks
     runs-on: ubuntu-latest
-    container: avdteam/base:3.6
+    container: avdteam/base:centos8
     steps:
       - uses: actions/checkout@master
-      - name: Install Pre Commit
-        run: |
-          pip --no-cache-dir install pre-commit
       - name: 'Pre Commit run'
         run: |
           pre-commit run

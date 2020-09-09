@@ -5,7 +5,7 @@ jobs:
   'ansible CI':
     name: Run Ansible Playbooks
     runs-on: ubuntu-latest
-    container: avdteam/base:3.6
+    container: avdteam/base:centos8
     steps:
       - uses: actions/checkout@master
       - name: 'Install collections'
