@@ -265,6 +265,7 @@ interface Port-Channel3
 | Ethernet2 | P2P_LINK_TO_DC2-SPINE2_Ethernet3 | 1500 | routed | access | - | - | - | 172.31.252.11/31 | - | - |
 | Ethernet3 | MLAG_PEER_DC2-BL1B_Ethernet3 | *1500 | *switched | *trunk | *2-4094 | *LEAF_PEER_L3<br> *MLAG | - | - | 3 | active |
 | Ethernet4 | MLAG_PEER_DC2-BL1B_Ethernet4 | *1500 | *switched | *trunk | *2-4094 | *LEAF_PEER_L3<br> *MLAG | - | - | 3 | active |
+| Ethernet10 | P2P_LINK_TO_DC1-BL1A_Ethernet10 | 1500 | routed | access | - | - | - | 172.31.0.1/31 | - | - |
 
 *Inherited from Port-Channel Interface
 
@@ -289,6 +290,11 @@ interface Ethernet3
 interface Ethernet4
    description MLAG_PEER_DC2-BL1B_Ethernet4
    channel-group 3 mode active
+!
+interface Ethernet10
+   description P2P_LINK_TO_DC1-BL1A_Ethernet10
+   no switchport
+   ip address 172.31.0.1/31
 ```
 
 ## Loopback Interfaces
@@ -563,6 +569,27 @@ router bfd
 
 ### Router BGP Peer Groups
 
+**DCI-EVPN-OVERLAY-PEERS**:
+
+| Settings | Value |
+| -------- | ----- |
+| Address Family | evpn |
+| remote_as | 65104 |
+| source | Loopback0 |
+| bfd | true |
+| ebgp multihop | 3 |
+| send community | true |
+| maximum routes | 0 (no limit) |
+
+**DCI-IPv4-UNDERLAY-PEERS**:
+
+| Settings | Value |
+| -------- | ----- |
+| Address Family | ipv4 |
+| remote_as | 65104 |
+| send community | true |
+| maximum routes | 12000 |
+
 **EVPN-OVERLAY-PEERS**:
 
 | Settings | Value |
@@ -599,8 +626,10 @@ router bfd
 | Neighbor | Remote AS |
 | -------- | ---------
 | 10.255.253.5 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER |
+| 172.31.0.0 | Inherited from peer group DCI-IPv4-UNDERLAY-PEERS |
 | 172.31.252.8 | Inherited from peer group IPv4-UNDERLAY-PEERS |
 | 172.31.252.10 | Inherited from peer group IPv4-UNDERLAY-PEERS |
+| 192.168.251.10 | Inherited from peer group DCI-EVPN-OVERLAY-PEERS |
 | 192.168.253.1 | Inherited from peer group EVPN-OVERLAY-PEERS |
 | 192.168.253.2 | Inherited from peer group EVPN-OVERLAY-PEERS |
 
@@ -622,6 +651,17 @@ router bgp 65202
    no bgp default ipv4-unicast
    distance bgp 20 200 200
    maximum-paths 2 ecmp 2
+   neighbor DCI-EVPN-OVERLAY-PEERS peer group
+   neighbor DCI-EVPN-OVERLAY-PEERS remote-as 65104
+   neighbor DCI-EVPN-OVERLAY-PEERS update-source Loopback0
+   neighbor DCI-EVPN-OVERLAY-PEERS bfd
+   neighbor DCI-EVPN-OVERLAY-PEERS ebgp-multihop 3
+   neighbor DCI-EVPN-OVERLAY-PEERS send-community
+   neighbor DCI-EVPN-OVERLAY-PEERS maximum-routes 0
+   neighbor DCI-IPv4-UNDERLAY-PEERS peer group
+   neighbor DCI-IPv4-UNDERLAY-PEERS remote-as 65104
+   neighbor DCI-IPv4-UNDERLAY-PEERS send-community
+   neighbor DCI-IPv4-UNDERLAY-PEERS maximum-routes 12000
    neighbor EVPN-OVERLAY-PEERS peer group
    neighbor EVPN-OVERLAY-PEERS remote-as 65200
    neighbor EVPN-OVERLAY-PEERS update-source Loopback0
@@ -642,18 +682,22 @@ router bgp 65202
    neighbor MLAG-IPv4-UNDERLAY-PEER send-community
    neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000
    neighbor 10.255.253.5 peer group MLAG-IPv4-UNDERLAY-PEER
+   neighbor 172.31.0.0 peer group DCI-IPv4-UNDERLAY-PEERS
    neighbor 172.31.252.8 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.252.10 peer group IPv4-UNDERLAY-PEERS
+   neighbor 192.168.251.10 peer group DCI-EVPN-OVERLAY-PEERS
    neighbor 192.168.253.1 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.253.2 peer group EVPN-OVERLAY-PEERS
    redistribute connected route-map RM-CONN-2-BGP
    !
    address-family evpn
+      neighbor DCI-EVPN-OVERLAY-PEERS activate
       neighbor EVPN-OVERLAY-PEERS activate
       no neighbor IPv4-UNDERLAY-PEERS activate
       no neighbor MLAG-IPv4-UNDERLAY-PEER activate
    !
    address-family ipv4
+      neighbor DCI-IPv4-UNDERLAY-PEERS activate
       no neighbor EVPN-OVERLAY-PEERS activate
       neighbor IPv4-UNDERLAY-PEERS activate
       neighbor MLAG-IPv4-UNDERLAY-PEER activate

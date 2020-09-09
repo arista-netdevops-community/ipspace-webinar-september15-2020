@@ -18,6 +18,11 @@
       import_role:
          name: arista.avd.eos_l3ls_evpn
 
+    - name: generate intented DCI variables
+      tags: [build, provision]
+      import_role:
+         name: eos_dci
+
     - name: generate device intended config and documention
       tags: [build]
       import_role:

@@ -291,6 +291,7 @@ interface Port-Channel5
 | Ethernet4 | P2P_LINK_TO_DC1-SPINE4_Ethernet6 | 1500 | routed | access | - | - | - | 172.31.251.47/31 | - | - |
 | Ethernet5 | MLAG_PEER_DC1-BL1B_Ethernet5 | *1500 | *switched | *trunk | *2-4094 | *LEAF_PEER_L3<br> *MLAG | - | - | 5 | active |
 | Ethernet6 | MLAG_PEER_DC1-BL1B_Ethernet6 | *1500 | *switched | *trunk | *2-4094 | *LEAF_PEER_L3<br> *MLAG | - | - | 5 | active |
+| Ethernet10 | P2P_LINK_TO_DC2-BL1A_Ethernet10 | 1500 | routed | access | - | - | - | 172.31.0.0/31 | - | - |
 
 *Inherited from Port-Channel Interface
 
@@ -325,6 +326,11 @@ interface Ethernet5
 interface Ethernet6
    description MLAG_PEER_DC1-BL1B_Ethernet6
    channel-group 5 mode active
+!
+interface Ethernet10
+   description P2P_LINK_TO_DC2-BL1A_Ethernet10
+   no switchport
+   ip address 172.31.0.0/31
 ```
 
 ## Loopback Interfaces
@@ -654,6 +660,27 @@ router bfd
 
 ### Router BGP Peer Groups
 
+**DCI-EVPN-OVERLAY-PEERS**:
+
+| Settings | Value |
+| -------- | ----- |
+| Address Family | evpn |
+| remote_as | 65202 |
+| source | Loopback0 |
+| bfd | true |
+| ebgp multihop | 3 |
+| send community | true |
+| maximum routes | 0 (no limit) |
+
+**DCI-IPv4-UNDERLAY-PEERS**:
+
+| Settings | Value |
+| -------- | ----- |
+| Address Family | ipv4 |
+| remote_as | 65202 |
+| send community | true |
+| maximum routes | 12000 |
+
 **EVPN-OVERLAY-PEERS**:
 
 | Settings | Value |
@@ -690,6 +717,7 @@ router bfd
 | Neighbor | Remote AS |
 | -------- | ---------
 | 10.255.251.11 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER |
+| 172.31.0.1 | Inherited from peer group DCI-IPv4-UNDERLAY-PEERS |
 | 172.31.251.40 | Inherited from peer group IPv4-UNDERLAY-PEERS |
 | 172.31.251.42 | Inherited from peer group IPv4-UNDERLAY-PEERS |
 | 172.31.251.44 | Inherited from peer group IPv4-UNDERLAY-PEERS |
@@ -698,6 +726,7 @@ router bfd
 | 192.168.251.2 | Inherited from peer group EVPN-OVERLAY-PEERS |
 | 192.168.251.3 | Inherited from peer group EVPN-OVERLAY-PEERS |
 | 192.168.251.4 | Inherited from peer group EVPN-OVERLAY-PEERS |
+| 192.168.253.5 | Inherited from peer group DCI-EVPN-OVERLAY-PEERS |
 
 ### Router BGP EVPN Address Family
 
@@ -727,6 +756,17 @@ router bgp 65104
    no bgp default ipv4-unicast
    distance bgp 20 200 200
    maximum-paths 4 ecmp 4
+   neighbor DCI-EVPN-OVERLAY-PEERS peer group
+   neighbor DCI-EVPN-OVERLAY-PEERS remote-as 65202
+   neighbor DCI-EVPN-OVERLAY-PEERS update-source Loopback0
+   neighbor DCI-EVPN-OVERLAY-PEERS bfd
+   neighbor DCI-EVPN-OVERLAY-PEERS ebgp-multihop 3
+   neighbor DCI-EVPN-OVERLAY-PEERS send-community
+   neighbor DCI-EVPN-OVERLAY-PEERS maximum-routes 0
+   neighbor DCI-IPv4-UNDERLAY-PEERS peer group
+   neighbor DCI-IPv4-UNDERLAY-PEERS remote-as 65202
+   neighbor DCI-IPv4-UNDERLAY-PEERS send-community
+   neighbor DCI-IPv4-UNDERLAY-PEERS maximum-routes 12000
    neighbor EVPN-OVERLAY-PEERS peer group
    neighbor EVPN-OVERLAY-PEERS remote-as 65100
    neighbor EVPN-OVERLAY-PEERS update-source Loopback0
@@ -747,6 +787,7 @@ router bgp 65104
    neighbor MLAG-IPv4-UNDERLAY-PEER send-community
    neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000
    neighbor 10.255.251.11 peer group MLAG-IPv4-UNDERLAY-PEER
+   neighbor 172.31.0.1 peer group DCI-IPv4-UNDERLAY-PEERS
    neighbor 172.31.251.40 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.251.42 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.251.44 peer group IPv4-UNDERLAY-PEERS
@@ -755,6 +796,7 @@ router bgp 65104
    neighbor 192.168.251.2 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.251.3 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.251.4 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.253.5 peer group DCI-EVPN-OVERLAY-PEERS
    redistribute connected route-map RM-CONN-2-BGP
    !
    vlan-aware-bundle Tenant_A_OP_Zone
@@ -770,11 +812,13 @@ router bgp 65104
       vlan 150
    !
    address-family evpn
+      neighbor DCI-EVPN-OVERLAY-PEERS activate
       neighbor EVPN-OVERLAY-PEERS activate
       no neighbor IPv4-UNDERLAY-PEERS activate
       no neighbor MLAG-IPv4-UNDERLAY-PEER activate
    !
    address-family ipv4
+      neighbor DCI-IPv4-UNDERLAY-PEERS activate
       no neighbor EVPN-OVERLAY-PEERS activate
       neighbor IPv4-UNDERLAY-PEERS activate
       neighbor MLAG-IPv4-UNDERLAY-PEER activate
