@@ -19,8 +19,6 @@ dc-deploy-cvp: dc1-deploy-cvp dc2-deploy-cvp ## Deploy configuration using CVP w
 
 .PHONY: dc-reset-cvp
 dc-reset-cvp: dc1-reset-cvp dc2-makereset-cvp ## DANGEROUS ! Reset CVP provisioning and all devices to ZTP for all DCs
-	make
-	make dc2-reset-cvp
 
 ######################################
 #		Demo configuration			 #
@@ -86,3 +84,13 @@ dc2-validate-state: ## Run ansible playbook to validate EVPN Fabric State.
 .PHONY: dc2-reset-cvp
 dc2-reset-cvp: ## ## DANGEROUS ! Reset CVP provisioning and all devices to ZTP for DC2
 	ansible-playbook playbooks/dc2-fabric-reset-cvp.yml -i inventories/DC2/inventory.yml
+
+
+#################
+#   CI Command  #
+#################
+
+.PHONY: ci-build
+ci-build: ## Run ansible playbook during Github Action to build configurations
+	ansible-playbook playbooks/github-fabric-build.yml -i inventories/DC1/inventory.yml
+	ansible-playbook playbooks/github-fabric-build.yml -i inventories/DC2/inventory.yml

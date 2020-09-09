@@ -1,0 +1,29 @@
+---
+- name: Build Switch configuration
+  hosts: [DC1_FABRIC, DC2_FABRIC]
+  connection: local
+  gather_facts: no
+
+  tasks:
+
+    - name: include global_vars
+      tags: [build, provision]
+      include_vars: "{{ item }}"
+      with_items:
+        - "../global_vars/AVD_LAB.yml"
+        - "../global_vars/EOS.yml"
+
+    - name: generate intented variables
+      tags: [build]
+      import_role:
+         name: arista.avd.eos_l3ls_evpn
+
+    - name: generate intented DCI variables
+      tags: [build, provision]
+      import_role:
+         name: eos_dci
+
+    - name: generate device intended config and documention
+      tags: [build]
+      import_role:
+         name: arista.avd.eos_cli_config_gen

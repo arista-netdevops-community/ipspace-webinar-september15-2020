@@ -13,7 +13,7 @@ jobs:
 
       - name: 'Build AVD content'
         run: |
-          make dc-build
+          make ci-build
 
       - name: 'Save Python libs version'
         run: |
