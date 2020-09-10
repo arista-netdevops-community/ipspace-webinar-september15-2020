@@ -456,13 +456,10 @@ l3leaf:
 l3leaf_node_group: DC1_BL1
 leaf_allowed_svis:
 - 113
-- 150
 leaf_allowed_vlans:
 - 113
-- 150
 leaf_allowed_vrfs:
 - Tenant_A_OP_Zone
-- Tenant_A_WAN_Zone
 leaf_bgp_as: 65104
 leaf_bgp_defaults:
 - no bgp default ipv4-unicast
@@ -544,7 +541,7 @@ ntp_server:
 ntp_servers:
 - 0.north-america.pool.ntp.org
 - 1.north-america.pool.ntp.org
-omit: __omit_place_holder__0c3749630599dc042a5e53044f22c40fff009d9c
+omit: __omit_place_holder__9b668394296c044cbb94a204045cde0ade6937d4
 overlay_loopback_network_summary: 192.168.251.0/24
 p2p_uplinks_mtu: 1500
 playbook_dir: /projects/ipspace-webinar-september15-2020/playbooks
@@ -557,15 +554,12 @@ port_channel_interfaces:
         - MLAG
         vlans: 2-4094
 port_profiles:
-    TENANT_A:
+    TENANT_A_ALL:
         mode: trunk
+        vlans: 120-121,130-131,160-161
+    TENANT_A_OPZone:
+        mode: access
         vlans: '110'
-    TENANT_A_B:
-        mode: trunk
-        vlans: 110-111,210-211
-    TENANT_B:
-        mode: trunk
-        vlans: 210-211
 prefix_lists:
     PL-LOOPBACKS-EVPN-OVERLAY:
         sequence_numbers:
@@ -582,6 +576,7 @@ prefix_lists:
 queue_monitor_length: null
 queue_monitor_streaming: null
 redundancy: null
+root_dir: /projects/ipspace-webinar-september15-2020/inventories/DC1
 route_maps:
     RM-CONN-2-BGP:
         sequence_numbers:
@@ -687,14 +682,6 @@ router_bgp:
                 both:
                 - '10:10'
             vlan: 113
-        Tenant_A_WAN_Zone:
-            rd: 192.168.251.11:14
-            redistribute_routes:
-            - learned
-            route_targets:
-                both:
-                - '14:14'
-            vlan: 150
     vlans: null
     vrfs:
         Tenant_A_OP_Zone:
@@ -712,120 +699,33 @@ router_bgp:
                     evpn:
                     - '10:10'
             router_id: 192.168.251.11
-        Tenant_A_WAN_Zone:
-            neighbors:
-                10.255.251.10:
-                    peer_group: MLAG-IPv4-UNDERLAY-PEER
-            rd: 192.168.251.11:14
-            redistribute_routes:
-            - connected
-            route_targets:
-                export:
-                    evpn:
-                    - '14:14'
-                import:
-                    evpn:
-                    - '14:14'
-            router_id: 192.168.251.11
 router_isis: null
 router_ospf: null
 servers:
-    server01:
+    server-1:
         adapters:
-        -   profile: TENANT_A
+        -   profile: TENANT_A_OPZone
             server_ports:
             - Eth1
             switch_ports:
-            - Ethernet5
+            - Ethernet3
             switches:
-            - DC1-LEAF1A
+            - DC1-L2LEAF1A
         -   port_channel:
                 description: PortChanne1
                 mode: active
                 state: present
-            profile: TENANT_A
+            profile: TENANT_A_ALL
             server_ports:
-            - Eth4
-            - Eth5
+            - Eth2
+            - Eth3
             switch_ports:
-            - Ethernet7
+            - Ethernet8
             - Ethernet8
             switches:
-            - DC1-LEAF1A
-            - DC1-LEAF1A
-        -   port_channel:
-                description: PortChanne1
-                mode: active
-                state: present
-            profile: TENANT_B
-            server_ports:
-            - Eth2
-            - Eth3
-            switch_ports:
-            - Ethernet10
-            - Ethernet10
-            switches:
             - DC1-LEAF2A
             - DC1-LEAF2B
         rack: RackB
-    server02:
-        adapters:
-        -   profile: TENANT_A
-            server_ports:
-            - Eth1
-            switch_ports:
-            - Ethernet6
-            switches:
-            - DC1-LEAF1A
-        -   port_channel:
-                description: PortChanne1
-                mode: active
-                state: present
-            profile: TENANT_B
-            server_ports:
-            - Eth2
-            - Eth3
-            switch_ports:
-            - Ethernet11
-            - Ethernet11
-            switches:
-            - DC1-LEAF2A
-            - DC1-LEAF2B
-        rack: RackB
-    server03:
-        adapters:
-        -   port_channel:
-                description: PortChanne1
-                mode: active
-                state: present
-            profile: TENANT_A_B
-            server_ports:
-            - Eth1
-            - Eth2
-            switch_ports:
-            - Ethernet10
-            - Ethernet10
-            switches:
-            - DC1-SVC3A
-            - DC1-SVC3B
-        rack: RackC
-    server04:
-        adapters:
-        -   port_channel:
-                description: PortChanne1
-                mode: active
-                state: present
-            profile: TENANT_A_B
-            server_ports:
-            - Eth1
-            - Eth2
-            switch_ports:
-            - Ethernet11
-            - Ethernet11
-            switches:
-            - DC1-SVC3A
-            - DC1-SVC3B
-        rack: RackC
 service_routing_protocols_model: multi-agent
 spanning_tree:
     mode: mstp
@@ -887,22 +787,6 @@ tenants:
                         tags:
                         - app
                 vrf_vni: 12
-            Tenant_A_DB_Zone:
-                svis:
-                    140:
-                        enabled: true
-                        ip_address_virtual: 10.1.40.1/24
-                        name: Tenant_A_DB_BZone_1
-                        tags:
-                        - db
-                        - erp1
-                    141:
-                        enabled: true
-                        ip_address_virtual: 10.1.41.1/24
-                        name: Tenant_A_DB_Zone_2
-                        tags:
-                        - db
-                vrf_vni: 13
             Tenant_A_OP_Zone:
                 svis:
                     110:
@@ -942,15 +826,6 @@ tenants:
                 vtep_diagnostic:
                     loopback: 100
                     loopback_ip_range: 10.255.1.0/24
-            Tenant_A_WAN_Zone:
-                svis:
-                    150:
-                        enabled: true
-                        ip_address_virtual: 10.1.40.1/24
-                        name: Tenant_A_WAN_Zone_1
-                        tags:
-                        - wan
-                vrf_vni: 14
             Tenant_A_WEB_Zone:
                 svis:
                     120:
@@ -981,25 +856,12 @@ vlan_interfaces:
         - DC1_BL1
         tenant: Tenant_A
         vrf: Tenant_A_OP_Zone
-    Vlan150:
-        description: Tenant_A_WAN_Zone_1
-        ip_address_virtual: 10.1.40.1/24
-        tags:
-        - wan
-        tenant: Tenant_A
-        vrf: Tenant_A_WAN_Zone
     Vlan3009:
         description: 'MLAG_PEER_L3_iBGP: vrf Tenant_A_OP_Zone'
         ip_address: 10.255.251.11/31
         tenant: Tenant_A
         type: underlay_peering
         vrf: Tenant_A_OP_Zone
-    Vlan3013:
-        description: 'MLAG_PEER_L3_iBGP: vrf Tenant_A_WAN_Zone'
-        ip_address: 10.255.251.11/31
-        tenant: Tenant_A
-        type: underlay_peering
-        vrf: Tenant_A_WAN_Zone
     Vlan4093:
         description: MLAG_PEER_L3_PEERING
         ip_address: 10.255.251.11/31
@@ -1017,16 +879,8 @@ vlans:
     113:
         name: Tenant_A_OP_Zone_WAN
         tenant: Tenant_A
-    150:
-        name: Tenant_A_WAN_Zone_1
-        tenant: Tenant_A
     3009:
         name: MLAG_iBGP_Tenant_A_OP_Zone
-        tenant: Tenant_A
-        trunk_groups:
-        - LEAF_PEER_L3
-    3013:
-        name: MLAG_iBGP_Tenant_A_WAN_Zone
         tenant: Tenant_A
         trunk_groups:
         - LEAF_PEER_L3
@@ -1046,9 +900,6 @@ vrfs:
     Tenant_A_OP_Zone:
         ip_routing: true
         tenant: Tenant_A
-    Tenant_A_WAN_Zone:
-        ip_routing: true
-        tenant: Tenant_A
 vtep_loopback_network_summary: 192.168.252.0/24
 vxlan_tunnel_interface:
     Vxlan1:
@@ -1061,11 +912,7 @@ vxlan_tunnel_interface:
             vlans:
                 113:
                     vni: 10113
-                150:
-                    vni: 10150
             vrfs:
                 Tenant_A_OP_Zone:
                     vni: 10
-                Tenant_A_WAN_Zone:
-                    vni: 14
 vxlan_vlan_aware_bundles: true

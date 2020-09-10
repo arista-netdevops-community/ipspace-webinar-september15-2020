@@ -203,9 +203,7 @@ username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAW
 | VLAN ID | Name | Trunk Groups |
 | ------- | ---- | ------------ |
 | 113 | Tenant_A_OP_Zone_WAN | none  |
-| 150 | Tenant_A_WAN_Zone_1 | none  |
 | 3009 | MLAG_iBGP_Tenant_A_OP_Zone | LEAF_PEER_L3  |
-| 3013 | MLAG_iBGP_Tenant_A_WAN_Zone | LEAF_PEER_L3  |
 | 4093 | LEAF_PEER_L3 | LEAF_PEER_L3  |
 | 4094 | MLAG_PEER | MLAG  |
 
@@ -216,15 +214,8 @@ username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAW
 vlan 113
    name Tenant_A_OP_Zone_WAN
 !
-vlan 150
-   name Tenant_A_WAN_Zone_1
-!
 vlan 3009
    name MLAG_iBGP_Tenant_A_OP_Zone
-   trunk group LEAF_PEER_L3
-!
-vlan 3013
-   name MLAG_iBGP_Tenant_A_WAN_Zone
    trunk group LEAF_PEER_L3
 !
 vlan 4093
@@ -244,7 +235,6 @@ vlan 4094
 | -------- | ---------- |
 | MGMT |  disabled |
 | Tenant_A_OP_Zone |  enabled |
-| Tenant_A_WAN_Zone |  enabled |
 
 ### VRF Instances Device Configuration
 
@@ -253,8 +243,6 @@ vlan 4094
 vrf instance MGMT
 !
 vrf instance Tenant_A_OP_Zone
-!
-vrf instance Tenant_A_WAN_Zone
 ```
 
 ## Port-Channel Interfaces
@@ -376,9 +364,7 @@ interface Loopback100
 | Interface | Description | VRF | IP Address | IP Address Virtual | IP Router Virtual Address (vARP) |
 | --------- | ----------- | --- | ---------- | ------------------ | -------------------------------- |
 | Vlan113 | Tenant_A_OP_Zone_WAN | Tenant_A_OP_Zone | 10.1.13.1/24 | - | - |
-| Vlan150 | Tenant_A_WAN_Zone_1 | Tenant_A_WAN_Zone | - | 10.1.40.1/24 | - |
 | Vlan3009 | MLAG_PEER_L3_iBGP: vrf Tenant_A_OP_Zone | Tenant_A_OP_Zone | 10.255.251.10/31 | - | - |
-| Vlan3013 | MLAG_PEER_L3_iBGP: vrf Tenant_A_WAN_Zone | Tenant_A_WAN_Zone | 10.255.251.10/31 | - | - |
 | Vlan4093 | MLAG_PEER_L3_PEERING | Global Routing Table | 10.255.251.10/31 | - | - |
 | Vlan4094 | MLAG_PEER | Global Routing Table | 10.255.252.10/31 | - | - |
 
@@ -391,19 +377,9 @@ interface Vlan113
    vrf Tenant_A_OP_Zone
    ip address 10.1.13.1/24
 !
-interface Vlan150
-   description Tenant_A_WAN_Zone_1
-   vrf Tenant_A_WAN_Zone
-   ip address virtual 10.1.40.1/24
-!
 interface Vlan3009
    description MLAG_PEER_L3_iBGP: vrf Tenant_A_OP_Zone
    vrf Tenant_A_OP_Zone
-   ip address 10.255.251.10/31
-!
-interface Vlan3013
-   description MLAG_PEER_L3_iBGP: vrf Tenant_A_WAN_Zone
-   vrf Tenant_A_WAN_Zone
    ip address 10.255.251.10/31
 !
 interface Vlan4093
@@ -428,14 +404,12 @@ interface Vlan4094
 | VLAN | VNI |
 | ---- | --- |
 | 113 | 10113 |
-| 150 | 10150 |
 
 **VRF to VNI Mappings:**
 
 | VLAN | VNI |
 | ---- | --- |
 | Tenant_A_OP_Zone | 10 |
-| Tenant_A_WAN_Zone | 14 |
 
 ### VXLAN Interface Device Configuration
 
@@ -446,9 +420,7 @@ interface Vxlan1
    vxlan virtual-router encapsulation mac-address mlag-system-id
    vxlan udp-port 4789
    vxlan vlan 113 vni 10113
-   vxlan vlan 150 vni 10150
    vxlan vrf Tenant_A_OP_Zone vni 10
-   vxlan vrf Tenant_A_WAN_Zone vni 14
 ```
 
 ## Virtual Router MAC Address & Virtual Source NAT
@@ -513,7 +485,6 @@ No Event Handler Defined
 | --- | --------------- |
 | MGMT | False |
 | Tenant_A_OP_Zone | True |
-| Tenant_A_WAN_Zone | True |
 
 ### IP Routing Device Configuration
 
@@ -522,7 +493,6 @@ No Event Handler Defined
 ip routing
 no ip routing vrf MGMT
 ip routing vrf Tenant_A_OP_Zone
-ip routing vrf Tenant_A_WAN_Zone
 ```
 
 ## Prefix Lists
@@ -568,7 +538,6 @@ IPv6 Prefix lists not defined
 | --- | -------------------- |
 | MGMT | False |
 | Tenant_A_OP_Zone | False |
-| Tenant_A_WAN_Zone | False |
 
 ### IPv6 Routing Device Configuration
 
@@ -735,7 +704,6 @@ router bfd
 | VLAN Aware Bundle | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute | VLANs |
 | ----------------- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ | ----- |
 | Tenant_A_OP_Zone | 192.168.251.10:10 |  10:10  |  |  | learned | 113 |
-| Tenant_A_WAN_Zone | 192.168.251.10:14 |  14:14  |  |  | learned | 150 |
 
 
 #### Router BGP EVPN VRFs
@@ -743,7 +711,6 @@ router bfd
 | VRF | Route-Distinguisher | Redistribute |
 | --- | ------------------- | ------------ |
 | Tenant_A_OP_Zone | 192.168.251.10:10 | connected  |
-| Tenant_A_WAN_Zone | 192.168.251.10:14 | connected  |
 
 ### Router BGP Device Configuration
 
@@ -803,12 +770,6 @@ router bgp 65104
       redistribute learned
       vlan 113
    !
-   vlan-aware-bundle Tenant_A_WAN_Zone
-      rd 192.168.251.10:14
-      route-target both 14:14
-      redistribute learned
-      vlan 150
-   !
    address-family evpn
       neighbor DCI-EVPN-OVERLAY-PEERS activate
       neighbor EVPN-OVERLAY-PEERS activate
@@ -825,14 +786,6 @@ router bgp 65104
       rd 192.168.251.10:10
       route-target import evpn 10:10
       route-target export evpn 10:10
-      router-id 192.168.251.10
-      neighbor 10.255.251.11 peer group MLAG-IPv4-UNDERLAY-PEER
-      redistribute connected
-   !
-   vrf Tenant_A_WAN_Zone
-      rd 192.168.251.10:14
-      route-target import evpn 14:14
-      route-target export evpn 14:14
       router-id 192.168.251.10
       neighbor 10.255.251.11 peer group MLAG-IPv4-UNDERLAY-PEER
       redistribute connected

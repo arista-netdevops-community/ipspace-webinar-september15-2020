@@ -31,3 +31,5 @@ dns_domain: avd-lab.local
 ntp_servers:
   - 0.north-america.pool.ntp.org
   - 1.north-america.pool.ntp.org
+
+eos_validate_state_name: 'reports'

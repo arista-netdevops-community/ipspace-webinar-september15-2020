@@ -273,6 +273,7 @@ interface Port-Channel1
 | --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | --- | ---------- | ---------------- | ------------------ |
 | Ethernet1 | DC1-LEAF2A_Ethernet7 | *1500 | *switched | *trunk | *110-111,120-121,130-131 | - | - | - | 1 | active |
 | Ethernet2 | DC1-LEAF2B_Ethernet7 | *1500 | *switched | *trunk | *110-111,120-121,130-131 | - | - | - | 1 | active |
+| Ethernet3 | server-1_Eth1 | 1500 | switched | access | 110 | - | - | - | - | - |
 
 *Inherited from Port-Channel Interface
 
@@ -287,6 +288,10 @@ interface Ethernet1
 interface Ethernet2
    description DC1-LEAF2B_Ethernet7
    channel-group 1 mode active
+!
+interface Ethernet3
+   description server-1_Eth1
+   switchport access vlan 110
 ```
 
 ## Loopback Interfaces

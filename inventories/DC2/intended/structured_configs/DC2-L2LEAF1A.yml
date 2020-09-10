@@ -150,6 +150,14 @@ ethernet_interfaces:
     channel_group:
       id: 1
       mode: active
+  Ethernet3:
+    peer: server-2
+    peer_interface: Eth1
+    peer_type: server
+    description: server-2_Eth1
+    mode: access
+    vlans: 210
+    profile: TENANT_A_OPZone
 
 ### Management Interfaces ###
 management_interfaces:

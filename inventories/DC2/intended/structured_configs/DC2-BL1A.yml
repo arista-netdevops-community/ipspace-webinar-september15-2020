@@ -161,11 +161,11 @@ groups:
     DC2_FABRIC:
     - DC2-SPINE1
     - DC2-SPINE2
-    - DC2-L2LEAF1A
     - DC2-LEAF1A
     - DC2-LEAF1B
     - DC2-BL1A
     - DC2-BL1B
+    - DC2-L2LEAF1A
     DC2_L2LEAF1:
     - DC2-L2LEAF1A
     DC2_L2LEAFS:
@@ -179,37 +179,37 @@ groups:
     - DC2-BL1A
     - DC2-BL1B
     DC2_SERVERS:
-    - DC2-L2LEAF1A
     - DC2-LEAF1A
     - DC2-LEAF1B
     - DC2-BL1A
     - DC2-BL1B
+    - DC2-L2LEAF1A
     DC2_SPINES:
     - DC2-SPINE1
     - DC2-SPINE2
     DC2_TENANTS_NETWORKS:
-    - DC2-L2LEAF1A
     - DC2-LEAF1A
     - DC2-LEAF1B
     - DC2-BL1A
     - DC2-BL1B
+    - DC2-L2LEAF1A
     EOS:
     - DC2-SPINE1
     - DC2-SPINE2
-    - DC2-L2LEAF1A
     - DC2-LEAF1A
     - DC2-LEAF1B
     - DC2-BL1A
     - DC2-BL1B
+    - DC2-L2LEAF1A
     all:
     - CVP-1
     - DC2-SPINE1
     - DC2-SPINE2
-    - DC2-L2LEAF1A
     - DC2-LEAF1A
     - DC2-LEAF1B
     - DC2-BL1A
     - DC2-BL1B
+    - DC2-L2LEAF1A
     ungrouped: []
 hardware_counters: null
 inventory_dir: /projects/ipspace-webinar-september15-2020/inventories/DC2
@@ -388,7 +388,7 @@ ntp_server:
 ntp_servers:
 - 0.north-america.pool.ntp.org
 - 1.north-america.pool.ntp.org
-omit: __omit_place_holder__716d0684c488db586d21777a8af638ff2b70fd52
+omit: __omit_place_holder__54462b033efdfb69cf22d103358ab62beee79935
 overlay_loopback_network_summary: 192.168.253.0/24
 p2p_uplinks_mtu: 1500
 playbook_dir: /projects/ipspace-webinar-september15-2020/playbooks
@@ -401,15 +401,12 @@ port_channel_interfaces:
         - MLAG
         vlans: 2-4094
 port_profiles:
-    TENANT_A:
+    TENANT_A_ALL:
         mode: trunk
-        vlans: '110'
-    TENANT_A_B:
-        mode: trunk
-        vlans: 110-111,210-211
-    TENANT_B:
-        mode: trunk
-        vlans: 210-211
+        vlans: 220-221,230-231,260-261
+    TENANT_A_OPZone:
+        mode: access
+        vlans: '210'
 prefix_lists:
     PL-LOOPBACKS-EVPN-OVERLAY:
         sequence_numbers:
@@ -426,6 +423,7 @@ prefix_lists:
 queue_monitor_length: null
 queue_monitor_streaming: null
 redundancy: null
+root_dir: /projects/ipspace-webinar-september15-2020/inventories/DC2
 route_maps:
     RM-CONN-2-BGP:
         sequence_numbers:
@@ -520,102 +518,30 @@ router_bgp:
 router_isis: null
 router_ospf: null
 servers:
-    server01:
+    server-2:
         adapters:
-        -   profile: TENANT_A
+        -   profile: TENANT_A_OPZone
             server_ports:
             - Eth1
             switch_ports:
-            - Ethernet5
+            - Ethernet3
             switches:
-            - DC1-LEAF1A
+            - DC2-L2LEAF1A
         -   port_channel:
                 description: PortChanne1
                 mode: active
                 state: present
-            profile: TENANT_A
-            server_ports:
-            - Eth4
-            - Eth5
-            switch_ports:
-            - Ethernet7
-            - Ethernet8
-            switches:
-            - DC1-LEAF1A
-            - DC1-LEAF1A
-        -   port_channel:
-                description: PortChanne1
-                mode: active
-                state: present
-            profile: TENANT_B
+            profile: TENANT_A_ALL
             server_ports:
             - Eth2
             - Eth3
             switch_ports:
-            - Ethernet10
-            - Ethernet10
+            - Ethernet4
+            - Ethernet4
             switches:
-            - DC1-LEAF2A
-            - DC1-LEAF2B
+            - DC2-LEAF1A
+            - DC2-LEAF1B
         rack: RackB
-    server02:
-        adapters:
-        -   profile: TENANT_A
-            server_ports:
-            - Eth1
-            switch_ports:
-            - Ethernet6
-            switches:
-            - DC1-LEAF1A
-        -   port_channel:
-                description: PortChanne1
-                mode: active
-                state: present
-            profile: TENANT_B
-            server_ports:
-            - Eth2
-            - Eth3
-            switch_ports:
-            - Ethernet11
-            - Ethernet11
-            switches:
-            - DC1-LEAF2A
-            - DC1-LEAF2B
-        rack: RackB
-    server03:
-        adapters:
-        -   port_channel:
-                description: PortChanne1
-                mode: active
-                state: present
-            profile: TENANT_A_B
-            server_ports:
-            - Eth1
-            - Eth2
-            switch_ports:
-            - Ethernet10
-            - Ethernet10
-            switches:
-            - DC1-SVC3A
-            - DC1-SVC3B
-        rack: RackC
-    server04:
-        adapters:
-        -   port_channel:
-                description: PortChanne1
-                mode: active
-                state: present
-            profile: TENANT_A_B
-            server_ports:
-            - Eth1
-            - Eth2
-            switch_ports:
-            - Ethernet11
-            - Ethernet11
-            switches:
-            - DC1-SVC3A
-            - DC1-SVC3B
-        rack: RackC
 service_routing_protocols_model: multi-agent
 spanning_tree:
     mode: mstp
@@ -671,22 +597,6 @@ tenants:
                         tags:
                         - app
                 vrf_vni: 12
-            Tenant_A_DB_Zone:
-                svis:
-                    240:
-                        enabled: true
-                        ip_address_virtual: 10.2.40.1/24
-                        name: Tenant_A_DB_BZone_1
-                        tags:
-                        - db
-                        - erp1
-                    241:
-                        enabled: true
-                        ip_address_virtual: 10.2.41.1/24
-                        name: Tenant_A_DB_Zone_2
-                        tags:
-                        - db
-                vrf_vni: 13
             Tenant_A_OP_Zone:
                 svis:
                     210:

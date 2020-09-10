@@ -246,21 +246,7 @@ vrf instance Tenant_A_WEB_Zone
 
 ## Port-Channel Interfaces
 
-### Port-Channel Interfaces Summary
-
-| Interface | Description | MTU | Type | Mode | Allowed VLANs (trunk) | Trunk Group | MLAG ID | EVPN ESI | VRF | IP Address | IPv6 Address |
-| --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | ------- | -------- | --- | ---------- | ------------ |
-| Port-Channel7 | server01_PortChanne1 | 1500 | switched | trunk | 110 | - | - | - | - | - | - |
-
-### Port-Channel Interfaces Device Configuration
-
-```eos
-!
-interface Port-Channel7
-   description server01_PortChanne1
-   switchport trunk allowed vlan 110
-   switchport mode trunk
-```
+No Port-Channels defined
 
 ## Ethernet Interfaces
 
@@ -272,10 +258,6 @@ interface Port-Channel7
 | Ethernet2 | P2P_LINK_TO_DC1-SPINE2_Ethernet1 | 1500 | routed | access | - | - | - | 172.31.251.3/31 | - | - |
 | Ethernet3 | P2P_LINK_TO_DC1-SPINE3_Ethernet1 | 1500 | routed | access | - | - | - | 172.31.251.5/31 | - | - |
 | Ethernet4 | P2P_LINK_TO_DC1-SPINE4_Ethernet1 | 1500 | routed | access | - | - | - | 172.31.251.7/31 | - | - |
-| Ethernet5 | server01_Eth1 | 1500 | switched | trunk | 110 | - | - | - | - | - |
-| Ethernet6 | server02_Eth1 | 1500 | switched | trunk | 110 | - | - | - | - | - |
-| Ethernet7 | server01_Eth4 | *1500 | *switched | *trunk | *110 | - | - | - | 7 | active |
-| Ethernet8 | server01_Eth5 | *1500 | *switched | *trunk | *110 | - | - | - | 7 | active |
 
 *Inherited from Port-Channel Interface
 
@@ -302,24 +284,6 @@ interface Ethernet4
    description P2P_LINK_TO_DC1-SPINE4_Ethernet1
    no switchport
    ip address 172.31.251.7/31
-!
-interface Ethernet5
-   description server01_Eth1
-   switchport trunk allowed vlan 110
-   switchport mode trunk
-!
-interface Ethernet6
-   description server02_Eth1
-   switchport trunk allowed vlan 110
-   switchport mode trunk
-!
-interface Ethernet7
-   description server01_Eth4
-   channel-group 7 mode active
-!
-interface Ethernet8
-   description server01_Eth5
-   channel-group 7 mode active
 ```
 
 ## Loopback Interfaces

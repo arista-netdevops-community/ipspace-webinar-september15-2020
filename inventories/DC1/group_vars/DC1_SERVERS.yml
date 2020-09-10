@@ -1,79 +1,27 @@
 port_profiles:
 
-  TENANT_A_B:
-    mode: trunk
-    vlans: "110-111,210-211"
 
-  TENANT_A:
-    mode: trunk
+  TENANT_A_OPZone:
+    mode: access
     vlans: "110"
 
-  TENANT_B:
+  TENANT_A_ALL:
     mode: trunk
-    vlans: "210-211"
-
+    vlans: "120-130,160-161"
 
 servers:
 
-  server01:
+  server-1:
     rack: RackB
     adapters:
       - server_ports: [ Eth1 ]
-        switch_ports: [ Ethernet5 ]
-        switches: [ DC1-LEAF1A ]
-        profile: TENANT_A
-      - server_ports: [ Eth4, Eth5 ]
-        switch_ports: [ Ethernet7, Ethernet8 ]
-        switches: [ DC1-LEAF1A, DC1-LEAF1A ]
-        profile: TENANT_A
-        port_channel:
-          state: present
-          description: PortChanne1
-          mode: active
+        switch_ports: [ Ethernet3 ]
+        switches: [ DC1-L2LEAF1A ]
+        profile: TENANT_A_OPZone
       - server_ports: [ Eth2, Eth3 ]
-        switch_ports: [ Ethernet10, Ethernet10 ]
+        switch_ports: [ Ethernet8, Ethernet8 ]
         switches: [ DC1-LEAF2A, DC1-LEAF2B ]
-        profile: TENANT_B
-        port_channel:
-          state: present
-          description: PortChanne1
-          mode: active
-
-  server02:
-    rack: RackB
-    adapters:
-      - server_ports: [ Eth1 ]
-        switch_ports: [ Ethernet6 ]
-        switches: [ DC1-LEAF1A ]
-        profile: TENANT_A
-      - server_ports: [ Eth2, Eth3 ]
-        switch_ports: [ Ethernet11, Ethernet11 ]
-        switches: [ DC1-LEAF2A, DC1-LEAF2B ]
-        profile: TENANT_B
-        port_channel:
-          state: present
-          description: PortChanne1
-          mode: active
-
-  server03:
-    rack: RackC
-    adapters:
-      - server_ports: [ Eth1, Eth2 ]
-        switch_ports: [ Ethernet10, Ethernet10 ]
-        switches: [ DC1-SVC3A, DC1-SVC3B ]
-        profile: TENANT_A_B
-        port_channel:
-          state: present
-          description: PortChanne1
-          mode: active
-
-  server04:
-    rack: RackC
-    adapters:
-      - server_ports: [ Eth1, Eth2 ]
-        switch_ports: [ Ethernet11, Ethernet11 ]
-        switches: [ DC1-SVC3A, DC1-SVC3B ]
-        profile: TENANT_A_B
+        profile: TENANT_A_ALL
         port_channel:
           state: present
           description: PortChanne1

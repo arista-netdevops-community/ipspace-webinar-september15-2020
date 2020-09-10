@@ -24,7 +24,7 @@ dc-fabric-backup: dc1-fabric-backup dc2-fabric-backup ## Backup Fabric
 dc-validate-state: dc1-validate-state dc2-validate-state ## Audit Fabric State
 
 .PHONY: dc-reset-cvp
-dc-reset-cvp: dc1-reset-cvp dc2-makereset-cvp ## DANGEROUS ! Reset CVP provisioning and all devices to ZTP for all DCs
+dc-reset-cvp: dc1-reset-cvp dc2-reset-cvp ## DANGEROUS ! Reset CVP provisioning and all devices to ZTP for all DCs
 
 ######################################
 #		Demo configuration			 #
