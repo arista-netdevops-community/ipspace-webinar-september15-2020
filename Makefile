@@ -17,6 +17,9 @@ dc-deploy-eapi: dc1-deploy-eapi dc2-deploy-eapi ## Deploy configuration using eA
 .PHONY: dc-deploy-cvp
 dc-deploy-cvp: dc1-deploy-cvp dc2-deploy-cvp ## Deploy configuration using CVP with REST APIs for both DCs
 
+.PHONY: dc-validate-state
+dc-validate-state: dc1-validate-state dc2-validate-state ## Audit Fabric State
+
 .PHONY: dc-reset-cvp
 dc-reset-cvp: dc1-reset-cvp dc2-makereset-cvp ## DANGEROUS ! Reset CVP provisioning and all devices to ZTP for all DCs
 
@@ -54,7 +57,7 @@ dc1-deploy-cvp: ## Run ansible playbook to deploy EVPN Fabric using CVP.
 
 .PHONY: dc1-validate-state
 dc1-validate-state: ## Run ansible playbook to validate EVPN Fabric State.
-	ansible-playbook playbooks/dc1-fabric-validate-state -i inventories/DC1/inventory.yml
+	ansible-playbook playbooks/dc1-fabric-validate-state.yml -i inventories/DC1/inventory.yml
 
 .PHONY: dc1-reset-cvp
 dc1-reset-cvp: ## DANGEROUS ! Reset CVP provisioning and all devices to ZTP for DC1
@@ -79,7 +82,7 @@ dc2-deploy-cvp: ## Run ansible playbook to deploy EVPN Fabric using CVP.
 
 .PHONY: dc2-validate-state
 dc2-validate-state: ## Run ansible playbook to validate EVPN Fabric State.
-	ansible-playbook playbooks/dc2-fabric-validate-state -i inventories/DC2/inventory.yml
+	ansible-playbook playbooks/dc2-fabric-validate-state.yml -i inventories/DC2/inventory.yml
 
 .PHONY: dc2-reset-cvp
 dc2-reset-cvp: ## ## DANGEROUS ! Reset CVP provisioning and all devices to ZTP for DC2

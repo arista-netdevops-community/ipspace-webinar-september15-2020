@@ -3,6 +3,13 @@
 
   tasks:
 
+    - name: include global_vars
+      tags: [always]
+      include_vars: "{{ item }}"
+      with_items:
+        - "../global_vars/AVD_LAB.yml"
+        - "../global_vars/EOS.yml"
+
     - name: validate states on EOS devices
       import_role:
          name: arista.avd.eos_validate_state
