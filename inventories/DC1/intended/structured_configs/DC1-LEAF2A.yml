@@ -9,7 +9,7 @@ switch_platform: vEOS-LAB
 leaf_bgp_as: 65102
 leaf_id: 2
 switch_mgmt_ip: 192.168.200.106/24
-leaf_filter_tenants: ['Tenant_A', 'Tenant_B', 'Tenant_C']
+leaf_filter_tenants: ['Tenant_A']
 leaf_filter_tags: ['opzone', 'web', 'app', 'db', 'vmotion', 'nfs']
 leaf_allowed_vrfs: ['Tenant_A_APP_Zone', 'Tenant_A_DB_Zone', 'Tenant_A_OP_Zone', 'Tenant_A_WEB_Zone']
 leaf_allowed_svis: [130, 131, 140, 141, 110, 111, 112, 120, 121]
@@ -66,7 +66,6 @@ name_server:
     vrf: MGMT
   nodes:
     - 192.168.200.5
-    - 8.8.8.8
 
 ### NTP Servers ###
 ntp_server:

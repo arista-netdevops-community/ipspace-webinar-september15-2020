@@ -1,0 +1,17 @@
+- hosts: DC1_FABRIC
+
+  tasks:
+
+    - name: include global_vars
+      tags: [build, provision]
+      include_vars: "{{ item }}"
+      with_items:
+        - "../global_vars/AVD_LAB.yml"
+        - "../global_vars/EOS.yml"
+
+    - name: backup configuration
+      eos_config:
+        backup: yes
+        backup_options:
+          filename: "{{ inventory_hostname }}_running-config.conf"
+          dir_path: "{{ root_dir }}/config_backup/"

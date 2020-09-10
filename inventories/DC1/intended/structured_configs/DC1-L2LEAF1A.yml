@@ -59,7 +59,6 @@ name_server:
     vrf: MGMT
   nodes:
     - 192.168.200.5
-    - 8.8.8.8
 
 ### NTP Servers ###
 ntp_server:

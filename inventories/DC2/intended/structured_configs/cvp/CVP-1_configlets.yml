@@ -5,11 +5,11 @@ CVP_CONFIGLETS:
     \ -ingestvrf=MGMT -taillogs\n   no shutdown\n!\nvlan internal order ascending\
     \ range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice routing\
     \ protocols model multi-agent\n!\nhostname DC2-BL1A\nip name-server vrf MGMT 192.168.200.5\n\
-    ip name-server vrf MGMT 8.8.8.8\ndns domain avd-lab.local\n!\nntp local-interface\
-    \ vrf MGMT Management1\nntp server vrf MGMT 0.north-america.pool.ntp.org prefer\n\
-    ntp server vrf MGMT 1.north-america.pool.ntp.org\n!\nspanning-tree mode mstp\n\
-    no spanning-tree vlan-id 4094\nspanning-tree mst 0 priority 4096\n!\nno aaa root\n\
-    !\nusername admin privilege 15 role network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
+    dns domain avd-lab.local\n!\nntp local-interface vrf MGMT Management1\nntp server\
+    \ vrf MGMT 0.north-america.pool.ntp.org prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n\
+    !\nspanning-tree mode mstp\nno spanning-tree vlan-id 4094\nspanning-tree mst 0\
+    \ priority 4096\n!\nno aaa root\n!\nusername admin privilege 15 role network-admin\
+    \ secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
     !\nvlan 4093\n   name LEAF_PEER_L3\n   trunk group LEAF_PEER_L3\n!\nvlan 4094\n\
     \   name MLAG_PEER\n   trunk group MLAG\n!\nvrf instance MGMT\n!\ninterface Port-Channel3\n\
@@ -79,11 +79,11 @@ CVP_CONFIGLETS:
     \ -ingestvrf=MGMT -taillogs\n   no shutdown\n!\nvlan internal order ascending\
     \ range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice routing\
     \ protocols model multi-agent\n!\nhostname DC2-BL1B\nip name-server vrf MGMT 192.168.200.5\n\
-    ip name-server vrf MGMT 8.8.8.8\ndns domain avd-lab.local\n!\nntp local-interface\
-    \ vrf MGMT Management1\nntp server vrf MGMT 0.north-america.pool.ntp.org prefer\n\
-    ntp server vrf MGMT 1.north-america.pool.ntp.org\n!\nspanning-tree mode mstp\n\
-    no spanning-tree vlan-id 4094\nspanning-tree mst 0 priority 4096\n!\nno aaa root\n\
-    !\nusername admin privilege 15 role network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
+    dns domain avd-lab.local\n!\nntp local-interface vrf MGMT Management1\nntp server\
+    \ vrf MGMT 0.north-america.pool.ntp.org prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n\
+    !\nspanning-tree mode mstp\nno spanning-tree vlan-id 4094\nspanning-tree mst 0\
+    \ priority 4096\n!\nno aaa root\n!\nusername admin privilege 15 role network-admin\
+    \ secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
     !\nvlan 4093\n   name LEAF_PEER_L3\n   trunk group LEAF_PEER_L3\n!\nvlan 4094\n\
     \   name MLAG_PEER\n   trunk group MLAG\n!\nvrf instance MGMT\n!\ninterface Port-Channel3\n\
@@ -153,18 +153,18 @@ CVP_CONFIGLETS:
     \ -ingestvrf=MGMT -taillogs\n   no shutdown\n!\nvlan internal order ascending\
     \ range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice routing\
     \ protocols model multi-agent\n!\nhostname DC2-L2LEAF1A\nip name-server vrf MGMT\
-    \ 192.168.200.5\nip name-server vrf MGMT 8.8.8.8\ndns domain avd-lab.local\n!\n\
-    ntp local-interface vrf MGMT Management1\nntp server vrf MGMT 0.north-america.pool.ntp.org\
-    \ prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n!\nspanning-tree mode\
-    \ mstp\nspanning-tree mst 0 priority 16384\n!\nno aaa root\n!\nusername admin\
-    \ privilege 15 role network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
+    \ 192.168.200.5\ndns domain avd-lab.local\n!\nntp local-interface vrf MGMT Management1\n\
+    ntp server vrf MGMT 0.north-america.pool.ntp.org prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n\
+    !\nspanning-tree mode mstp\nspanning-tree mst 0 priority 16384\n!\nno aaa root\n\
+    !\nusername admin privilege 15 role network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
+    !\nvlan 210\n   name Tenant_A_OP_Zone_1\n!\nvlan 211\n   name Tenant_A_OP_Zone_2\n\
     !\nvlan 220\n   name Tenant_A_WEB_Zone_1\n!\nvlan 221\n   name Tenant_A_WEBZone_2\n\
     !\nvlan 230\n   name Tenant_A_APP_Zone_1\n!\nvlan 231\n   name Tenant_A_APP_Zone_2\n\
     !\nvrf instance MGMT\n!\ninterface Port-Channel1\n   description DC2-LEAF1A_Po3\n\
-    \   switchport trunk allowed vlan 220-221,230-231\n   switchport mode trunk\n\
-    \   mlag 1\n!\ninterface Ethernet1\n   description DC2-LEAF1A_Ethernet3\n   channel-group\
-    \ 1 mode active\n!\ninterface Ethernet2\n   description DC2-LEAF1B_Ethernet3\n\
+    \   switchport trunk allowed vlan 210-211,220-221,230-231\n   switchport mode\
+    \ trunk\n   mlag 1\n!\ninterface Ethernet1\n   description DC2-LEAF1A_Ethernet3\n\
+    \   channel-group 1 mode active\n!\ninterface Ethernet2\n   description DC2-LEAF1B_Ethernet3\n\
     \   channel-group 1 mode active\n!\ninterface Management1\n   description oob_management\n\
     \   vrf MGMT\n   ip address 192.168.200.157/24\n!\nip routing\nno ip routing vrf\
     \ MGMT\n!\nip route vrf MGMT 0.0.0.0/0 192.168.200.1\n!\nrouter bfd\n   multihop\
@@ -176,24 +176,30 @@ CVP_CONFIGLETS:
     \ -ingestvrf=MGMT -taillogs\n   no shutdown\n!\nvlan internal order ascending\
     \ range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice routing\
     \ protocols model multi-agent\n!\nhostname DC2-LEAF1A\nip name-server vrf MGMT\
-    \ 192.168.200.5\nip name-server vrf MGMT 8.8.8.8\ndns domain avd-lab.local\n!\n\
-    ntp local-interface vrf MGMT Management1\nntp server vrf MGMT 0.north-america.pool.ntp.org\
-    \ prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n!\nspanning-tree mode\
-    \ mstp\nno spanning-tree vlan-id 4094\nspanning-tree mst 0 priority 4096\n!\n\
-    no aaa root\n!\nusername admin privilege 15 role network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
+    \ 192.168.200.5\ndns domain avd-lab.local\n!\nntp local-interface vrf MGMT Management1\n\
+    ntp server vrf MGMT 0.north-america.pool.ntp.org prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n\
+    !\nspanning-tree mode mstp\nno spanning-tree vlan-id 4094\nspanning-tree mst 0\
+    \ priority 4096\n!\nno aaa root\n!\nusername admin privilege 15 role network-admin\
+    \ secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
-    !\nvlan 220\n   name Tenant_A_WEB_Zone_1\n!\nvlan 221\n   name Tenant_A_WEBZone_2\n\
-    !\nvlan 230\n   name Tenant_A_APP_Zone_1\n!\nvlan 231\n   name Tenant_A_APP_Zone_2\n\
-    !\nvlan 3010\n   name MLAG_iBGP_Tenant_A_WEB_Zone\n   trunk group LEAF_PEER_L3\n\
-    !\nvlan 3011\n   name MLAG_iBGP_Tenant_A_APP_Zone\n   trunk group LEAF_PEER_L3\n\
-    !\nvlan 4093\n   name LEAF_PEER_L3\n   trunk group LEAF_PEER_L3\n!\nvlan 4094\n\
-    \   name MLAG_PEER\n   trunk group MLAG\n!\nvrf instance MGMT\n!\nvrf instance\
-    \ Tenant_A_APP_Zone\n!\nvrf instance Tenant_A_WEB_Zone\n!\ninterface Port-Channel3\n\
-    \   description DC2_L2LEAF1_Po1\n   switchport trunk allowed vlan 220-221,230-231\n\
-    \   switchport mode trunk\n   mlag 3\n!\ninterface Port-Channel13\n   description\
-    \ MLAG_PEER_DC2-LEAF1B_Po13\n   switchport trunk allowed vlan 2-4094\n   switchport\
-    \ mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport trunk group\
-    \ MLAG\n!\ninterface Ethernet1\n   description P2P_LINK_TO_DC2-SPINE1_Ethernet1\n\
+    !\nvlan 210\n   name Tenant_A_OP_Zone_1\n!\nvlan 211\n   name Tenant_A_OP_Zone_2\n\
+    !\nvlan 212\n   name Tenant_A_OP_Zone_3\n!\nvlan 220\n   name Tenant_A_WEB_Zone_1\n\
+    !\nvlan 221\n   name Tenant_A_WEBZone_2\n!\nvlan 230\n   name Tenant_A_APP_Zone_1\n\
+    !\nvlan 231\n   name Tenant_A_APP_Zone_2\n!\nvlan 240\n   name Tenant_A_DB_BZone_1\n\
+    !\nvlan 241\n   name Tenant_A_DB_Zone_2\n!\nvlan 260\n   name Tenant_A_VMOTION\n\
+    !\nvlan 261\n   name Tenant_A_NFS\n!\nvlan 3009\n   name MLAG_iBGP_Tenant_A_OP_Zone\n\
+    \   trunk group LEAF_PEER_L3\n!\nvlan 3010\n   name MLAG_iBGP_Tenant_A_WEB_Zone\n\
+    \   trunk group LEAF_PEER_L3\n!\nvlan 3011\n   name MLAG_iBGP_Tenant_A_APP_Zone\n\
+    \   trunk group LEAF_PEER_L3\n!\nvlan 3012\n   name MLAG_iBGP_Tenant_A_DB_Zone\n\
+    \   trunk group LEAF_PEER_L3\n!\nvlan 4093\n   name LEAF_PEER_L3\n   trunk group\
+    \ LEAF_PEER_L3\n!\nvlan 4094\n   name MLAG_PEER\n   trunk group MLAG\n!\nvrf instance\
+    \ MGMT\n!\nvrf instance Tenant_A_APP_Zone\n!\nvrf instance Tenant_A_DB_Zone\n\
+    !\nvrf instance Tenant_A_OP_Zone\n!\nvrf instance Tenant_A_WEB_Zone\n!\ninterface\
+    \ Port-Channel3\n   description DC2_L2LEAF1_Po1\n   switchport trunk allowed vlan\
+    \ 210-211,220-221,230-231\n   switchport mode trunk\n   mlag 3\n!\ninterface Port-Channel13\n\
+    \   description MLAG_PEER_DC2-LEAF1B_Po13\n   switchport trunk allowed vlan 2-4094\n\
+    \   switchport mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport\
+    \ trunk group MLAG\n!\ninterface Ethernet1\n   description P2P_LINK_TO_DC2-SPINE1_Ethernet1\n\
     \   no switchport\n   ip address 172.31.252.1/31\n!\ninterface Ethernet2\n   description\
     \ P2P_LINK_TO_DC2-SPINE2_Ethernet1\n   no switchport\n   ip address 172.31.252.3/31\n\
     !\ninterface Ethernet3\n   description DC2-L2LEAF1A_Ethernet1\n   channel-group\
@@ -201,39 +207,56 @@ CVP_CONFIGLETS:
     \   channel-group 13 mode active\n!\ninterface Ethernet14\n   description MLAG_PEER_DC2-LEAF1B_Ethernet14\n\
     \   channel-group 13 mode active\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n\
     \   ip address 192.168.253.3/32\n!\ninterface Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n\
-    \   ip address 192.168.254.3/32\n!\ninterface Management1\n   description oob_management\n\
-    \   vrf MGMT\n   ip address 192.168.200.153/24\n!\ninterface Vlan220\n   description\
-    \ Tenant_A_WEB_Zone_1\n   vrf Tenant_A_WEB_Zone\n   ip address virtual 10.2.20.1/24\n\
-    !\ninterface Vlan221\n   description Tenant_A_WEBZone_2\n   vrf Tenant_A_WEB_Zone\n\
-    \   ip address virtual 10.2.21.1/24\n!\ninterface Vlan230\n   description Tenant_A_APP_Zone_1\n\
-    \   vrf Tenant_A_APP_Zone\n   ip address virtual 10.2.30.1/24\n!\ninterface Vlan231\n\
+    \   ip address 192.168.254.3/32\n!\ninterface Loopback100\n   description Tenant_A_OP_Zone_VTEP_DIAGNOSTICS\n\
+    \   vrf Tenant_A_OP_Zone\n   ip address 10.255.2.3/32\n!\ninterface Management1\n\
+    \   description oob_management\n   vrf MGMT\n   ip address 192.168.200.153/24\n\
+    !\ninterface Vlan210\n   description Tenant_A_OP_Zone_1\n   vrf Tenant_A_OP_Zone\n\
+    \   ip address virtual 10.2.10.1/24\n!\ninterface Vlan211\n   description Tenant_A_OP_Zone_2\n\
+    \   vrf Tenant_A_OP_Zone\n   ip address virtual 10.2.11.1/24\n!\ninterface Vlan212\n\
+    \   description Tenant_A_OP_Zone_3\n   vrf Tenant_A_OP_Zone\n   ip virtual-router\
+    \ address 10.2.12.1\n!\ninterface Vlan220\n   description Tenant_A_WEB_Zone_1\n\
+    \   vrf Tenant_A_WEB_Zone\n   ip address virtual 10.2.20.1/24\n!\ninterface Vlan221\n\
+    \   description Tenant_A_WEBZone_2\n   vrf Tenant_A_WEB_Zone\n   ip address virtual\
+    \ 10.2.21.1/24\n!\ninterface Vlan230\n   description Tenant_A_APP_Zone_1\n   vrf\
+    \ Tenant_A_APP_Zone\n   ip address virtual 10.2.30.1/24\n!\ninterface Vlan231\n\
     \   description Tenant_A_APP_Zone_2\n   vrf Tenant_A_APP_Zone\n   ip address virtual\
-    \ 10.2.31.1/24\n!\ninterface Vlan3010\n   description MLAG_PEER_L3_iBGP: vrf Tenant_A_WEB_Zone\n\
-    \   vrf Tenant_A_WEB_Zone\n   ip address 10.255.253.0/31\n!\ninterface Vlan3011\n\
-    \   description MLAG_PEER_L3_iBGP: vrf Tenant_A_APP_Zone\n   vrf Tenant_A_APP_Zone\n\
-    \   ip address 10.255.253.0/31\n!\ninterface Vlan4093\n   description MLAG_PEER_L3_PEERING\n\
-    \   ip address 10.255.253.0/31\n!\ninterface Vlan4094\n   description MLAG_PEER\n\
-    \   no autostate\n   ip address 10.255.254.0/31\n!\ninterface Vxlan1\n   vxlan\
-    \ source-interface Loopback1\n   vxlan virtual-router encapsulation mac-address\
-    \ mlag-system-id\n   vxlan udp-port 4789\n   vxlan vlan 220 vni 20220\n   vxlan\
-    \ vlan 221 vni 20221\n   vxlan vlan 230 vni 20230\n   vxlan vlan 231 vni 20231\n\
-    \   vxlan vrf Tenant_A_APP_Zone vni 12\n   vxlan vrf Tenant_A_WEB_Zone vni 11\n\
-    !\nip virtual-router mac-address 00:dc:00:00:00:0b\n!\nip routing\nno ip routing\
-    \ vrf MGMT\nip routing vrf Tenant_A_APP_Zone\nip routing vrf Tenant_A_WEB_Zone\n\
-    !\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n   seq 10 permit 192.168.253.0/24\
-    \ eq 32\n   seq 20 permit 192.168.254.0/24 eq 32\n!\nip prefix-list PL-P2P-UNDERLAY\n\
-    \   seq 10 permit 172.31.252.0/24 le 31\n   seq 20 permit 10.255.253.0/24 le 31\n\
-    !\nmlag configuration\n   domain-id DC2_LEAF1\n   local-interface Vlan4094\n \
-    \  peer-address 10.255.254.1\n   peer-address heartbeat 192.168.200.154 vrf MGMT\n\
-    \   peer-link Port-Channel13\n   dual-primary detection delay 5 action errdisable\
-    \ all-interfaces\n   reload-delay mlag 300\n   reload-delay non-mlag 330\n!\n\
-    ip route vrf MGMT 0.0.0.0/0 192.168.200.1\n!\nroute-map RM-CONN-2-BGP permit 10\n\
-    \   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nrouter bfd\n  \
-    \ multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65201\n   router-id\
-    \ 192.168.253.3\n   no bgp default ipv4-unicast\n   distance bgp 20 200 200\n\
-    \   maximum-paths 2 ecmp 2\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
-    \ EVPN-OVERLAY-PEERS remote-as 65200\n   neighbor EVPN-OVERLAY-PEERS update-source\
-    \ Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
+    \ 10.2.31.1/24\n!\ninterface Vlan240\n   description Tenant_A_DB_BZone_1\n   vrf\
+    \ Tenant_A_DB_Zone\n   ip address virtual 10.2.40.1/24\n!\ninterface Vlan241\n\
+    \   description Tenant_A_DB_Zone_2\n   vrf Tenant_A_DB_Zone\n   ip address virtual\
+    \ 10.2.41.1/24\n!\ninterface Vlan3009\n   description MLAG_PEER_L3_iBGP: vrf Tenant_A_OP_Zone\n\
+    \   vrf Tenant_A_OP_Zone\n   ip address 10.255.253.0/31\n!\ninterface Vlan3010\n\
+    \   description MLAG_PEER_L3_iBGP: vrf Tenant_A_WEB_Zone\n   vrf Tenant_A_WEB_Zone\n\
+    \   ip address 10.255.253.0/31\n!\ninterface Vlan3011\n   description MLAG_PEER_L3_iBGP:\
+    \ vrf Tenant_A_APP_Zone\n   vrf Tenant_A_APP_Zone\n   ip address 10.255.253.0/31\n\
+    !\ninterface Vlan3012\n   description MLAG_PEER_L3_iBGP: vrf Tenant_A_DB_Zone\n\
+    \   vrf Tenant_A_DB_Zone\n   ip address 10.255.253.0/31\n!\ninterface Vlan4093\n\
+    \   description MLAG_PEER_L3_PEERING\n   ip address 10.255.253.0/31\n!\ninterface\
+    \ Vlan4094\n   description MLAG_PEER\n   no autostate\n   ip address 10.255.254.0/31\n\
+    !\ninterface Vxlan1\n   vxlan source-interface Loopback1\n   vxlan virtual-router\
+    \ encapsulation mac-address mlag-system-id\n   vxlan udp-port 4789\n   vxlan vlan\
+    \ 210 vni 20210\n   vxlan vlan 211 vni 20211\n   vxlan vlan 212 vni 20212\n  \
+    \ vxlan vlan 220 vni 20220\n   vxlan vlan 221 vni 20221\n   vxlan vlan 230 vni\
+    \ 20230\n   vxlan vlan 231 vni 20231\n   vxlan vlan 240 vni 20240\n   vxlan vlan\
+    \ 241 vni 20241\n   vxlan vlan 260 vni 20260\n   vxlan vlan 261 vni 20261\n  \
+    \ vxlan vrf Tenant_A_APP_Zone vni 12\n   vxlan vrf Tenant_A_DB_Zone vni 13\n \
+    \  vxlan vrf Tenant_A_OP_Zone vni 10\n   vxlan vrf Tenant_A_WEB_Zone vni 11\n\
+    !\nip virtual-router mac-address 00:dc:00:00:00:0b\nip address virtual source-nat\
+    \ vrf Tenant_A_OP_Zone address 10.255.2.3\n!\nip routing\nno ip routing vrf MGMT\n\
+    ip routing vrf Tenant_A_APP_Zone\nip routing vrf Tenant_A_DB_Zone\nip routing\
+    \ vrf Tenant_A_OP_Zone\nip routing vrf Tenant_A_WEB_Zone\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    \   seq 10 permit 192.168.253.0/24 eq 32\n   seq 20 permit 192.168.254.0/24 eq\
+    \ 32\n!\nip prefix-list PL-P2P-UNDERLAY\n   seq 10 permit 172.31.252.0/24 le 31\n\
+    \   seq 20 permit 10.255.253.0/24 le 31\n!\nmlag configuration\n   domain-id DC2_LEAF1\n\
+    \   local-interface Vlan4094\n   peer-address 10.255.254.1\n   peer-address heartbeat\
+    \ 192.168.200.154 vrf MGMT\n   peer-link Port-Channel13\n   dual-primary detection\
+    \ delay 5 action errdisable all-interfaces\n   reload-delay mlag 300\n   reload-delay\
+    \ non-mlag 330\n!\nip route vrf MGMT 0.0.0.0/0 192.168.200.1\n!\nroute-map RM-CONN-2-BGP\
+    \ permit 10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nrouter\
+    \ bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65201\n\
+    \   router-id 192.168.253.3\n   no bgp default ipv4-unicast\n   distance bgp 20\
+    \ 200 200\n   maximum-paths 2 ecmp 2\n   neighbor EVPN-OVERLAY-PEERS peer group\n\
+    \   neighbor EVPN-OVERLAY-PEERS remote-as 65200\n   neighbor EVPN-OVERLAY-PEERS\
+    \ update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
     \ ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n\
     \   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS\
     \ maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS peer group\n   neighbor IPv4-UNDERLAY-PEERS\
@@ -249,14 +272,28 @@ CVP_CONFIGLETS:
     \   neighbor 192.168.253.2 peer group EVPN-OVERLAY-PEERS\n   redistribute connected\
     \ route-map RM-CONN-2-BGP\n   !\n   vlan-aware-bundle Tenant_A_APP_Zone\n    \
     \  rd 192.168.253.3:12\n      route-target both 12:12\n      redistribute learned\n\
-    \      vlan 230-231\n   !\n   vlan-aware-bundle Tenant_A_WEB_Zone\n      rd 192.168.253.3:11\n\
-    \      route-target both 11:11\n      redistribute learned\n      vlan 220-221\n\
+    \      vlan 230-231\n   !\n   vlan-aware-bundle Tenant_A_DB_Zone\n      rd 192.168.253.3:13\n\
+    \      route-target both 13:13\n      redistribute learned\n      vlan 240-241\n\
+    \   !\n   vlan-aware-bundle Tenant_A_NFS\n      rd 192.168.253.3:20261\n     \
+    \ route-target both 20261:20261\n      redistribute learned\n      vlan 261\n\
+    \   !\n   vlan-aware-bundle Tenant_A_OP_Zone\n      rd 192.168.253.3:10\n    \
+    \  route-target both 10:10\n      redistribute learned\n      vlan 210-212\n \
+    \  !\n   vlan-aware-bundle Tenant_A_VMOTION\n      rd 192.168.253.3:20260\n  \
+    \    route-target both 20260:20260\n      redistribute learned\n      vlan 260\n\
+    \   !\n   vlan-aware-bundle Tenant_A_WEB_Zone\n      rd 192.168.253.3:11\n   \
+    \   route-target both 11:11\n      redistribute learned\n      vlan 220-221\n\
     \   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n  \
     \    no neighbor IPv4-UNDERLAY-PEERS activate\n      no neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
     \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ activate\n   !\n   vrf Tenant_A_APP_Zone\n      rd 192.168.253.3:12\n      route-target\
     \ import evpn 12:12\n      route-target export evpn 12:12\n      router-id 192.168.253.3\n\
+    \      neighbor 10.255.253.1 peer group MLAG-IPv4-UNDERLAY-PEER\n      redistribute\
+    \ connected\n   !\n   vrf Tenant_A_DB_Zone\n      rd 192.168.253.3:13\n      route-target\
+    \ import evpn 13:13\n      route-target export evpn 13:13\n      router-id 192.168.253.3\n\
+    \      neighbor 10.255.253.1 peer group MLAG-IPv4-UNDERLAY-PEER\n      redistribute\
+    \ connected\n   !\n   vrf Tenant_A_OP_Zone\n      rd 192.168.253.3:10\n      route-target\
+    \ import evpn 10:10\n      route-target export evpn 10:10\n      router-id 192.168.253.3\n\
     \      neighbor 10.255.253.1 peer group MLAG-IPv4-UNDERLAY-PEER\n      redistribute\
     \ connected\n   !\n   vrf Tenant_A_WEB_Zone\n      rd 192.168.253.3:11\n     \
     \ route-target import evpn 11:11\n      route-target export evpn 11:11\n     \
@@ -269,24 +306,30 @@ CVP_CONFIGLETS:
     \ -ingestvrf=MGMT -taillogs\n   no shutdown\n!\nvlan internal order ascending\
     \ range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice routing\
     \ protocols model multi-agent\n!\nhostname DC2-LEAF1B\nip name-server vrf MGMT\
-    \ 192.168.200.5\nip name-server vrf MGMT 8.8.8.8\ndns domain avd-lab.local\n!\n\
-    ntp local-interface vrf MGMT Management1\nntp server vrf MGMT 0.north-america.pool.ntp.org\
-    \ prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n!\nspanning-tree mode\
-    \ mstp\nno spanning-tree vlan-id 4094\nspanning-tree mst 0 priority 4096\n!\n\
-    no aaa root\n!\nusername admin privilege 15 role network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
+    \ 192.168.200.5\ndns domain avd-lab.local\n!\nntp local-interface vrf MGMT Management1\n\
+    ntp server vrf MGMT 0.north-america.pool.ntp.org prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n\
+    !\nspanning-tree mode mstp\nno spanning-tree vlan-id 4094\nspanning-tree mst 0\
+    \ priority 4096\n!\nno aaa root\n!\nusername admin privilege 15 role network-admin\
+    \ secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
-    !\nvlan 220\n   name Tenant_A_WEB_Zone_1\n!\nvlan 221\n   name Tenant_A_WEBZone_2\n\
-    !\nvlan 230\n   name Tenant_A_APP_Zone_1\n!\nvlan 231\n   name Tenant_A_APP_Zone_2\n\
-    !\nvlan 3010\n   name MLAG_iBGP_Tenant_A_WEB_Zone\n   trunk group LEAF_PEER_L3\n\
-    !\nvlan 3011\n   name MLAG_iBGP_Tenant_A_APP_Zone\n   trunk group LEAF_PEER_L3\n\
-    !\nvlan 4093\n   name LEAF_PEER_L3\n   trunk group LEAF_PEER_L3\n!\nvlan 4094\n\
-    \   name MLAG_PEER\n   trunk group MLAG\n!\nvrf instance MGMT\n!\nvrf instance\
-    \ Tenant_A_APP_Zone\n!\nvrf instance Tenant_A_WEB_Zone\n!\ninterface Port-Channel3\n\
-    \   description DC2_L2LEAF1_Po1\n   switchport trunk allowed vlan 220-221,230-231\n\
-    \   switchport mode trunk\n   mlag 3\n!\ninterface Port-Channel13\n   description\
-    \ MLAG_PEER_DC2-LEAF1A_Po13\n   switchport trunk allowed vlan 2-4094\n   switchport\
-    \ mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport trunk group\
-    \ MLAG\n!\ninterface Ethernet1\n   description P2P_LINK_TO_DC2-SPINE1_Ethernet2\n\
+    !\nvlan 210\n   name Tenant_A_OP_Zone_1\n!\nvlan 211\n   name Tenant_A_OP_Zone_2\n\
+    !\nvlan 212\n   name Tenant_A_OP_Zone_3\n!\nvlan 220\n   name Tenant_A_WEB_Zone_1\n\
+    !\nvlan 221\n   name Tenant_A_WEBZone_2\n!\nvlan 230\n   name Tenant_A_APP_Zone_1\n\
+    !\nvlan 231\n   name Tenant_A_APP_Zone_2\n!\nvlan 240\n   name Tenant_A_DB_BZone_1\n\
+    !\nvlan 241\n   name Tenant_A_DB_Zone_2\n!\nvlan 260\n   name Tenant_A_VMOTION\n\
+    !\nvlan 261\n   name Tenant_A_NFS\n!\nvlan 3009\n   name MLAG_iBGP_Tenant_A_OP_Zone\n\
+    \   trunk group LEAF_PEER_L3\n!\nvlan 3010\n   name MLAG_iBGP_Tenant_A_WEB_Zone\n\
+    \   trunk group LEAF_PEER_L3\n!\nvlan 3011\n   name MLAG_iBGP_Tenant_A_APP_Zone\n\
+    \   trunk group LEAF_PEER_L3\n!\nvlan 3012\n   name MLAG_iBGP_Tenant_A_DB_Zone\n\
+    \   trunk group LEAF_PEER_L3\n!\nvlan 4093\n   name LEAF_PEER_L3\n   trunk group\
+    \ LEAF_PEER_L3\n!\nvlan 4094\n   name MLAG_PEER\n   trunk group MLAG\n!\nvrf instance\
+    \ MGMT\n!\nvrf instance Tenant_A_APP_Zone\n!\nvrf instance Tenant_A_DB_Zone\n\
+    !\nvrf instance Tenant_A_OP_Zone\n!\nvrf instance Tenant_A_WEB_Zone\n!\ninterface\
+    \ Port-Channel3\n   description DC2_L2LEAF1_Po1\n   switchport trunk allowed vlan\
+    \ 210-211,220-221,230-231\n   switchport mode trunk\n   mlag 3\n!\ninterface Port-Channel13\n\
+    \   description MLAG_PEER_DC2-LEAF1A_Po13\n   switchport trunk allowed vlan 2-4094\n\
+    \   switchport mode trunk\n   switchport trunk group LEAF_PEER_L3\n   switchport\
+    \ trunk group MLAG\n!\ninterface Ethernet1\n   description P2P_LINK_TO_DC2-SPINE1_Ethernet2\n\
     \   no switchport\n   ip address 172.31.252.5/31\n!\ninterface Ethernet2\n   description\
     \ P2P_LINK_TO_DC2-SPINE2_Ethernet2\n   no switchport\n   ip address 172.31.252.7/31\n\
     !\ninterface Ethernet3\n   description DC2-L2LEAF1A_Ethernet2\n   channel-group\
@@ -294,39 +337,56 @@ CVP_CONFIGLETS:
     \   channel-group 13 mode active\n!\ninterface Ethernet14\n   description MLAG_PEER_DC2-LEAF1A_Ethernet14\n\
     \   channel-group 13 mode active\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n\
     \   ip address 192.168.253.4/32\n!\ninterface Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n\
-    \   ip address 192.168.254.3/32\n!\ninterface Management1\n   description oob_management\n\
-    \   vrf MGMT\n   ip address 192.168.200.154/24\n!\ninterface Vlan220\n   description\
-    \ Tenant_A_WEB_Zone_1\n   vrf Tenant_A_WEB_Zone\n   ip address virtual 10.2.20.1/24\n\
-    !\ninterface Vlan221\n   description Tenant_A_WEBZone_2\n   vrf Tenant_A_WEB_Zone\n\
-    \   ip address virtual 10.2.21.1/24\n!\ninterface Vlan230\n   description Tenant_A_APP_Zone_1\n\
-    \   vrf Tenant_A_APP_Zone\n   ip address virtual 10.2.30.1/24\n!\ninterface Vlan231\n\
+    \   ip address 192.168.254.3/32\n!\ninterface Loopback100\n   description Tenant_A_OP_Zone_VTEP_DIAGNOSTICS\n\
+    \   vrf Tenant_A_OP_Zone\n   ip address 10.255.2.4/32\n!\ninterface Management1\n\
+    \   description oob_management\n   vrf MGMT\n   ip address 192.168.200.154/24\n\
+    !\ninterface Vlan210\n   description Tenant_A_OP_Zone_1\n   vrf Tenant_A_OP_Zone\n\
+    \   ip address virtual 10.2.10.1/24\n!\ninterface Vlan211\n   description Tenant_A_OP_Zone_2\n\
+    \   vrf Tenant_A_OP_Zone\n   ip address virtual 10.2.11.1/24\n!\ninterface Vlan212\n\
+    \   description Tenant_A_OP_Zone_3\n   vrf Tenant_A_OP_Zone\n   ip virtual-router\
+    \ address 10.2.12.1\n!\ninterface Vlan220\n   description Tenant_A_WEB_Zone_1\n\
+    \   vrf Tenant_A_WEB_Zone\n   ip address virtual 10.2.20.1/24\n!\ninterface Vlan221\n\
+    \   description Tenant_A_WEBZone_2\n   vrf Tenant_A_WEB_Zone\n   ip address virtual\
+    \ 10.2.21.1/24\n!\ninterface Vlan230\n   description Tenant_A_APP_Zone_1\n   vrf\
+    \ Tenant_A_APP_Zone\n   ip address virtual 10.2.30.1/24\n!\ninterface Vlan231\n\
     \   description Tenant_A_APP_Zone_2\n   vrf Tenant_A_APP_Zone\n   ip address virtual\
-    \ 10.2.31.1/24\n!\ninterface Vlan3010\n   description MLAG_PEER_L3_iBGP: vrf Tenant_A_WEB_Zone\n\
-    \   vrf Tenant_A_WEB_Zone\n   ip address 10.255.253.1/31\n!\ninterface Vlan3011\n\
-    \   description MLAG_PEER_L3_iBGP: vrf Tenant_A_APP_Zone\n   vrf Tenant_A_APP_Zone\n\
-    \   ip address 10.255.253.1/31\n!\ninterface Vlan4093\n   description MLAG_PEER_L3_PEERING\n\
-    \   ip address 10.255.253.1/31\n!\ninterface Vlan4094\n   description MLAG_PEER\n\
-    \   no autostate\n   ip address 10.255.254.1/31\n!\ninterface Vxlan1\n   vxlan\
-    \ source-interface Loopback1\n   vxlan virtual-router encapsulation mac-address\
-    \ mlag-system-id\n   vxlan udp-port 4789\n   vxlan vlan 220 vni 20220\n   vxlan\
-    \ vlan 221 vni 20221\n   vxlan vlan 230 vni 20230\n   vxlan vlan 231 vni 20231\n\
-    \   vxlan vrf Tenant_A_APP_Zone vni 12\n   vxlan vrf Tenant_A_WEB_Zone vni 11\n\
-    !\nip virtual-router mac-address 00:dc:00:00:00:0b\n!\nip routing\nno ip routing\
-    \ vrf MGMT\nip routing vrf Tenant_A_APP_Zone\nip routing vrf Tenant_A_WEB_Zone\n\
-    !\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n   seq 10 permit 192.168.253.0/24\
-    \ eq 32\n   seq 20 permit 192.168.254.0/24 eq 32\n!\nip prefix-list PL-P2P-UNDERLAY\n\
-    \   seq 10 permit 172.31.252.0/24 le 31\n   seq 20 permit 10.255.253.0/24 le 31\n\
-    !\nmlag configuration\n   domain-id DC2_LEAF1\n   local-interface Vlan4094\n \
-    \  peer-address 10.255.254.0\n   peer-address heartbeat 192.168.200.153 vrf MGMT\n\
-    \   peer-link Port-Channel13\n   dual-primary detection delay 5 action errdisable\
-    \ all-interfaces\n   reload-delay mlag 300\n   reload-delay non-mlag 330\n!\n\
-    ip route vrf MGMT 0.0.0.0/0 192.168.200.1\n!\nroute-map RM-CONN-2-BGP permit 10\n\
-    \   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nrouter bfd\n  \
-    \ multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65201\n   router-id\
-    \ 192.168.253.4\n   no bgp default ipv4-unicast\n   distance bgp 20 200 200\n\
-    \   maximum-paths 2 ecmp 2\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
-    \ EVPN-OVERLAY-PEERS remote-as 65200\n   neighbor EVPN-OVERLAY-PEERS update-source\
-    \ Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
+    \ 10.2.31.1/24\n!\ninterface Vlan240\n   description Tenant_A_DB_BZone_1\n   vrf\
+    \ Tenant_A_DB_Zone\n   ip address virtual 10.2.40.1/24\n!\ninterface Vlan241\n\
+    \   description Tenant_A_DB_Zone_2\n   vrf Tenant_A_DB_Zone\n   ip address virtual\
+    \ 10.2.41.1/24\n!\ninterface Vlan3009\n   description MLAG_PEER_L3_iBGP: vrf Tenant_A_OP_Zone\n\
+    \   vrf Tenant_A_OP_Zone\n   ip address 10.255.253.1/31\n!\ninterface Vlan3010\n\
+    \   description MLAG_PEER_L3_iBGP: vrf Tenant_A_WEB_Zone\n   vrf Tenant_A_WEB_Zone\n\
+    \   ip address 10.255.253.1/31\n!\ninterface Vlan3011\n   description MLAG_PEER_L3_iBGP:\
+    \ vrf Tenant_A_APP_Zone\n   vrf Tenant_A_APP_Zone\n   ip address 10.255.253.1/31\n\
+    !\ninterface Vlan3012\n   description MLAG_PEER_L3_iBGP: vrf Tenant_A_DB_Zone\n\
+    \   vrf Tenant_A_DB_Zone\n   ip address 10.255.253.1/31\n!\ninterface Vlan4093\n\
+    \   description MLAG_PEER_L3_PEERING\n   ip address 10.255.253.1/31\n!\ninterface\
+    \ Vlan4094\n   description MLAG_PEER\n   no autostate\n   ip address 10.255.254.1/31\n\
+    !\ninterface Vxlan1\n   vxlan source-interface Loopback1\n   vxlan virtual-router\
+    \ encapsulation mac-address mlag-system-id\n   vxlan udp-port 4789\n   vxlan vlan\
+    \ 210 vni 20210\n   vxlan vlan 211 vni 20211\n   vxlan vlan 212 vni 20212\n  \
+    \ vxlan vlan 220 vni 20220\n   vxlan vlan 221 vni 20221\n   vxlan vlan 230 vni\
+    \ 20230\n   vxlan vlan 231 vni 20231\n   vxlan vlan 240 vni 20240\n   vxlan vlan\
+    \ 241 vni 20241\n   vxlan vlan 260 vni 20260\n   vxlan vlan 261 vni 20261\n  \
+    \ vxlan vrf Tenant_A_APP_Zone vni 12\n   vxlan vrf Tenant_A_DB_Zone vni 13\n \
+    \  vxlan vrf Tenant_A_OP_Zone vni 10\n   vxlan vrf Tenant_A_WEB_Zone vni 11\n\
+    !\nip virtual-router mac-address 00:dc:00:00:00:0b\nip address virtual source-nat\
+    \ vrf Tenant_A_OP_Zone address 10.255.2.4\n!\nip routing\nno ip routing vrf MGMT\n\
+    ip routing vrf Tenant_A_APP_Zone\nip routing vrf Tenant_A_DB_Zone\nip routing\
+    \ vrf Tenant_A_OP_Zone\nip routing vrf Tenant_A_WEB_Zone\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    \   seq 10 permit 192.168.253.0/24 eq 32\n   seq 20 permit 192.168.254.0/24 eq\
+    \ 32\n!\nip prefix-list PL-P2P-UNDERLAY\n   seq 10 permit 172.31.252.0/24 le 31\n\
+    \   seq 20 permit 10.255.253.0/24 le 31\n!\nmlag configuration\n   domain-id DC2_LEAF1\n\
+    \   local-interface Vlan4094\n   peer-address 10.255.254.0\n   peer-address heartbeat\
+    \ 192.168.200.153 vrf MGMT\n   peer-link Port-Channel13\n   dual-primary detection\
+    \ delay 5 action errdisable all-interfaces\n   reload-delay mlag 300\n   reload-delay\
+    \ non-mlag 330\n!\nip route vrf MGMT 0.0.0.0/0 192.168.200.1\n!\nroute-map RM-CONN-2-BGP\
+    \ permit 10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nrouter\
+    \ bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65201\n\
+    \   router-id 192.168.253.4\n   no bgp default ipv4-unicast\n   distance bgp 20\
+    \ 200 200\n   maximum-paths 2 ecmp 2\n   neighbor EVPN-OVERLAY-PEERS peer group\n\
+    \   neighbor EVPN-OVERLAY-PEERS remote-as 65200\n   neighbor EVPN-OVERLAY-PEERS\
+    \ update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
     \ ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n\
     \   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS\
     \ maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS peer group\n   neighbor IPv4-UNDERLAY-PEERS\
@@ -342,14 +402,28 @@ CVP_CONFIGLETS:
     \   neighbor 192.168.253.2 peer group EVPN-OVERLAY-PEERS\n   redistribute connected\
     \ route-map RM-CONN-2-BGP\n   !\n   vlan-aware-bundle Tenant_A_APP_Zone\n    \
     \  rd 192.168.253.4:12\n      route-target both 12:12\n      redistribute learned\n\
-    \      vlan 230-231\n   !\n   vlan-aware-bundle Tenant_A_WEB_Zone\n      rd 192.168.253.4:11\n\
-    \      route-target both 11:11\n      redistribute learned\n      vlan 220-221\n\
+    \      vlan 230-231\n   !\n   vlan-aware-bundle Tenant_A_DB_Zone\n      rd 192.168.253.4:13\n\
+    \      route-target both 13:13\n      redistribute learned\n      vlan 240-241\n\
+    \   !\n   vlan-aware-bundle Tenant_A_NFS\n      rd 192.168.253.4:20261\n     \
+    \ route-target both 20261:20261\n      redistribute learned\n      vlan 261\n\
+    \   !\n   vlan-aware-bundle Tenant_A_OP_Zone\n      rd 192.168.253.4:10\n    \
+    \  route-target both 10:10\n      redistribute learned\n      vlan 210-212\n \
+    \  !\n   vlan-aware-bundle Tenant_A_VMOTION\n      rd 192.168.253.4:20260\n  \
+    \    route-target both 20260:20260\n      redistribute learned\n      vlan 260\n\
+    \   !\n   vlan-aware-bundle Tenant_A_WEB_Zone\n      rd 192.168.253.4:11\n   \
+    \   route-target both 11:11\n      redistribute learned\n      vlan 220-221\n\
     \   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n  \
     \    no neighbor IPv4-UNDERLAY-PEERS activate\n      no neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
     \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n      neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ activate\n   !\n   vrf Tenant_A_APP_Zone\n      rd 192.168.253.4:12\n      route-target\
     \ import evpn 12:12\n      route-target export evpn 12:12\n      router-id 192.168.253.4\n\
+    \      neighbor 10.255.253.0 peer group MLAG-IPv4-UNDERLAY-PEER\n      redistribute\
+    \ connected\n   !\n   vrf Tenant_A_DB_Zone\n      rd 192.168.253.4:13\n      route-target\
+    \ import evpn 13:13\n      route-target export evpn 13:13\n      router-id 192.168.253.4\n\
+    \      neighbor 10.255.253.0 peer group MLAG-IPv4-UNDERLAY-PEER\n      redistribute\
+    \ connected\n   !\n   vrf Tenant_A_OP_Zone\n      rd 192.168.253.4:10\n      route-target\
+    \ import evpn 10:10\n      route-target export evpn 10:10\n      router-id 192.168.253.4\n\
     \      neighbor 10.255.253.0 peer group MLAG-IPv4-UNDERLAY-PEER\n      redistribute\
     \ connected\n   !\n   vrf Tenant_A_WEB_Zone\n      rd 192.168.253.4:11\n     \
     \ route-target import evpn 11:11\n      route-target export evpn 11:11\n     \
@@ -362,11 +436,10 @@ CVP_CONFIGLETS:
     \ -ingestvrf=MGMT -taillogs\n   no shutdown\n!\nvlan internal order ascending\
     \ range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice routing\
     \ protocols model multi-agent\n!\nhostname DC2-SPINE1\nip name-server vrf MGMT\
-    \ 192.168.200.5\nip name-server vrf MGMT 8.8.8.8\ndns domain avd-lab.local\n!\n\
-    ntp local-interface vrf MGMT Management1\nntp server vrf MGMT 0.north-america.pool.ntp.org\
-    \ prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n!\nspanning-tree mode\
-    \ none\n!\nno aaa root\n!\nusername admin privilege 15 role network-admin secret\
-    \ sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
+    \ 192.168.200.5\ndns domain avd-lab.local\n!\nntp local-interface vrf MGMT Management1\n\
+    ntp server vrf MGMT 0.north-america.pool.ntp.org prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n\
+    !\nspanning-tree mode none\n!\nno aaa root\n!\nusername admin privilege 15 role\
+    \ network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
     !\nvrf instance MGMT\n!\ninterface Ethernet1\n   description P2P_LINK_TO_DC2-LEAF1A_Ethernet1\n\
     \   no switchport\n   ip address 172.31.252.0/31\n!\ninterface Ethernet2\n   description\
@@ -410,11 +483,10 @@ CVP_CONFIGLETS:
     \ -ingestvrf=MGMT -taillogs\n   no shutdown\n!\nvlan internal order ascending\
     \ range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice routing\
     \ protocols model multi-agent\n!\nhostname DC2-SPINE2\nip name-server vrf MGMT\
-    \ 192.168.200.5\nip name-server vrf MGMT 8.8.8.8\ndns domain avd-lab.local\n!\n\
-    ntp local-interface vrf MGMT Management1\nntp server vrf MGMT 0.north-america.pool.ntp.org\
-    \ prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n!\nspanning-tree mode\
-    \ none\n!\nno aaa root\n!\nusername admin privilege 15 role network-admin secret\
-    \ sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
+    \ 192.168.200.5\ndns domain avd-lab.local\n!\nntp local-interface vrf MGMT Management1\n\
+    ntp server vrf MGMT 0.north-america.pool.ntp.org prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n\
+    !\nspanning-tree mode none\n!\nno aaa root\n!\nusername admin privilege 15 role\
+    \ network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
     !\nvrf instance MGMT\n!\ninterface Ethernet1\n   description P2P_LINK_TO_DC2-LEAF1A_Ethernet2\n\
     \   no switchport\n   ip address 172.31.252.2/31\n!\ninterface Ethernet2\n   description\

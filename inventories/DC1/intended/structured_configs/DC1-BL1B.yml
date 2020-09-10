@@ -166,9 +166,6 @@ groups:
     - DC1-SPINE2
     - DC1-SPINE3
     - DC1-SPINE4
-    - DC1-L2LEAF1A
-    - DC1-L2LEAF2A
-    - DC1-L2LEAF2B
     - DC1-LEAF1A
     - DC1-LEAF2A
     - DC1-LEAF2B
@@ -176,6 +173,9 @@ groups:
     - DC1-SVC3B
     - DC1-BL1A
     - DC1-BL1B
+    - DC1-L2LEAF1A
+    - DC1-L2LEAF2A
+    - DC1-L2LEAF2B
     CVP:
     - CVP-1
     DC1_BL1:
@@ -407,8 +407,6 @@ l3leaf:
                 - nfs
                 tenants:
                 - Tenant_A
-                - Tenant_B
-                - Tenant_C
             nodes:
                 DC1-LEAF2A:
                     id: 2
@@ -438,8 +436,6 @@ l3leaf:
                 - nfs
                 tenants:
                 - Tenant_A
-                - Tenant_B
-                - Tenant_C
             nodes:
                 DC1-SVC3A:
                     id: 4
@@ -534,12 +530,10 @@ mlag_ips:
 name_server:
     nodes:
     - 192.168.200.5
-    - 8.8.8.8
     source:
         vrf: MGMT
 name_servers:
 - 192.168.200.5
-- 8.8.8.8
 ntp_server:
     local_interface:
         interface: Management1
@@ -550,7 +544,7 @@ ntp_server:
 ntp_servers:
 - 0.north-america.pool.ntp.org
 - 1.north-america.pool.ntp.org
-omit: __omit_place_holder__41f00e09e8bb9aa8e3486bfd43a89ac760796ace
+omit: __omit_place_holder__0c3749630599dc042a5e53044f22c40fff009d9c
 overlay_loopback_network_summary: 192.168.251.0/24
 p2p_uplinks_mtu: 1500
 playbook_dir: /projects/ipspace-webinar-september15-2020/playbooks
@@ -973,7 +967,6 @@ tenants:
                         tags:
                         - web
                 vrf_vni: 11
-test: null
 type: l3leaf
 underlay_p2p_network_summary: 172.31.251.0/24
 validation_mode_loose: true

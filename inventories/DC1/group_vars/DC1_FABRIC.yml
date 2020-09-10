@@ -79,7 +79,7 @@ l3leaf:
     DC1_LEAF2:
       bgp_as: 65102
       filter:
-        tenants: [ Tenant_A, Tenant_B, Tenant_C ]
+        tenants: [ Tenant_A ]
         tags: [ opzone, web, app, db, vmotion, nfs ]
       nodes:
         DC1-LEAF2A:
@@ -93,7 +93,7 @@ l3leaf:
     DC1_SVC3:
       bgp_as: 65103
       filter:
-        tenants: [ Tenant_A, Tenant_B, Tenant_C ]
+        tenants: [ Tenant_A ]
         tags: [ opzone, web, app, db, vmotion, nfs ]
       nodes:
         DC1-SVC3A:

@@ -87,13 +87,11 @@ DNS domain lookup not defined
 | Name Server | Source VRF |
 | ----------- | ---------- |
 | 192.168.200.5 | MGMT |
-| 8.8.8.8 | MGMT |
 
 ### Name Servers Device Configuration
 
 ```eos
 ip name-server vrf MGMT 192.168.200.5
-ip name-server vrf MGMT 8.8.8.8
 ```
 
 ## DNS Domain
@@ -203,6 +201,8 @@ username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAW
 
 | VLAN ID | Name | Trunk Groups |
 | ------- | ---- | ------------ |
+| 210 | Tenant_A_OP_Zone_1 | none  |
+| 211 | Tenant_A_OP_Zone_2 | none  |
 | 220 | Tenant_A_WEB_Zone_1 | none  |
 | 221 | Tenant_A_WEBZone_2 | none  |
 | 230 | Tenant_A_APP_Zone_1 | none  |
@@ -211,6 +211,12 @@ username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAW
 ### VLANs Device Configuration
 
 ```eos
+!
+vlan 210
+   name Tenant_A_OP_Zone_1
+!
+vlan 211
+   name Tenant_A_OP_Zone_2
 !
 vlan 220
    name Tenant_A_WEB_Zone_1
@@ -246,7 +252,7 @@ vrf instance MGMT
 
 | Interface | Description | MTU | Type | Mode | Allowed VLANs (trunk) | Trunk Group | MLAG ID | EVPN ESI | VRF | IP Address | IPv6 Address |
 | --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | ------- | -------- | --- | ---------- | ------------ |
-| Port-Channel1 | DC2-LEAF1A_Po3 | 1500 | switched | trunk | 220-221,230-231 | - | 1 | - | - | - | - |
+| Port-Channel1 | DC2-LEAF1A_Po3 | 1500 | switched | trunk | 210-211,220-221,230-231 | - | 1 | - | - | - | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -254,7 +260,7 @@ vrf instance MGMT
 !
 interface Port-Channel1
    description DC2-LEAF1A_Po3
-   switchport trunk allowed vlan 220-221,230-231
+   switchport trunk allowed vlan 210-211,220-221,230-231
    switchport mode trunk
    mlag 1
 ```
@@ -265,8 +271,8 @@ interface Port-Channel1
 
 | Interface | Description | MTU | Type | Mode | Allowed VLANs (Trunk) | Trunk Group | VRF | IP Address | Channel-Group ID | Channel-Group Type |
 | --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | --- | ---------- | ---------------- | ------------------ |
-| Ethernet1 | DC2-LEAF1A_Ethernet3 | *1500 | *switched | *trunk | *220-221,230-231 | - | - | - | 1 | active |
-| Ethernet2 | DC2-LEAF1B_Ethernet3 | *1500 | *switched | *trunk | *220-221,230-231 | - | - | - | 1 | active |
+| Ethernet1 | DC2-LEAF1A_Ethernet3 | *1500 | *switched | *trunk | *210-211,220-221,230-231 | - | - | - | 1 | active |
+| Ethernet2 | DC2-LEAF1B_Ethernet3 | *1500 | *switched | *trunk | *210-211,220-221,230-231 | - | - | - | 1 | active |
 
 *Inherited from Port-Channel Interface
 

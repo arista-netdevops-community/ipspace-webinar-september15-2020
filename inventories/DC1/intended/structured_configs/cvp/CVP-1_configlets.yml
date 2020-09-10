@@ -5,11 +5,11 @@ CVP_CONFIGLETS:
     \ -ingestvrf=MGMT -taillogs\n   no shutdown\n!\nvlan internal order ascending\
     \ range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice routing\
     \ protocols model multi-agent\n!\nhostname DC1-BL1A\nip name-server vrf MGMT 192.168.200.5\n\
-    ip name-server vrf MGMT 8.8.8.8\ndns domain avd-lab.local\n!\nntp local-interface\
-    \ vrf MGMT Management1\nntp server vrf MGMT 0.north-america.pool.ntp.org prefer\n\
-    ntp server vrf MGMT 1.north-america.pool.ntp.org\n!\nspanning-tree mode mstp\n\
-    no spanning-tree vlan-id 4094\nspanning-tree mst 0 priority 4096\n!\nno aaa root\n\
-    !\nusername admin privilege 15 role network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
+    dns domain avd-lab.local\n!\nntp local-interface vrf MGMT Management1\nntp server\
+    \ vrf MGMT 0.north-america.pool.ntp.org prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n\
+    !\nspanning-tree mode mstp\nno spanning-tree vlan-id 4094\nspanning-tree mst 0\
+    \ priority 4096\n!\nno aaa root\n!\nusername admin privilege 15 role network-admin\
+    \ secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
     !\nvlan 113\n   name Tenant_A_OP_Zone_WAN\n!\nvlan 150\n   name Tenant_A_WAN_Zone_1\n\
     !\nvlan 3009\n   name MLAG_iBGP_Tenant_A_OP_Zone\n   trunk group LEAF_PEER_L3\n\
@@ -109,11 +109,11 @@ CVP_CONFIGLETS:
     \ -ingestvrf=MGMT -taillogs\n   no shutdown\n!\nvlan internal order ascending\
     \ range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice routing\
     \ protocols model multi-agent\n!\nhostname DC1-BL1B\nip name-server vrf MGMT 192.168.200.5\n\
-    ip name-server vrf MGMT 8.8.8.8\ndns domain avd-lab.local\n!\nntp local-interface\
-    \ vrf MGMT Management1\nntp server vrf MGMT 0.north-america.pool.ntp.org prefer\n\
-    ntp server vrf MGMT 1.north-america.pool.ntp.org\n!\nspanning-tree mode mstp\n\
-    no spanning-tree vlan-id 4094\nspanning-tree mst 0 priority 4096\n!\nno aaa root\n\
-    !\nusername admin privilege 15 role network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
+    dns domain avd-lab.local\n!\nntp local-interface vrf MGMT Management1\nntp server\
+    \ vrf MGMT 0.north-america.pool.ntp.org prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n\
+    !\nspanning-tree mode mstp\nno spanning-tree vlan-id 4094\nspanning-tree mst 0\
+    \ priority 4096\n!\nno aaa root\n!\nusername admin privilege 15 role network-admin\
+    \ secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
     !\nvlan 113\n   name Tenant_A_OP_Zone_WAN\n!\nvlan 150\n   name Tenant_A_WAN_Zone_1\n\
     !\nvlan 3009\n   name MLAG_iBGP_Tenant_A_OP_Zone\n   trunk group LEAF_PEER_L3\n\
@@ -213,11 +213,10 @@ CVP_CONFIGLETS:
     \ -ingestvrf=MGMT -taillogs\n   no shutdown\n!\nvlan internal order ascending\
     \ range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice routing\
     \ protocols model multi-agent\n!\nhostname DC1-L2LEAF1A\nip name-server vrf MGMT\
-    \ 192.168.200.5\nip name-server vrf MGMT 8.8.8.8\ndns domain avd-lab.local\n!\n\
-    ntp local-interface vrf MGMT Management1\nntp server vrf MGMT 0.north-america.pool.ntp.org\
-    \ prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n!\nspanning-tree mode\
-    \ mstp\nspanning-tree mst 0 priority 16384\n!\nno aaa root\n!\nusername admin\
-    \ privilege 15 role network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
+    \ 192.168.200.5\ndns domain avd-lab.local\n!\nntp local-interface vrf MGMT Management1\n\
+    ntp server vrf MGMT 0.north-america.pool.ntp.org prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n\
+    !\nspanning-tree mode mstp\nspanning-tree mst 0 priority 16384\n!\nno aaa root\n\
+    !\nusername admin privilege 15 role network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
     !\nvlan 110\n   name Tenant_A_OP_Zone_1\n!\nvlan 111\n   name Tenant_A_OP_Zone_2\n\
     !\nvlan 120\n   name Tenant_A_WEB_Zone_1\n!\nvlan 121\n   name Tenant_A_WEBZone_2\n\
@@ -237,11 +236,11 @@ CVP_CONFIGLETS:
     \ -ingestvrf=MGMT -taillogs\n   no shutdown\n!\nvlan internal order ascending\
     \ range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice routing\
     \ protocols model multi-agent\n!\nhostname DC1-L2LEAF2A\nip name-server vrf MGMT\
-    \ 192.168.200.5\nip name-server vrf MGMT 8.8.8.8\ndns domain avd-lab.local\n!\n\
-    ntp local-interface vrf MGMT Management1\nntp server vrf MGMT 0.north-america.pool.ntp.org\
-    \ prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n!\nspanning-tree mode\
-    \ mstp\nno spanning-tree vlan-id 4094\nspanning-tree mst 0 priority 16384\n!\n\
-    no aaa root\n!\nusername admin privilege 15 role network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
+    \ 192.168.200.5\ndns domain avd-lab.local\n!\nntp local-interface vrf MGMT Management1\n\
+    ntp server vrf MGMT 0.north-america.pool.ntp.org prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n\
+    !\nspanning-tree mode mstp\nno spanning-tree vlan-id 4094\nspanning-tree mst 0\
+    \ priority 16384\n!\nno aaa root\n!\nusername admin privilege 15 role network-admin\
+    \ secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
     !\nvlan 110\n   name Tenant_A_OP_Zone_1\n!\nvlan 111\n   name Tenant_A_OP_Zone_2\n\
     !\nvlan 120\n   name Tenant_A_WEB_Zone_1\n!\nvlan 121\n   name Tenant_A_WEBZone_2\n\
@@ -273,11 +272,11 @@ CVP_CONFIGLETS:
     \ -ingestvrf=MGMT -taillogs\n   no shutdown\n!\nvlan internal order ascending\
     \ range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice routing\
     \ protocols model multi-agent\n!\nhostname DC1-L2LEAF2B\nip name-server vrf MGMT\
-    \ 192.168.200.5\nip name-server vrf MGMT 8.8.8.8\ndns domain avd-lab.local\n!\n\
-    ntp local-interface vrf MGMT Management1\nntp server vrf MGMT 0.north-america.pool.ntp.org\
-    \ prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n!\nspanning-tree mode\
-    \ mstp\nno spanning-tree vlan-id 4094\nspanning-tree mst 0 priority 16384\n!\n\
-    no aaa root\n!\nusername admin privilege 15 role network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
+    \ 192.168.200.5\ndns domain avd-lab.local\n!\nntp local-interface vrf MGMT Management1\n\
+    ntp server vrf MGMT 0.north-america.pool.ntp.org prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n\
+    !\nspanning-tree mode mstp\nno spanning-tree vlan-id 4094\nspanning-tree mst 0\
+    \ priority 16384\n!\nno aaa root\n!\nusername admin privilege 15 role network-admin\
+    \ secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
     !\nvlan 110\n   name Tenant_A_OP_Zone_1\n!\nvlan 111\n   name Tenant_A_OP_Zone_2\n\
     !\nvlan 120\n   name Tenant_A_WEB_Zone_1\n!\nvlan 121\n   name Tenant_A_WEBZone_2\n\
@@ -309,11 +308,10 @@ CVP_CONFIGLETS:
     \ -ingestvrf=MGMT -taillogs\n   no shutdown\n!\nvlan internal order ascending\
     \ range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice routing\
     \ protocols model multi-agent\n!\nhostname DC1-LEAF1A\nip name-server vrf MGMT\
-    \ 192.168.200.5\nip name-server vrf MGMT 8.8.8.8\ndns domain avd-lab.local\n!\n\
-    ntp local-interface vrf MGMT Management1\nntp server vrf MGMT 0.north-america.pool.ntp.org\
-    \ prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n!\nspanning-tree mode\
-    \ mstp\nspanning-tree mst 0 priority 4096\n!\nno aaa root\n!\nusername admin privilege\
-    \ 15 role network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
+    \ 192.168.200.5\ndns domain avd-lab.local\n!\nntp local-interface vrf MGMT Management1\n\
+    ntp server vrf MGMT 0.north-america.pool.ntp.org prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n\
+    !\nspanning-tree mode mstp\nspanning-tree mst 0 priority 4096\n!\nno aaa root\n\
+    !\nusername admin privilege 15 role network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
     !\nvlan 120\n   name Tenant_A_WEB_Zone_1\n!\nvlan 121\n   name Tenant_A_WEBZone_2\n\
     !\nvlan 130\n   name Tenant_A_APP_Zone_1\n!\nvlan 131\n   name Tenant_A_APP_Zone_2\n\
@@ -384,11 +382,11 @@ CVP_CONFIGLETS:
     \ -ingestvrf=MGMT -taillogs\n   no shutdown\n!\nvlan internal order ascending\
     \ range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice routing\
     \ protocols model multi-agent\n!\nhostname DC1-LEAF2A\nip name-server vrf MGMT\
-    \ 192.168.200.5\nip name-server vrf MGMT 8.8.8.8\ndns domain avd-lab.local\n!\n\
-    ntp local-interface vrf MGMT Management1\nntp server vrf MGMT 0.north-america.pool.ntp.org\
-    \ prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n!\nspanning-tree mode\
-    \ mstp\nno spanning-tree vlan-id 4094\nspanning-tree mst 0 priority 4096\n!\n\
-    no aaa root\n!\nusername admin privilege 15 role network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
+    \ 192.168.200.5\ndns domain avd-lab.local\n!\nntp local-interface vrf MGMT Management1\n\
+    ntp server vrf MGMT 0.north-america.pool.ntp.org prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n\
+    !\nspanning-tree mode mstp\nno spanning-tree vlan-id 4094\nspanning-tree mst 0\
+    \ priority 4096\n!\nno aaa root\n!\nusername admin privilege 15 role network-admin\
+    \ secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
     !\nvlan 110\n   name Tenant_A_OP_Zone_1\n!\nvlan 111\n   name Tenant_A_OP_Zone_2\n\
     !\nvlan 112\n   name Tenant_A_OP_Zone_3\n!\nvlan 120\n   name Tenant_A_WEB_Zone_1\n\
@@ -526,11 +524,11 @@ CVP_CONFIGLETS:
     \ -ingestvrf=MGMT -taillogs\n   no shutdown\n!\nvlan internal order ascending\
     \ range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice routing\
     \ protocols model multi-agent\n!\nhostname DC1-LEAF2B\nip name-server vrf MGMT\
-    \ 192.168.200.5\nip name-server vrf MGMT 8.8.8.8\ndns domain avd-lab.local\n!\n\
-    ntp local-interface vrf MGMT Management1\nntp server vrf MGMT 0.north-america.pool.ntp.org\
-    \ prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n!\nspanning-tree mode\
-    \ mstp\nno spanning-tree vlan-id 4094\nspanning-tree mst 0 priority 4096\n!\n\
-    no aaa root\n!\nusername admin privilege 15 role network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
+    \ 192.168.200.5\ndns domain avd-lab.local\n!\nntp local-interface vrf MGMT Management1\n\
+    ntp server vrf MGMT 0.north-america.pool.ntp.org prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n\
+    !\nspanning-tree mode mstp\nno spanning-tree vlan-id 4094\nspanning-tree mst 0\
+    \ priority 4096\n!\nno aaa root\n!\nusername admin privilege 15 role network-admin\
+    \ secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
     !\nvlan 110\n   name Tenant_A_OP_Zone_1\n!\nvlan 111\n   name Tenant_A_OP_Zone_2\n\
     !\nvlan 112\n   name Tenant_A_OP_Zone_3\n!\nvlan 120\n   name Tenant_A_WEB_Zone_1\n\
@@ -668,11 +666,10 @@ CVP_CONFIGLETS:
     \ -ingestvrf=MGMT -taillogs\n   no shutdown\n!\nvlan internal order ascending\
     \ range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice routing\
     \ protocols model multi-agent\n!\nhostname DC1-SPINE1\nip name-server vrf MGMT\
-    \ 192.168.200.5\nip name-server vrf MGMT 8.8.8.8\ndns domain avd-lab.local\n!\n\
-    ntp local-interface vrf MGMT Management1\nntp server vrf MGMT 0.north-america.pool.ntp.org\
-    \ prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n!\nspanning-tree mode\
-    \ none\n!\nno aaa root\n!\nusername admin privilege 15 role network-admin secret\
-    \ sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
+    \ 192.168.200.5\ndns domain avd-lab.local\n!\nntp local-interface vrf MGMT Management1\n\
+    ntp server vrf MGMT 0.north-america.pool.ntp.org prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n\
+    !\nspanning-tree mode none\n!\nno aaa root\n!\nusername admin privilege 15 role\
+    \ network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
     !\nvrf instance MGMT\n!\ninterface Ethernet1\n   description P2P_LINK_TO_DC1-LEAF1A_Ethernet1\n\
     \   no switchport\n   ip address 172.31.251.0/31\n!\ninterface Ethernet2\n   description\
@@ -729,11 +726,10 @@ CVP_CONFIGLETS:
     \ -ingestvrf=MGMT -taillogs\n   no shutdown\n!\nvlan internal order ascending\
     \ range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice routing\
     \ protocols model multi-agent\n!\nhostname DC1-SPINE2\nip name-server vrf MGMT\
-    \ 192.168.200.5\nip name-server vrf MGMT 8.8.8.8\ndns domain avd-lab.local\n!\n\
-    ntp local-interface vrf MGMT Management1\nntp server vrf MGMT 0.north-america.pool.ntp.org\
-    \ prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n!\nspanning-tree mode\
-    \ none\n!\nno aaa root\n!\nusername admin privilege 15 role network-admin secret\
-    \ sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
+    \ 192.168.200.5\ndns domain avd-lab.local\n!\nntp local-interface vrf MGMT Management1\n\
+    ntp server vrf MGMT 0.north-america.pool.ntp.org prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n\
+    !\nspanning-tree mode none\n!\nno aaa root\n!\nusername admin privilege 15 role\
+    \ network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
     !\nvrf instance MGMT\n!\ninterface Ethernet1\n   description P2P_LINK_TO_DC1-LEAF1A_Ethernet2\n\
     \   no switchport\n   ip address 172.31.251.2/31\n!\ninterface Ethernet2\n   description\
@@ -790,11 +786,10 @@ CVP_CONFIGLETS:
     \ -ingestvrf=MGMT -taillogs\n   no shutdown\n!\nvlan internal order ascending\
     \ range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice routing\
     \ protocols model multi-agent\n!\nhostname DC1-SPINE3\nip name-server vrf MGMT\
-    \ 192.168.200.5\nip name-server vrf MGMT 8.8.8.8\ndns domain avd-lab.local\n!\n\
-    ntp local-interface vrf MGMT Management1\nntp server vrf MGMT 0.north-america.pool.ntp.org\
-    \ prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n!\nspanning-tree mode\
-    \ none\n!\nno aaa root\n!\nusername admin privilege 15 role network-admin secret\
-    \ sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
+    \ 192.168.200.5\ndns domain avd-lab.local\n!\nntp local-interface vrf MGMT Management1\n\
+    ntp server vrf MGMT 0.north-america.pool.ntp.org prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n\
+    !\nspanning-tree mode none\n!\nno aaa root\n!\nusername admin privilege 15 role\
+    \ network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
     !\nvrf instance MGMT\n!\ninterface Ethernet1\n   description P2P_LINK_TO_DC1-LEAF1A_Ethernet3\n\
     \   no switchport\n   ip address 172.31.251.4/31\n!\ninterface Ethernet2\n   description\
@@ -851,11 +846,10 @@ CVP_CONFIGLETS:
     \ -ingestvrf=MGMT -taillogs\n   no shutdown\n!\nvlan internal order ascending\
     \ range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice routing\
     \ protocols model multi-agent\n!\nhostname DC1-SPINE4\nip name-server vrf MGMT\
-    \ 192.168.200.5\nip name-server vrf MGMT 8.8.8.8\ndns domain avd-lab.local\n!\n\
-    ntp local-interface vrf MGMT Management1\nntp server vrf MGMT 0.north-america.pool.ntp.org\
-    \ prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n!\nspanning-tree mode\
-    \ none\n!\nno aaa root\n!\nusername admin privilege 15 role network-admin secret\
-    \ sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
+    \ 192.168.200.5\ndns domain avd-lab.local\n!\nntp local-interface vrf MGMT Management1\n\
+    ntp server vrf MGMT 0.north-america.pool.ntp.org prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n\
+    !\nspanning-tree mode none\n!\nno aaa root\n!\nusername admin privilege 15 role\
+    \ network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
     !\nvrf instance MGMT\n!\ninterface Ethernet1\n   description P2P_LINK_TO_DC1-LEAF1A_Ethernet4\n\
     \   no switchport\n   ip address 172.31.251.6/31\n!\ninterface Ethernet2\n   description\
@@ -912,11 +906,11 @@ CVP_CONFIGLETS:
     \ -ingestvrf=MGMT -taillogs\n   no shutdown\n!\nvlan internal order ascending\
     \ range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice routing\
     \ protocols model multi-agent\n!\nhostname DC1-SVC3A\nip name-server vrf MGMT\
-    \ 192.168.200.5\nip name-server vrf MGMT 8.8.8.8\ndns domain avd-lab.local\n!\n\
-    ntp local-interface vrf MGMT Management1\nntp server vrf MGMT 0.north-america.pool.ntp.org\
-    \ prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n!\nspanning-tree mode\
-    \ mstp\nno spanning-tree vlan-id 4094\nspanning-tree mst 0 priority 4096\n!\n\
-    no aaa root\n!\nusername admin privilege 15 role network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
+    \ 192.168.200.5\ndns domain avd-lab.local\n!\nntp local-interface vrf MGMT Management1\n\
+    ntp server vrf MGMT 0.north-america.pool.ntp.org prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n\
+    !\nspanning-tree mode mstp\nno spanning-tree vlan-id 4094\nspanning-tree mst 0\
+    \ priority 4096\n!\nno aaa root\n!\nusername admin privilege 15 role network-admin\
+    \ secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
     !\nvlan 110\n   name Tenant_A_OP_Zone_1\n!\nvlan 111\n   name Tenant_A_OP_Zone_2\n\
     !\nvlan 120\n   name Tenant_A_WEB_Zone_1\n!\nvlan 121\n   name Tenant_A_WEBZone_2\n\
@@ -1054,11 +1048,11 @@ CVP_CONFIGLETS:
     \ -ingestvrf=MGMT -taillogs\n   no shutdown\n!\nvlan internal order ascending\
     \ range 1006 1199\n!\ntransceiver qsfp default-mode 4x10G\n!\nservice routing\
     \ protocols model multi-agent\n!\nhostname DC1-SVC3B\nip name-server vrf MGMT\
-    \ 192.168.200.5\nip name-server vrf MGMT 8.8.8.8\ndns domain avd-lab.local\n!\n\
-    ntp local-interface vrf MGMT Management1\nntp server vrf MGMT 0.north-america.pool.ntp.org\
-    \ prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n!\nspanning-tree mode\
-    \ mstp\nno spanning-tree vlan-id 4094\nspanning-tree mst 0 priority 4096\n!\n\
-    no aaa root\n!\nusername admin privilege 15 role network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
+    \ 192.168.200.5\ndns domain avd-lab.local\n!\nntp local-interface vrf MGMT Management1\n\
+    ntp server vrf MGMT 0.north-america.pool.ntp.org prefer\nntp server vrf MGMT 1.north-america.pool.ntp.org\n\
+    !\nspanning-tree mode mstp\nno spanning-tree vlan-id 4094\nspanning-tree mst 0\
+    \ priority 4096\n!\nno aaa root\n!\nusername admin privilege 15 role network-admin\
+    \ secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
     !\nvlan 110\n   name Tenant_A_OP_Zone_1\n!\nvlan 111\n   name Tenant_A_OP_Zone_2\n\
     !\nvlan 120\n   name Tenant_A_WEB_Zone_1\n!\nvlan 121\n   name Tenant_A_WEBZone_2\n\

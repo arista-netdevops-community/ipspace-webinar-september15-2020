@@ -17,6 +17,9 @@ dc-deploy-eapi: dc1-deploy-eapi dc2-deploy-eapi ## Deploy configuration using eA
 .PHONY: dc-deploy-cvp
 dc-deploy-cvp: dc1-deploy-cvp dc2-deploy-cvp ## Deploy configuration using CVP with REST APIs for both DCs
 
+.PHONY: dc-fabric-backup
+dc-fabric-backup: dc1-fabric-backup dc2-fabric-backup ## Backup Fabric
+
 .PHONY: dc-validate-state
 dc-validate-state: dc1-validate-state dc2-validate-state ## Audit Fabric State
 
@@ -55,6 +58,10 @@ dc1-deploy-eapi: ## Run ansible playbook to deploy EVPN Fabric using EOS eAPI.
 dc1-deploy-cvp: ## Run ansible playbook to deploy EVPN Fabric using CVP.
 	ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --tags provision -i inventories/DC1/inventory.yml
 
+.PHONY: dc1-fabric-backup
+dc1-fabric-backup: ## Run ansible playbook to bacup Fabric.
+	ansible-playbook playbooks/dc1-fabric-backup.yml -i inventories/DC1/inventory.yml
+
 .PHONY: dc1-validate-state
 dc1-validate-state: ## Run ansible playbook to validate EVPN Fabric State.
 	ansible-playbook playbooks/dc1-fabric-validate-state.yml -i inventories/DC1/inventory.yml
@@ -79,6 +86,10 @@ dc2-deploy-eapi: ## Run ansible playbook to deploy EVPN Fabric using EOS eAPI.
 .PHONY: dc2-deploy-cvp
 dc2-deploy-cvp: ## Run ansible playbook to deploy EVPN Fabric using CVP.
 	ansible-playbook playbooks/dc2-fabric-deploy-cvp.yml --tags provision -i inventories/DC2/inventory.yml
+
+.PHONY: dc2-fabric-backup
+dc2-fabric-backup: ## Run ansible playbook to bacup Fabric.
+	ansible-playbook playbooks/dc2-fabric-backup.yml -i inventories/DC2/inventory.yml
 
 .PHONY: dc2-validate-state
 dc2-validate-state: ## Run ansible playbook to validate EVPN Fabric State.

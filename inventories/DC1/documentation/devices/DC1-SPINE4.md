@@ -87,13 +87,11 @@ DNS domain lookup not defined
 | Name Server | Source VRF |
 | ----------- | ---------- |
 | 192.168.200.5 | MGMT |
-| 8.8.8.8 | MGMT |
 
 ### Name Servers Device Configuration
 
 ```eos
 ip name-server vrf MGMT 192.168.200.5
-ip name-server vrf MGMT 8.8.8.8
 ```
 
 ## DNS Domain
