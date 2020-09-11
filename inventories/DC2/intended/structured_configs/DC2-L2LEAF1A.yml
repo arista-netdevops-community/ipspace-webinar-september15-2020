@@ -10,9 +10,9 @@ leaf_id: 5
 switch_mgmt_ip: 192.168.200.157/24
 leaf_filter_tenants: ['Tenant_A']
 leaf_filter_tags: ['opzone', 'web', 'app']
-leaf_allowed_vrfs: ['Tenant_A_APP_Zone', 'Tenant_A_OP_Zone', 'Tenant_A_WEB_Zone']
-leaf_allowed_svis: [230, 231, 210, 211, 220, 221]
-leaf_allowed_vlans: [230, 231, 210, 211, 220, 221]
+leaf_allowed_vrfs: ['Tenant_A_OP_Zone', 'Tenant_A_WEB_Zone']
+leaf_allowed_svis: [210, 211, 220, 221]
+leaf_allowed_vlans: [210, 211, 220, 221]
 leaf_mlag: False
 
 service_routing_protocols_model: multi-agent
@@ -99,12 +99,6 @@ clock:
 vlans:
 
 ## Tenant_A ##
-  230:
-    tenant: Tenant_A
-    name: Tenant_A_APP_Zone_1
-  231:
-    tenant: Tenant_A
-    name: Tenant_A_APP_Zone_2
   210:
     tenant: Tenant_A
     name: Tenant_A_OP_Zone_1
@@ -126,7 +120,7 @@ vrfs:
 port_channel_interfaces:
   Port-Channel1:
     description: DC2-LEAF1A_Po3
-    vlans: 210-211,220-221,230-231
+    vlans: 210-211,220-221
     mode: trunk
     mlag: 1
 

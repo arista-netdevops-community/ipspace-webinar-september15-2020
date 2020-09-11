@@ -203,8 +203,6 @@ username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAW
 | ------- | ---- | ------------ |
 | 120 | Tenant_A_WEB_Zone_1 | none  |
 | 121 | Tenant_A_WEBZone_2 | none  |
-| 130 | Tenant_A_APP_Zone_1 | none  |
-| 131 | Tenant_A_APP_Zone_2 | none  |
 
 ### VLANs Device Configuration
 
@@ -215,12 +213,6 @@ vlan 120
 !
 vlan 121
    name Tenant_A_WEBZone_2
-!
-vlan 130
-   name Tenant_A_APP_Zone_1
-!
-vlan 131
-   name Tenant_A_APP_Zone_2
 ```
 
 ## VRF Instances
@@ -230,7 +222,6 @@ vlan 131
 | VRF Name | IP Routing |
 | -------- | ---------- |
 | MGMT |  disabled |
-| Tenant_A_APP_Zone |  enabled |
 | Tenant_A_WEB_Zone |  enabled |
 
 ### VRF Instances Device Configuration
@@ -238,8 +229,6 @@ vlan 131
 ```eos
 !
 vrf instance MGMT
-!
-vrf instance Tenant_A_APP_Zone
 !
 vrf instance Tenant_A_WEB_Zone
 ```
@@ -325,8 +314,6 @@ interface Loopback1
 | --------- | ----------- | --- | ---------- | ------------------ | -------------------------------- |
 | Vlan120 | Tenant_A_WEB_Zone_1 | Tenant_A_WEB_Zone | - | 10.1.20.1/24 | - |
 | Vlan121 | Tenant_A_WEBZone_2 | Tenant_A_WEB_Zone | - | 10.1.21.1/24 | - |
-| Vlan130 | Tenant_A_APP_Zone_1 | Tenant_A_APP_Zone | - | 10.1.30.1/24 | - |
-| Vlan131 | Tenant_A_APP_Zone_2 | Tenant_A_APP_Zone | - | 10.1.31.1/24 | - |
 
 ### VLAN Interfaces Device Configuration
 
@@ -341,16 +328,6 @@ interface Vlan121
    description Tenant_A_WEBZone_2
    vrf Tenant_A_WEB_Zone
    ip address virtual 10.1.21.1/24
-!
-interface Vlan130
-   description Tenant_A_APP_Zone_1
-   vrf Tenant_A_APP_Zone
-   ip address virtual 10.1.30.1/24
-!
-interface Vlan131
-   description Tenant_A_APP_Zone_2
-   vrf Tenant_A_APP_Zone
-   ip address virtual 10.1.31.1/24
 ```
 
 ## VXLAN Interface
@@ -366,14 +343,11 @@ interface Vlan131
 | ---- | --- |
 | 120 | 10120 |
 | 121 | 10121 |
-| 130 | 10130 |
-| 131 | 10131 |
 
 **VRF to VNI Mappings:**
 
 | VLAN | VNI |
 | ---- | --- |
-| Tenant_A_APP_Zone | 12 |
 | Tenant_A_WEB_Zone | 11 |
 
 ### VXLAN Interface Device Configuration
@@ -385,9 +359,6 @@ interface Vxlan1
    vxlan udp-port 4789
    vxlan vlan 120 vni 10120
    vxlan vlan 121 vni 10121
-   vxlan vlan 130 vni 10130
-   vxlan vlan 131 vni 10131
-   vxlan vrf Tenant_A_APP_Zone vni 12
    vxlan vrf Tenant_A_WEB_Zone vni 11
 ```
 
@@ -446,7 +417,6 @@ No Event Handler Defined
 | VRF | Routing Enabled |
 | --- | --------------- |
 | MGMT | False |
-| Tenant_A_APP_Zone | True |
 | Tenant_A_WEB_Zone | True |
 
 ### IP Routing Device Configuration
@@ -455,7 +425,6 @@ No Event Handler Defined
 !
 ip routing
 no ip routing vrf MGMT
-ip routing vrf Tenant_A_APP_Zone
 ip routing vrf Tenant_A_WEB_Zone
 ```
 
@@ -499,7 +468,6 @@ IPv6 Prefix lists not defined
 | VRF | IPv6 Routing Enabled |
 | --- | -------------------- |
 | MGMT | False |
-| Tenant_A_APP_Zone | False |
 | Tenant_A_WEB_Zone | False |
 
 ### IPv6 Routing Device Configuration
@@ -611,7 +579,6 @@ router bfd
 
 | VLAN Aware Bundle | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute | VLANs |
 | ----------------- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ | ----- |
-| Tenant_A_APP_Zone | 192.168.251.5:12 |  12:12  |  |  | learned | 130-131 |
 | Tenant_A_WEB_Zone | 192.168.251.5:11 |  11:11  |  |  | learned | 120-121 |
 
 
@@ -619,7 +586,6 @@ router bfd
 
 | VRF | Route-Distinguisher | Redistribute |
 | --- | ------------------- | ------------ |
-| Tenant_A_APP_Zone | 192.168.251.5:12 | connected  |
 | Tenant_A_WEB_Zone | 192.168.251.5:11 | connected  |
 
 ### Router BGP Device Configuration
@@ -654,12 +620,6 @@ router bgp 65101
    neighbor 192.168.251.4 peer group EVPN-OVERLAY-PEERS
    redistribute connected route-map RM-CONN-2-BGP
    !
-   vlan-aware-bundle Tenant_A_APP_Zone
-      rd 192.168.251.5:12
-      route-target both 12:12
-      redistribute learned
-      vlan 130-131
-   !
    vlan-aware-bundle Tenant_A_WEB_Zone
       rd 192.168.251.5:11
       route-target both 11:11
@@ -673,13 +633,6 @@ router bgp 65101
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
       neighbor IPv4-UNDERLAY-PEERS activate
-   !
-   vrf Tenant_A_APP_Zone
-      rd 192.168.251.5:12
-      route-target import evpn 12:12
-      route-target export evpn 12:12
-      router-id 192.168.251.5
-      redistribute connected
    !
    vrf Tenant_A_WEB_Zone
       rd 192.168.251.5:11

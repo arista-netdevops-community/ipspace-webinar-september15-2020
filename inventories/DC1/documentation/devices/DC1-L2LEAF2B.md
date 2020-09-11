@@ -206,9 +206,6 @@ username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAW
 | 111 | Tenant_A_OP_Zone_2 | none  |
 | 120 | Tenant_A_WEB_Zone_1 | none  |
 | 121 | Tenant_A_WEBZone_2 | none  |
-| 130 | Tenant_A_APP_Zone_1 | none  |
-| 131 | Tenant_A_APP_Zone_2 | none  |
-| 160 | Tenant_A_VMOTION | none  |
 | 161 | Tenant_A_NFS | none  |
 | 4094 | MLAG_PEER | MLAG  |
 
@@ -227,15 +224,6 @@ vlan 120
 !
 vlan 121
    name Tenant_A_WEBZone_2
-!
-vlan 130
-   name Tenant_A_APP_Zone_1
-!
-vlan 131
-   name Tenant_A_APP_Zone_2
-!
-vlan 160
-   name Tenant_A_VMOTION
 !
 vlan 161
    name Tenant_A_NFS
@@ -266,7 +254,7 @@ vrf instance MGMT
 
 | Interface | Description | MTU | Type | Mode | Allowed VLANs (trunk) | Trunk Group | MLAG ID | EVPN ESI | VRF | IP Address | IPv6 Address |
 | --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | ------- | -------- | --- | ---------- | ------------ |
-| Port-Channel1 | DC1-SVC3B_Po7 | 1500 | switched | trunk | 110-111,120-121,130-131,160-161 | - | 1 | - | - | - | - |
+| Port-Channel1 | DC1-SVC3B_Po7 | 1500 | switched | trunk | 110-111,120-121,161 | - | 1 | - | - | - | - |
 | Port-Channel3 | MLAG_PEER_DC1-L2LEAF2A_Po3 | 1500 | switched | trunk | 2-4094 | MLAG | - | - | - | - | - |
 
 ### Port-Channel Interfaces Device Configuration
@@ -275,7 +263,7 @@ vrf instance MGMT
 !
 interface Port-Channel1
    description DC1-SVC3B_Po7
-   switchport trunk allowed vlan 110-111,120-121,130-131,160-161
+   switchport trunk allowed vlan 110-111,120-121,161
    switchport mode trunk
    mlag 1
 !
@@ -292,8 +280,8 @@ interface Port-Channel3
 
 | Interface | Description | MTU | Type | Mode | Allowed VLANs (Trunk) | Trunk Group | VRF | IP Address | Channel-Group ID | Channel-Group Type |
 | --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | --- | ---------- | ---------------- | ------------------ |
-| Ethernet1 | DC1-SVC3A_Ethernet8 | *1500 | *switched | *trunk | *110-111,120-121,130-131,160-161 | - | - | - | 1 | active |
-| Ethernet2 | DC1-SVC3B_Ethernet8 | *1500 | *switched | *trunk | *110-111,120-121,130-131,160-161 | - | - | - | 1 | active |
+| Ethernet1 | DC1-SVC3A_Ethernet8 | *1500 | *switched | *trunk | *110-111,120-121,161 | - | - | - | 1 | active |
+| Ethernet2 | DC1-SVC3B_Ethernet8 | *1500 | *switched | *trunk | *110-111,120-121,161 | - | - | - | 1 | active |
 | Ethernet3 | MLAG_PEER_DC1-L2LEAF2A_Ethernet3 | *1500 | *switched | *trunk | *2-4094 | *MLAG | - | - | 3 | active |
 | Ethernet4 | MLAG_PEER_DC1-L2LEAF2A_Ethernet4 | *1500 | *switched | *trunk | *2-4094 | *MLAG | - | - | 3 | active |
 

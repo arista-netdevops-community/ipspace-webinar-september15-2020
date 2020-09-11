@@ -54,18 +54,6 @@ CVP_DEVICES:
     configlets:
       - DC1-AVD_DC1-SVC3B
     imageBundle: []
-  DC1-BL1A:
-    name: DC1-BL1A
-    parentContainerName: DC1_BL1
-    configlets:
-      - DC1-AVD_DC1-BL1A
-    imageBundle: []
-  DC1-BL1B:
-    name: DC1-BL1B
-    parentContainerName: DC1_BL1
-    configlets:
-      - DC1-AVD_DC1-BL1B
-    imageBundle: []
   DC1-L2LEAF1A:
     name: DC1-L2LEAF1A
     parentContainerName: DC1_L2LEAF1
@@ -97,8 +85,6 @@ CVP_CONTAINERS:
     parent_container: DC1_L2LEAFS
   DC1_LEAFS:
     parent_container: DC1_FABRIC
-  DC1_BL1:
-    parent_container: DC1_LEAFS
   DC1_LEAF1:
     parent_container: DC1_LEAFS
   DC1_LEAF2:
