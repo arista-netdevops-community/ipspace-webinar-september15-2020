@@ -32,8 +32,8 @@ dc-reset-cvp: dc1-reset-cvp dc2-reset-cvp ## DANGEROUS ! Reset CVP provisioning 
 
 .PHONY: install
 install: ## Install Ansible collections
-	git clone https://github.com/aristanetworks/ansible-avd.git
-	git clone https://github.com/aristanetworks/ansible-cvp.git
+	git clone https://github.com/aristanetworks/ansible-avd.git ../
+	git clone https://github.com/aristanetworks/ansible-cvp.git ../
 
 .PHONY: shell
 shell: ## Start docker to get a preconfigured shell
