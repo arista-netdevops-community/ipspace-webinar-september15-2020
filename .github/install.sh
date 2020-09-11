@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Use sh -c "$(curl -fsSL https://raw.githubusercontent.com/arista-netdevops-community/ipspace-webinar-september15-2020/master/.github/install.sh)"
+
 # Local Installation Path
 _ROOT_INSTALLATION_DIR="${PWD}/arista-ipspace"
 
