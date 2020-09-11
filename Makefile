@@ -32,8 +32,8 @@ dc-reset-cvp: dc1-reset-cvp dc2-reset-cvp ## DANGEROUS ! Reset CVP provisioning 
 
 .PHONY: install
 install: ## Install Ansible collections
-	git clone https://github.com/aristanetworks/ansible-avd.git
-	git clone https://github.com/aristanetworks/ansible-cvp.git
+	git clone https://github.com/aristanetworks/ansible-avd.git ../
+	git clone https://github.com/aristanetworks/ansible-cvp.git ../
 
 .PHONY: shell
 shell: ## Start docker to get a preconfigured shell
@@ -108,3 +108,8 @@ dc2-reset-cvp: ## ## DANGEROUS ! Reset CVP provisioning and all devices to ZTP f
 ci-build: ## Run ansible playbook during Github Action to build configurations
 	ansible-playbook playbooks/github-fabric-build.yml -i inventories/DC1/inventory.yml
 	ansible-playbook playbooks/github-fabric-build.yml -i inventories/DC2/inventory.yml
+
+.PHONY: ci-install
+ci-install:
+	git clone https://github.com/aristanetworks/ansible-avd.git
+	git clone https://github.com/aristanetworks/ansible-cvp.git

@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: 'Install collections'
-        run: make install
+        run: make ci-install
 
       - name: 'Build AVD content'
         run: |
