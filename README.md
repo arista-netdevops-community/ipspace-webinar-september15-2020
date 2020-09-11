@@ -23,6 +23,8 @@ __Content used for ipSpace webinar / Work In Progress__
       - [Configure DCI on DC1](#configure-dci-on-dc1)
       - [Insert role for DCI in DC2](#insert-role-for-dci-in-dc2)
     - [Validate EOS device states](#validate-eos-device-states)
+    - [Configure a new set of L2 and L3 services](#configure-a-new-set-of-l2-and-l3-services)
+  - [License](#license)
 
 <!-- /code_chunk_output -->
 
@@ -349,3 +351,101 @@ $ make dc-validate-state
 $ ansible-playbook playbooks/dc1-fabric-validate-state.yml -i inventories/DC1/inventory.yml
 $ ansible-playbook playbooks/dc2-fabric-validate-state.yml -i inventories/DC2/inventory.yml
 ```
+
+### Configure a new set of L2 and L3 services
+
+In this section, we are going to deploy services across both fabric
+
+- Update configuration in DC1
+
+Edit file [DC1_TENANT_NETWORKS.yml](inventories/DC1/group_vars/DC1_TENANTS_NETWORKS.yml) and uncomment configuration for `Tenant_A_APP_Zone` and vlan `160`:
+
+```yaml
+# DC1 Tenants Networks
+# Documentation of Tenant specific information - Vlans/VRFs
+tenants:
+# Tenant A Specific Information - VRFs / VLANs
+  Tenant_A:
+    mac_vrf_vni_base: 10000
+    vrfs:
+      Tenant_A_APP_Zone:
+        vrf_vni: 12
+        svis:
+          130:
+            name: Tenant_A_APP_Zone_1
+            tags: [ app, erp1 ]
+            enabled: true
+            ip_address_virtual: 10.1.30.1/24
+          131:
+            name: Tenant_A_APP_Zone_2
+            tags: [ app ]
+            enabled: true
+            ip_address_virtual: 10.1.31.1/24
+
+    l2vlans:
+      160:
+        name: Tenant_A_VMOTION
+        tags: [ vmotion ]
+```
+
+- Update configuration in DC2
+
+Edit file [DC2_TENANT_NETWORKS.yml](inventories/DC2/group_vars/DC2_TENANTS_NETWORKS.yml) and uncomment configuration for `Tenant_A_APP_Zone` and vlan `160`:
+
+```yaml
+# DC1 Tenants Networks
+# Documentation of Tenant specific information - Vlans/VRFs
+tenants:
+# Tenant A Specific Information - VRFs / VLANs
+  Tenant_A:
+    mac_vrf_vni_base: 10000
+    vrfs:
+      Tenant_A_APP_Zone:
+        vrf_vni: 12
+        svis:
+          230:
+            name: Tenant_A_APP_Zone_1
+            tags: [ app, erp1 ]
+            enabled: true
+            ip_address_virtual: 10.2.30.1/24
+          231:
+            name: Tenant_A_APP_Zone_2
+            tags: [ app ]
+            enabled: true
+            ip_address_virtual: 10.2.31.1/24
+
+    l2vlans:
+      260:
+        name: Tenant_A_VMOTION
+        tags: [ vmotion ]
+```
+
+- Generate EOS configuration and documentation
+
+_Playbook_: [dc{1|2}-fabric-deploy-cvp.yml](playbooks/dc1-fabric-deploy-cvp.yml)
+
+```shell
+# Shortcut command
+$ make dc-build
+
+# Ansible command
+$ ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --tags build -i inventories/DC1/inventory.yml
+$ ansible-playbook playbooks/dc2-fabric-deploy-cvp.yml --tags build -i inventories/DC2/inventory.yml
+```
+
+- Provision changes on Cloudvision
+
+_Playbook_: [dc{1|2}-fabric-deploy-cvp.yml](playbooks/dc1-fabric-deploy-cvp.yml)
+
+```shell
+# Shortcut command
+$ make dc-provision
+
+# Ansible command
+$ ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --tags provision -i inventories/DC1/inventory.yml
+$ ansible-playbook playbooks/dc2-fabric-deploy-cvp.yml --tags provision -i inventories/DC2/inventory.yml
+```
+
+## License
+
+Project is published under [Apache License](License).
