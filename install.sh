@@ -40,7 +40,8 @@ if [ ! -d "${_ROOT_INSTALLATION_DIR}" ]; then
     # Deploy infrastructure makefile
     if [ -d ${_ROOT_INSTALLATION_DIR} ]; then
         echo "deploying development content to ${_ROOT_INSTALLATION_DIR}"
-        cp ${_ROOT_INSTALLATION_DIR}/${_LOCAL_EXAMPLES}/.github/Makefile ${_ROOT_INSTALLATION_DIR}/Makefile
+        cd ${_ROOT_INSTALLATION_DIR}
+        cp ${_LOCAL_EXAMPLES}/.github/Makefile ${_ROOT_INSTALLATION_DIR}/Makefile
     else
         echo "  ! error: development folder is missing: ${_DEV_FOLDER}"
         exit 1
@@ -57,6 +58,7 @@ if [ ! -d "${_ROOT_INSTALLATION_DIR}" ]; then
         echo "Installtion done."
         echo "Because docker is missing, we cannot start shell !"
         echo "You can access setup at ${_ROOT_INSTALLATION_DIR} to review all the files"
+    fi
 else
     echo "  ! local installation folder already exists - ${_ROOT_INSTALLATION_DIR}"
     exit 1
