@@ -1,6 +1,7 @@
 # Makefile for ipSpace Webinar
 
 CONTAINER ?= avdteam/base:3.6
+HOME_DIR = $(PWD)
 
 .PHONY: help
 help: ## Display help message (*: main entry points / []: part of an entry point)
