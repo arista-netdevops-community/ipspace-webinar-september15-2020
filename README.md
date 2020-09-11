@@ -11,6 +11,8 @@ __Content used for ipSpace webinar / Work In Progress__
 - [ipSpace Webinar with Ansible Arista Validated Design](#ipspace-webinar-with-ansible-arista-validated-design)
   - [Lab Topology](#lab-topology)
   - [Quick Start](#quick-start)
+    - [Repository installation](#repository-installation)
+    - [Ansible commands](#ansible-commands)
   - [Requirements](#requirements)
   - [Step by Step demo](#step-by-step-demo)
     - [Provision border-leaf devices](#provision-border-leaf-devices)
@@ -42,13 +44,31 @@ The Lab topology consists of four spines, seven L3 leafs and and three L2 Leafs,
 
 ## Quick Start
 
+### Repository installation
+
+Below is the manual process to install collection and repository
+
 ```shell
+# Clone current repository
+$ git clone https://github.com/arista-netdevops-community/ipspace-webinar-september15-2020.git
+$ cd ipspace-webinar-september15-2020.git
+
 # Start a pre-configured shell using docker
 $ make shell
 
 # Install AVD and CVP collection
 $ make install
+```
 
+Or you can use oneliner installation:
+
+```shell
+$ sh -c "$(curl -fsSL https://raw.githubusercontent.com/arista-netdevops-community/ipspace-webinar-september15-2020/master/install.sh)"
+```
+
+### Ansible commands
+
+```shell
 # Edit Inventory file
 $ vim inventories/DC{1|2}/inventory.yml
 
