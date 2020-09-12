@@ -202,7 +202,7 @@ _Playbook_: [dc{1|2}-fabric-deploy-cvp.yml](playbooks/dc1-fabric-deploy-cvp.yml)
 
 ```shell
 # Shortcut command
-$ make dc-provision
+$ make dc-deploy-cvp
 
 # Ansible command
 $ ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --tags provision -i inventories/DC1/inventory.yml
@@ -217,7 +217,6 @@ Because AVD provides 2 different approaches, we will detail both of them:
 
 - Upload configlets and configure AVD to attach them to devices (use-case for DC1)
 - Insert an intermediate role to generate DCI configuration (use-case for DC2)
-
 
 #### Configure DCI on DC1
 
@@ -249,7 +248,7 @@ _Playbook_: [dc1-fabric-deploy-cvp.yml](playbooks/dc1-fabric-deploy-cvp.yml)
 ```shell
 # Shortcut command
 $ make dc1-build
-$ make dc1-provision
+$ make dc1-deploy-cvp
 
 # Ansible command
 $ ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --tags build -i inventories/DC1/inventory.yml
@@ -341,9 +340,19 @@ _Playbook_: [dc2-fabric-deploy-cvp.yml](playbooks/dc2-fabric-deploy-cvp.yml)
          name: arista.avd.eos_cli_config_gen
 ```
 
+```shell
+# Shortcut command
+$ make dc2-build
+$ make dc2-deploy-cvp
+
+# Ansible command
+$ ansible-playbook playbooks/dc2-fabric-deploy-cvp.yml --tags build -i inventories/DC2/inventory.yml
+$ ansible-playbook playbooks/dc2-fabric-deploy-cvp.yml --tags provision -i inventories/DC2/inventory.yml
+```
+
 ### Validate EOS device states
 
-In this section, we will check our EOS devices are configured based on __structured-config__ generated with the build phase.
+In this section, we will check our EOS devices that are configured based on __structured-config__ generated with the build phase.
 
 _Playbook_: [dc{1|2}-fabric-validate-state.yml](playbooks/dc1-fabric-validate-state.yml)
 
@@ -443,7 +452,7 @@ _Playbook_: [dc{1|2}-fabric-deploy-cvp.yml](playbooks/dc1-fabric-deploy-cvp.yml)
 
 ```shell
 # Shortcut command
-$ make dc-provision
+$ make dc-deploy-cvp
 
 # Ansible command
 $ ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --tags provision -i inventories/DC1/inventory.yml
