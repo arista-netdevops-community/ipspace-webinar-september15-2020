@@ -36,7 +36,7 @@ Devices configuration are based on [Arista EVPN Design Guide](https://www.arista
 
 ## Lab Topology
 
-The Lab topology consists of four spines, seven L3 leafs and and three L2 Leafs, deployed on vEOS-LAB.
+The Lab topology consists of two L3 leaf and spine EVPN fabric, DC1 and DC2, deployed on vEOS-LAB.
 
 ![Lab Topology](medias/topology.gif)
 
