@@ -76,20 +76,20 @@ l3leaf:
           id: 2
           mgmt_ip: 192.168.200.154/24
           spine_interfaces: [ Ethernet2, Ethernet2 ]
-    DC2_BL1:
-      bgp_as: 65202
-      filter:
-        tenants: [ all ]
-        tags: [ wan ]
-      nodes:
-        DC2-BL1A:
-          id: 3
-          mgmt_ip: 192.168.200.155/24
-          spine_interfaces: [ Ethernet3, Ethernet3 ]
-        DC2-BL1B:
-          id: 4
-          mgmt_ip: 192.168.200.156/24
-          spine_interfaces: [ Ethernet4, Ethernet4 ]
+    # DC2_BL1:
+    #   bgp_as: 65202
+    #   filter:
+    #     tenants: [ all ]
+    #     tags: [ wan ]
+    #   nodes:
+    #     DC2-BL1A:
+    #       id: 3
+    #       mgmt_ip: 192.168.200.155/24
+    #       spine_interfaces: [ Ethernet3, Ethernet3 ]
+    #     DC2-BL1B:
+    #       id: 4
+    #       mgmt_ip: 192.168.200.156/24
+    #       spine_interfaces: [ Ethernet4, Ethernet4 ]
 
 l2leaf:
   defaults:
