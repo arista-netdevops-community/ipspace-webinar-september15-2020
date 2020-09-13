@@ -2,8 +2,6 @@
 
 # ipSpace Webinar with Ansible Arista Validated Design
 
-__Content used for ipSpace webinar / Work In Progress__
-
 <!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
 
 <!-- code_chunk_output -->
@@ -28,7 +26,7 @@ __Content used for ipSpace webinar / Work In Progress__
 
 <!-- /code_chunk_output -->
 
-Repository provides modules and roles to build an EVPN/VXLAN fabric using Ansible to build and deploy configuration to devices.
+This repository provides an example on how to build an EVPN/VXLAN fabric using Ansible Collection For Arista Validated Designs (arista.avd)- to build and deploy configuration to devices.
 
 Devices configuration are based on [Arista EVPN Design Guide](https://www.arista.com/en/solutions/design-guides) and cover a generic Unified Cloud Network environment.
 
@@ -36,7 +34,7 @@ Devices configuration are based on [Arista EVPN Design Guide](https://www.arista
 
 ## Lab Topology
 
-The Lab topology consists of two L3 leaf and spine EVPN fabric, DC1 and DC2, deployed on vEOS-LAB.
+The Lab topology consists of two L3 leaf and spine EVPN fabrics, DC1 and DC2, deployed on vEOS-LAB.
 
 ![Lab Topology](medias/topology.gif)
 
