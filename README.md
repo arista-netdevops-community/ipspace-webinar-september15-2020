@@ -218,15 +218,14 @@ Because AVD provides 2 different approaches, we will detail both of them:
 
 #### Configure DCI on DC1
 
-Configlets are stored in [inventories/dc1/configlets/](inventories/dc1/configlets/) folder
+Configlets are stored in [inventories/dc1/configlets/](inventories/dc1/configlets/) folder.
 
-- Upload configlet on Cloudvision
+Pre-defined configlets have been pre-staged with the required configuration:
 
-```shell
-$ ansible-playbook playbooks/dc1-configlet-upload.yml -i inventories/DC1/inventory.yml
-```
+- DCI_DC1-BL1A.conf
+- DCI_DC1-BL1A.conf
 
-- Update border leaf configuration in AVD
+Update border leaf configuration in AVD, to bind the configlets to the device.
 
 Edit [DC1_FABRIC.yml](inventories/dc1/../DC1/group_vars/DC1_FABRIC.yml)
 
@@ -234,9 +233,9 @@ Edit [DC1_FABRIC.yml](inventories/dc1/../DC1/group_vars/DC1_FABRIC.yml)
 cv_configlets:
   devices:
     DC1-BL1A:
-      - DCI-DC1-BL1A
+      - DC1-CUSTOM_DCI_DC1-BL1A
     DC1-BL1B:
-      - DCI-DC1-BL1B
+      - DC1-CUSTOM_DCI_DC1-BL1B
 ```
 
 - Provision changes on Cloudvision
@@ -245,11 +244,9 @@ _Playbook_: [dc1-fabric-deploy-cvp.yml](playbooks/dc1-fabric-deploy-cvp.yml)
 
 ```shell
 # Shortcut command
-$ make dc1-build
 $ make dc1-deploy-cvp
 
 # Ansible command
-$ ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --tags build -i inventories/DC1/inventory.yml
 $ ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --tags provision -i inventories/DC1/inventory.yml
 ```
 
