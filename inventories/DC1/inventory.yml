@@ -36,12 +36,12 @@ all:
                       ansible_host: 192.168.200.108
                     DC1-SVC3B:
                       ansible_host: 192.168.200.109
-                # DC1_BL1:
-                #   hosts:
-                #     DC1-BL1A:
-                #       ansible_host: 192.168.200.110
-                #     DC1-BL1B:
-                #       ansible_host: 192.168.200.111
+                DC1_BL1:
+                  hosts:
+                    DC1-BL1A:
+                      ansible_host: 192.168.200.110
+                    DC1-BL1B:
+                      ansible_host: 192.168.200.111
             DC1_L2LEAFS:
               children:
                 DC1_L2LEAF1:

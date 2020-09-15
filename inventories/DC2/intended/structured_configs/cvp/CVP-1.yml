@@ -30,6 +30,18 @@ CVP_DEVICES:
     configlets:
       - DC2-AVD_DC2-LEAF1B
     imageBundle: []
+  DC2-BL1A:
+    name: DC2-BL1A
+    parentContainerName: DC2_BL1
+    configlets:
+      - DC2-AVD_DC2-BL1A
+    imageBundle: []
+  DC2-BL1B:
+    name: DC2-BL1B
+    parentContainerName: DC2_BL1
+    configlets:
+      - DC2-AVD_DC2-BL1B
+    imageBundle: []
 CVP_CONTAINERS:
   DC2_FABRIC:
     parent_container: Tenant
@@ -41,6 +53,8 @@ CVP_CONTAINERS:
     parent_container: DC2_L2LEAFS
   DC2_LEAFS:
     parent_container: DC2_FABRIC
+  DC2_BL1:
+    parent_container: DC2_LEAFS
   DC2_LEAF1:
     parent_container: DC2_LEAFS
   DC2_SPINES:

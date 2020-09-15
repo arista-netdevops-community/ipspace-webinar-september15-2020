@@ -22,12 +22,12 @@ all:
                       ansible_host: 192.168.200.153
                     DC2-LEAF1B:
                       ansible_host: 192.168.200.154
-                # DC2_BL1:
-                #   hosts:
-                #     DC2-BL1A:
-                #       ansible_host: 192.168.200.155
-                #     DC2-BL1B:
-                #       ansible_host: 192.168.200.156
+                DC2_BL1:
+                  hosts:
+                    DC2-BL1A:
+                      ansible_host: 192.168.200.155
+                    DC2-BL1B:
+                      ansible_host: 192.168.200.156
             DC2_L2LEAFS:
               children:
                 DC2_L2LEAF1:

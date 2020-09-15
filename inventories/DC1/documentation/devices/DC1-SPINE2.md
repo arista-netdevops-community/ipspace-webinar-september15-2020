@@ -223,6 +223,8 @@ No Port-Channels defined
 | Ethernet3 | P2P_LINK_TO_DC1-LEAF2B_Ethernet2 | 1500 | routed | access | - | - | - | 172.31.251.18/31 | - | - |
 | Ethernet4 | P2P_LINK_TO_DC1-SVC3A_Ethernet2 | 1500 | routed | access | - | - | - | 172.31.251.26/31 | - | - |
 | Ethernet5 | P2P_LINK_TO_DC1-SVC3B_Ethernet2 | 1500 | routed | access | - | - | - | 172.31.251.34/31 | - | - |
+| Ethernet6 | P2P_LINK_TO_DC1-BL1A_Ethernet2 | 1500 | routed | access | - | - | - | 172.31.251.42/31 | - | - |
+| Ethernet7 | P2P_LINK_TO_DC1-BL1B_Ethernet2 | 1500 | routed | access | - | - | - | 172.31.251.50/31 | - | - |
 
 *Inherited from Port-Channel Interface
 
@@ -254,6 +256,16 @@ interface Ethernet5
    description P2P_LINK_TO_DC1-SVC3B_Ethernet2
    no switchport
    ip address 172.31.251.34/31
+!
+interface Ethernet6
+   description P2P_LINK_TO_DC1-BL1A_Ethernet2
+   no switchport
+   ip address 172.31.251.42/31
+!
+interface Ethernet7
+   description P2P_LINK_TO_DC1-BL1B_Ethernet2
+   no switchport
+   ip address 172.31.251.50/31
 ```
 
 ## Loopback Interfaces
@@ -482,11 +494,15 @@ router bfd
 | 172.31.251.19 | 65102 |
 | 172.31.251.27 | 65103 |
 | 172.31.251.35 | 65103 |
+| 172.31.251.43 | 65104 |
+| 172.31.251.51 | 65104 |
 | 192.168.251.5 | 65101 |
 | 192.168.251.6 | 65102 |
 | 192.168.251.7 | 65102 |
 | 192.168.251.8 | 65103 |
 | 192.168.251.9 | 65103 |
+| 192.168.251.10 | 65104 |
+| 192.168.251.11 | 65104 |
 
 ### Router BGP EVPN Address Family
 
@@ -527,6 +543,10 @@ router bgp 65100
    neighbor 172.31.251.27 remote-as 65103
    neighbor 172.31.251.35 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.251.35 remote-as 65103
+   neighbor 172.31.251.43 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.251.43 remote-as 65104
+   neighbor 172.31.251.51 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.251.51 remote-as 65104
    neighbor 192.168.251.5 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.251.5 remote-as 65101
    neighbor 192.168.251.6 peer group EVPN-OVERLAY-PEERS
@@ -537,6 +557,10 @@ router bgp 65100
    neighbor 192.168.251.8 remote-as 65103
    neighbor 192.168.251.9 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.251.9 remote-as 65103
+   neighbor 192.168.251.10 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.251.10 remote-as 65104
+   neighbor 192.168.251.11 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.251.11 remote-as 65104
    redistribute connected route-map RM-CONN-2-BGP
    !
    address-family evpn

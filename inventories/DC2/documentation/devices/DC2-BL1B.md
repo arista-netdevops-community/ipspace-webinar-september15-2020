@@ -1,4 +1,4 @@
-# DC1-SPINE1
+# DC2-BL1B
 
 ## Management Interfaces
 
@@ -8,7 +8,7 @@ IPv4
 
 | Management Interface | description | VRF | IP Address | Gateway |
 | -------------------- | ----------- | --- | ---------- | ------- |
-| Management1 | oob_management | MGMT | 192.168.200.101/24 | 192.168.200.1 |
+| Management1 | oob_management | MGMT | 192.168.200.156/24 | 192.168.200.1 |
 
 IPv6
 
@@ -23,7 +23,7 @@ IPv6
 interface Management1
    description oob_management
    vrf MGMT
-   ip address 192.168.200.101/24
+   ip address 192.168.200.156/24
 ```
 
 ## Hardware Counters
@@ -141,14 +141,21 @@ No sFlow defined
 
 ### Spanning Tree Summary
 
-Mode: none
+Mode: mstp
 
+**MSTP Instance and Priority**:
+
+| Instance | Priority |
+| -------- | -------- |
+| 0 | 4096 |
 
 ### Spanning Tree Device Configuration
 
 ```eos
 !
-spanning-tree mode none
+spanning-tree mode mstp
+no spanning-tree vlan-id 4094
+spanning-tree mst 0 priority 4096
 ```
 
 
@@ -191,7 +198,25 @@ username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAW
 
 ## VLANs
 
-No VLANs defined
+### VLANs Summary
+
+| VLAN ID | Name | Trunk Groups |
+| ------- | ---- | ------------ |
+| 4093 | LEAF_PEER_L3 | LEAF_PEER_L3  |
+| 4094 | MLAG_PEER | MLAG  |
+
+### VLANs Device Configuration
+
+```eos
+!
+vlan 4093
+   name LEAF_PEER_L3
+   trunk group LEAF_PEER_L3
+!
+vlan 4094
+   name MLAG_PEER
+   trunk group MLAG
+```
 
 ## VRF Instances
 
@@ -210,7 +235,23 @@ vrf instance MGMT
 
 ## Port-Channel Interfaces
 
-No Port-Channels defined
+### Port-Channel Interfaces Summary
+
+| Interface | Description | MTU | Type | Mode | Allowed VLANs (trunk) | Trunk Group | MLAG ID | EVPN ESI | VRF | IP Address | IPv6 Address |
+| --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | ------- | -------- | --- | ---------- | ------------ |
+| Port-Channel3 | MLAG_PEER_DC2-BL1A_Po3 | 1500 | switched | trunk | 2-4094 | LEAF_PEER_L3<br> MLAG | - | - | - | - | - |
+
+### Port-Channel Interfaces Device Configuration
+
+```eos
+!
+interface Port-Channel3
+   description MLAG_PEER_DC2-BL1A_Po3
+   switchport trunk allowed vlan 2-4094
+   switchport mode trunk
+   switchport trunk group LEAF_PEER_L3
+   switchport trunk group MLAG
+```
 
 ## Ethernet Interfaces
 
@@ -218,13 +259,10 @@ No Port-Channels defined
 
 | Interface | Description | MTU | Type | Mode | Allowed VLANs (Trunk) | Trunk Group | VRF | IP Address | Channel-Group ID | Channel-Group Type |
 | --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | --- | ---------- | ---------------- | ------------------ |
-| Ethernet1 | P2P_LINK_TO_DC1-LEAF1A_Ethernet1 | 1500 | routed | access | - | - | - | 172.31.251.0/31 | - | - |
-| Ethernet2 | P2P_LINK_TO_DC1-LEAF2A_Ethernet1 | 1500 | routed | access | - | - | - | 172.31.251.8/31 | - | - |
-| Ethernet3 | P2P_LINK_TO_DC1-LEAF2B_Ethernet1 | 1500 | routed | access | - | - | - | 172.31.251.16/31 | - | - |
-| Ethernet4 | P2P_LINK_TO_DC1-SVC3A_Ethernet1 | 1500 | routed | access | - | - | - | 172.31.251.24/31 | - | - |
-| Ethernet5 | P2P_LINK_TO_DC1-SVC3B_Ethernet1 | 1500 | routed | access | - | - | - | 172.31.251.32/31 | - | - |
-| Ethernet6 | P2P_LINK_TO_DC1-BL1A_Ethernet1 | 1500 | routed | access | - | - | - | 172.31.251.40/31 | - | - |
-| Ethernet7 | P2P_LINK_TO_DC1-BL1B_Ethernet1 | 1500 | routed | access | - | - | - | 172.31.251.48/31 | - | - |
+| Ethernet1 | P2P_LINK_TO_DC2-SPINE1_Ethernet4 | 1500 | routed | access | - | - | - | 172.31.252.13/31 | - | - |
+| Ethernet2 | P2P_LINK_TO_DC2-SPINE2_Ethernet4 | 1500 | routed | access | - | - | - | 172.31.252.15/31 | - | - |
+| Ethernet3 | MLAG_PEER_DC2-BL1A_Ethernet3 | *1500 | *switched | *trunk | *2-4094 | *LEAF_PEER_L3<br> *MLAG | - | - | 3 | active |
+| Ethernet4 | MLAG_PEER_DC2-BL1A_Ethernet4 | *1500 | *switched | *trunk | *2-4094 | *LEAF_PEER_L3<br> *MLAG | - | - | 3 | active |
 
 *Inherited from Port-Channel Interface
 
@@ -233,39 +271,22 @@ No Port-Channels defined
 ```eos
 !
 interface Ethernet1
-   description P2P_LINK_TO_DC1-LEAF1A_Ethernet1
+   description P2P_LINK_TO_DC2-SPINE1_Ethernet4
    no switchport
-   ip address 172.31.251.0/31
+   ip address 172.31.252.13/31
 !
 interface Ethernet2
-   description P2P_LINK_TO_DC1-LEAF2A_Ethernet1
+   description P2P_LINK_TO_DC2-SPINE2_Ethernet4
    no switchport
-   ip address 172.31.251.8/31
+   ip address 172.31.252.15/31
 !
 interface Ethernet3
-   description P2P_LINK_TO_DC1-LEAF2B_Ethernet1
-   no switchport
-   ip address 172.31.251.16/31
+   description MLAG_PEER_DC2-BL1A_Ethernet3
+   channel-group 3 mode active
 !
 interface Ethernet4
-   description P2P_LINK_TO_DC1-SVC3A_Ethernet1
-   no switchport
-   ip address 172.31.251.24/31
-!
-interface Ethernet5
-   description P2P_LINK_TO_DC1-SVC3B_Ethernet1
-   no switchport
-   ip address 172.31.251.32/31
-!
-interface Ethernet6
-   description P2P_LINK_TO_DC1-BL1A_Ethernet1
-   no switchport
-   ip address 172.31.251.40/31
-!
-interface Ethernet7
-   description P2P_LINK_TO_DC1-BL1B_Ethernet1
-   no switchport
-   ip address 172.31.251.48/31
+   description MLAG_PEER_DC2-BL1A_Ethernet4
+   channel-group 3 mode active
 ```
 
 ## Loopback Interfaces
@@ -276,13 +297,15 @@ IPv4
 
 | Interface | Description | VRF | IP Address |
 | --------- | ----------- | --- | ---------- |
-| Loopback0 | EVPN_Overlay_Peering | Global Routing Table | 192.168.251.1/32 |
+| Loopback0 | EVPN_Overlay_Peering | Global Routing Table | 192.168.253.6/32 |
+| Loopback1 | VTEP_VXLAN_Tunnel_Source | Global Routing Table | 192.168.254.5/32 |
 
 IPv6
 
 | Interface | Description | VRF | IPv6 Address |
 | --------- | ----------- | --- | ------------ |
 | Loopback0 | EVPN_Overlay_Peering | Global Routing Table | - |
+| Loopback1 | VTEP_VXLAN_Tunnel_Source | Global Routing Table | - |
 
 ### Loopback Interfaces Device Configuration
 
@@ -290,19 +313,71 @@ IPv6
 !
 interface Loopback0
    description EVPN_Overlay_Peering
-   ip address 192.168.251.1/32
+   ip address 192.168.253.6/32
+!
+interface Loopback1
+   description VTEP_VXLAN_Tunnel_Source
+   ip address 192.168.254.5/32
 ```
 
 ## VLAN Interfaces
 
-No VLAN interfaces defined
+### VLAN Interfaces Summary
+
+| Interface | Description | VRF | IP Address | IP Address Virtual | IP Router Virtual Address (vARP) |
+| --------- | ----------- | --- | ---------- | ------------------ | -------------------------------- |
+| Vlan4093 | MLAG_PEER_L3_PEERING | Global Routing Table | 10.255.253.5/31 | - | - |
+| Vlan4094 | MLAG_PEER | Global Routing Table | 10.255.254.5/31 | - | - |
+
+### VLAN Interfaces Device Configuration
+
+```eos
+!
+interface Vlan4093
+   description MLAG_PEER_L3_PEERING
+   ip address 10.255.253.5/31
+!
+interface Vlan4094
+   description MLAG_PEER
+   no autostate
+   ip address 10.255.254.5/31
+```
 
 ## VXLAN Interface
 
-No VXLAN interface defined
+### VXLAN Interface Summary
+
+**Source Interface:** Loopback1
+**UDP port:** 4789
+
+**VLAN to VNI Mappings:**
+
+| VLAN | VNI |
+| ---- | --- |
+| N/A | N/A |
+
+### VXLAN Interface Device Configuration
+
+```eos
+!
+interface Vxlan1
+   vxlan source-interface Loopback1
+   vxlan virtual-router encapsulation mac-address mlag-system-id
+   vxlan udp-port 4789
+```
 
 ## Virtual Router MAC Address & Virtual Source NAT
 
+### Virtual Router MAC Address and Virtual Source NAT Summary
+
+**Virtual Router MAC Address:** 00:dc:00:00:00:0b
+
+### Virtual Router MAC Address Device and Virtual Source NAT Configuration
+
+```eos
+!
+ip virtual-router mac-address 00:dc:00:00:00:0b
+```
 
 ## IPv6 Extended Access-lists
 
@@ -363,14 +438,27 @@ no ip routing vrf MGMT
 
 | Sequence | Action |
 | -------- | ------ |
-| 10 | permit 192.168.251.0/24 le 32 |
+| 10 | permit 192.168.253.0/24 eq 32 |
+| 20 | permit 192.168.254.0/24 eq 32 |
+
+**PL-P2P-UNDERLAY:**
+
+| Sequence | Action |
+| -------- | ------ |
+| 10 | permit 172.31.252.0/24 le 31 |
+| 20 | permit 10.255.253.0/24 le 31 |
 
 ### Prefix Lists Device Configuration
 
 ```eos
 !
 ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
-   seq 10 permit 192.168.251.0/24 le 32
+   seq 10 permit 192.168.253.0/24 eq 32
+   seq 20 permit 192.168.254.0/24 eq 32
+!
+ip prefix-list PL-P2P-UNDERLAY
+   seq 10 permit 172.31.252.0/24 le 31
+   seq 20 permit 10.255.253.0/24 le 31
 ```
 
 ## IPv6 Prefix Lists
@@ -392,7 +480,28 @@ IPv6 Prefix lists not defined
 
 ## MLAG
 
-MLAG not defined
+### MLAG Summary
+
+| domain-id | local-interface | peer-address | peer-link |
+| --------- | --------------- | ------------ | --------- |
+| DC2_BL1 | Vlan4094 | 10.255.254.4 | Port-Channel3 |
+
+Dual primary detection is enabled. The detection delay is 5 seconds.
+
+### MLAG Device Configuration
+
+```eos
+!
+mlag configuration
+   domain-id DC2_BL1
+   local-interface Vlan4094
+   peer-address 10.255.254.4
+   peer-address heartbeat 192.168.200.155 vrf MGMT
+   peer-link Port-Channel3
+   dual-primary detection delay 5 action errdisable all-interfaces
+   reload-delay mlag 300
+   reload-delay non-mlag 330
+```
 
 ## Community Lists
 
@@ -418,21 +527,7 @@ route-map RM-CONN-2-BGP permit 10
 
 ## Peer Filters
 
-### Peer Filters Summary
-
-**LEAF-AS-RANGE:**
-
-| Sequence | Match |
-| -------- | ----- |
-| 10 | as-range 65101-65132 result accept |
-
-### Peer Filters Device Configuration
-
-```eos
-!
-peer-filter LEAF-AS-RANGE
-   10 match as-range 65101-65132 result accept
-```
+No Peer Filters defined
 
 ## Router BFD
 
@@ -456,13 +551,13 @@ router bfd
 
 | BGP AS | Router ID |
 | ------ | --------- |
-| 65100|  192.168.251.1 |
+| 65202|  192.168.253.6 |
 
 | BGP Tuning |
 | ---------- |
 | no bgp default ipv4-unicast |
 | distance bgp 20 200 200 |
-| maximum-paths 4 ecmp 4 |
+| maximum-paths 2 ecmp 2 |
 
 ### Router BGP Peer Groups
 
@@ -471,7 +566,7 @@ router bfd
 | Settings | Value |
 | -------- | ----- |
 | Address Family | evpn |
-| next-hop unchanged | true |
+| remote_as | 65200 |
 | source | Loopback0 |
 | bfd | true |
 | ebgp multihop | 3 |
@@ -483,26 +578,29 @@ router bfd
 | Settings | Value |
 | -------- | ----- |
 | Address Family | ipv4 |
+| remote_as | 65200 |
+| send community | true |
+| maximum routes | 12000 |
+
+**MLAG-IPv4-UNDERLAY-PEER**:
+
+| Settings | Value |
+| -------- | ----- |
+| Address Family | ipv4 |
+| remote_as | 65202 |
+| next-hop self | true |
+| send community | true |
 | maximum routes | 12000 |
 
 ### BGP Neighbors
 
 | Neighbor | Remote AS |
 | -------- | ---------
-| 172.31.251.1 | 65101 |
-| 172.31.251.9 | 65102 |
-| 172.31.251.17 | 65102 |
-| 172.31.251.25 | 65103 |
-| 172.31.251.33 | 65103 |
-| 172.31.251.41 | 65104 |
-| 172.31.251.49 | 65104 |
-| 192.168.251.5 | 65101 |
-| 192.168.251.6 | 65102 |
-| 192.168.251.7 | 65102 |
-| 192.168.251.8 | 65103 |
-| 192.168.251.9 | 65103 |
-| 192.168.251.10 | 65104 |
-| 192.168.251.11 | 65104 |
+| 10.255.253.4 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER |
+| 172.31.252.12 | Inherited from peer group IPv4-UNDERLAY-PEERS |
+| 172.31.252.14 | Inherited from peer group IPv4-UNDERLAY-PEERS |
+| 192.168.253.1 | Inherited from peer group EVPN-OVERLAY-PEERS |
+| 192.168.253.2 | Inherited from peer group EVPN-OVERLAY-PEERS |
 
 ### Router BGP EVPN Address Family
 
@@ -517,13 +615,13 @@ router bfd
 
 ```eos
 !
-router bgp 65100
-   router-id 192.168.251.1
+router bgp 65202
+   router-id 192.168.253.6
    no bgp default ipv4-unicast
    distance bgp 20 200 200
-   maximum-paths 4 ecmp 4
+   maximum-paths 2 ecmp 2
    neighbor EVPN-OVERLAY-PEERS peer group
-   neighbor EVPN-OVERLAY-PEERS next-hop-unchanged
+   neighbor EVPN-OVERLAY-PEERS remote-as 65200
    neighbor EVPN-OVERLAY-PEERS update-source Loopback0
    neighbor EVPN-OVERLAY-PEERS bfd
    neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3
@@ -531,45 +629,32 @@ router bgp 65100
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
    neighbor IPv4-UNDERLAY-PEERS peer group
+   neighbor IPv4-UNDERLAY-PEERS remote-as 65200
    neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==
+   neighbor IPv4-UNDERLAY-PEERS send-community
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
-   neighbor 172.31.251.1 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.251.1 remote-as 65101
-   neighbor 172.31.251.9 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.251.9 remote-as 65102
-   neighbor 172.31.251.17 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.251.17 remote-as 65102
-   neighbor 172.31.251.25 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.251.25 remote-as 65103
-   neighbor 172.31.251.33 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.251.33 remote-as 65103
-   neighbor 172.31.251.41 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.251.41 remote-as 65104
-   neighbor 172.31.251.49 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.251.49 remote-as 65104
-   neighbor 192.168.251.5 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.251.5 remote-as 65101
-   neighbor 192.168.251.6 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.251.6 remote-as 65102
-   neighbor 192.168.251.7 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.251.7 remote-as 65102
-   neighbor 192.168.251.8 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.251.8 remote-as 65103
-   neighbor 192.168.251.9 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.251.9 remote-as 65103
-   neighbor 192.168.251.10 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.251.10 remote-as 65104
-   neighbor 192.168.251.11 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.251.11 remote-as 65104
+   neighbor MLAG-IPv4-UNDERLAY-PEER peer group
+   neighbor MLAG-IPv4-UNDERLAY-PEER remote-as 65202
+   neighbor MLAG-IPv4-UNDERLAY-PEER next-hop-self
+   neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==
+   neighbor MLAG-IPv4-UNDERLAY-PEER send-community
+   neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000
+   neighbor 10.255.253.4 peer group MLAG-IPv4-UNDERLAY-PEER
+   neighbor 172.31.252.12 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.252.14 peer group IPv4-UNDERLAY-PEERS
+   neighbor 192.168.253.1 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.253.2 peer group EVPN-OVERLAY-PEERS
    redistribute connected route-map RM-CONN-2-BGP
    !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate
       no neighbor IPv4-UNDERLAY-PEERS activate
+      no neighbor MLAG-IPv4-UNDERLAY-PEER activate
    !
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
       neighbor IPv4-UNDERLAY-PEERS activate
+      neighbor MLAG-IPv4-UNDERLAY-PEER activate
 ```
 
 ## Router Multicast
