@@ -58,12 +58,14 @@ CVP_DEVICES:
     name: DC1-BL1A
     parentContainerName: DC1_BL1
     configlets:
+      - DC1-CUSTOM_DCI_DC1-BL1A
       - DC1-AVD_DC1-BL1A
     imageBundle: []
   DC1-BL1B:
     name: DC1-BL1B
     parentContainerName: DC1_BL1
     configlets:
+      - DC1-CUSTOM_DCI_DC1-BL1B
       - DC1-AVD_DC1-BL1B
     imageBundle: []
   DC1-L2LEAF1A:
