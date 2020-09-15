@@ -205,6 +205,8 @@ username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAW
 | 211 | Tenant_A_OP_Zone_2 | none  |
 | 220 | Tenant_A_WEB_Zone_1 | none  |
 | 221 | Tenant_A_WEBZone_2 | none  |
+| 230 | Tenant_A_APP_Zone_1 | none  |
+| 231 | Tenant_A_APP_Zone_2 | none  |
 
 ### VLANs Device Configuration
 
@@ -221,6 +223,12 @@ vlan 220
 !
 vlan 221
    name Tenant_A_WEBZone_2
+!
+vlan 230
+   name Tenant_A_APP_Zone_1
+!
+vlan 231
+   name Tenant_A_APP_Zone_2
 ```
 
 ## VRF Instances
@@ -244,7 +252,7 @@ vrf instance MGMT
 
 | Interface | Description | MTU | Type | Mode | Allowed VLANs (trunk) | Trunk Group | MLAG ID | EVPN ESI | VRF | IP Address | IPv6 Address |
 | --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | ------- | -------- | --- | ---------- | ------------ |
-| Port-Channel1 | DC2-LEAF1A_Po3 | 1500 | switched | trunk | 210-211,220-221 | - | 1 | - | - | - | - |
+| Port-Channel1 | DC2-LEAF1A_Po3 | 1500 | switched | trunk | 210-211,220-221,230-231 | - | 1 | - | - | - | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -252,7 +260,7 @@ vrf instance MGMT
 !
 interface Port-Channel1
    description DC2-LEAF1A_Po3
-   switchport trunk allowed vlan 210-211,220-221
+   switchport trunk allowed vlan 210-211,220-221,230-231
    switchport mode trunk
    mlag 1
 ```
@@ -263,8 +271,8 @@ interface Port-Channel1
 
 | Interface | Description | MTU | Type | Mode | Allowed VLANs (Trunk) | Trunk Group | VRF | IP Address | Channel-Group ID | Channel-Group Type |
 | --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | --- | ---------- | ---------------- | ------------------ |
-| Ethernet1 | DC2-LEAF1A_Ethernet3 | *1500 | *switched | *trunk | *210-211,220-221 | - | - | - | 1 | active |
-| Ethernet2 | DC2-LEAF1B_Ethernet3 | *1500 | *switched | *trunk | *210-211,220-221 | - | - | - | 1 | active |
+| Ethernet1 | DC2-LEAF1A_Ethernet3 | *1500 | *switched | *trunk | *210-211,220-221,230-231 | - | - | - | 1 | active |
+| Ethernet2 | DC2-LEAF1B_Ethernet3 | *1500 | *switched | *trunk | *210-211,220-221,230-231 | - | - | - | 1 | active |
 | Ethernet3 | server-2_Eth1 | 1500 | switched | access | 210 | - | - | - | - | - |
 
 *Inherited from Port-Channel Interface

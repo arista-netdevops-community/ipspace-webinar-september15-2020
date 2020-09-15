@@ -59,24 +59,24 @@ tenants:
             enabled: true
             ip_address_virtual: 10.1.21.1/24
 
-      # Tenant_A_APP_Zone:
-      #   vrf_vni: 12
-      #   svis:
-      #     130:
-      #       name: Tenant_A_APP_Zone_1
-      #       tags: [ app, erp1 ]
-      #       enabled: true
-      #       ip_address_virtual: 10.1.30.1/24
-      #     131:
-      #       name: Tenant_A_APP_Zone_2
-      #       tags: [ app ]
-      #       enabled: true
-      #       ip_address_virtual: 10.1.31.1/24
+      Tenant_A_APP_Zone:
+        vrf_vni: 12
+        svis:
+          130:
+            name: Tenant_A_APP_Zone_1
+            tags: [ app, erp1 ]
+            enabled: true
+            ip_address_virtual: 10.1.30.1/24
+          131:
+            name: Tenant_A_APP_Zone_2
+            tags: [ app ]
+            enabled: true
+            ip_address_virtual: 10.1.31.1/24
 
     l2vlans:
-      # 160:
-      #   name: Tenant_A_VMOTION
-      #   tags: [ vmotion ]
+      160:
+        name: Tenant_A_VMOTION
+        tags: [ vmotion ]
       161:
         name: Tenant_A_NFS
         tags: [ nfs ]

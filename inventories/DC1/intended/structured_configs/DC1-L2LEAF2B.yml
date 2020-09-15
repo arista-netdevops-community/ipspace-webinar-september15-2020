@@ -10,9 +10,9 @@ leaf_id: 10
 switch_mgmt_ip: 192.168.200.114/24
 leaf_filter_tenants: ['all']
 leaf_filter_tags: ['all']
-leaf_allowed_vrfs: ['Tenant_A_OP_Zone', 'Tenant_A_WEB_Zone']
-leaf_allowed_svis: [110, 111, 120, 121]
-leaf_allowed_vlans: [110, 111, 120, 121, 161]
+leaf_allowed_vrfs: ['Tenant_A_APP_Zone', 'Tenant_A_OP_Zone', 'Tenant_A_WEB_Zone']
+leaf_allowed_svis: [130, 131, 110, 111, 120, 121]
+leaf_allowed_vlans: [130, 131, 110, 111, 120, 121, 160, 161]
 leaf_mlag: True
 leaf_mlag_group: DC1_L2LEAF2
 leaf_mlag_role: secondary
@@ -112,6 +112,12 @@ vlans:
       - MLAG
 
 ## Tenant_A ##
+  130:
+    tenant: Tenant_A
+    name: Tenant_A_APP_Zone_1
+  131:
+    tenant: Tenant_A
+    name: Tenant_A_APP_Zone_2
   110:
     tenant: Tenant_A
     name: Tenant_A_OP_Zone_1
@@ -124,6 +130,9 @@ vlans:
   121:
     tenant: Tenant_A
     name: Tenant_A_WEBZone_2
+  160:
+    tenant: Tenant_A
+    name: Tenant_A_VMOTION
   161:
     tenant: Tenant_A
     name: Tenant_A_NFS
@@ -136,7 +145,7 @@ vrfs:
 port_channel_interfaces:
   Port-Channel1:
     description: DC1-SVC3B_Po7
-    vlans: 110-111,120-121,161
+    vlans: 110-111,120-121,130-131,160-161
     mode: trunk
     mlag: 1
 ## mlag peer-link ##

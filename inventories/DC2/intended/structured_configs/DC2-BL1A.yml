@@ -162,11 +162,11 @@ groups:
     DC2_FABRIC:
     - DC2-SPINE1
     - DC2-SPINE2
+    - DC2-L2LEAF1A
     - DC2-LEAF1A
     - DC2-LEAF1B
     - DC2-BL1A
     - DC2-BL1B
-    - DC2-L2LEAF1A
     DC2_L2LEAF1:
     - DC2-L2LEAF1A
     DC2_L2LEAFS:
@@ -180,37 +180,37 @@ groups:
     - DC2-BL1A
     - DC2-BL1B
     DC2_SERVERS:
+    - DC2-L2LEAF1A
     - DC2-LEAF1A
     - DC2-LEAF1B
     - DC2-BL1A
     - DC2-BL1B
-    - DC2-L2LEAF1A
     DC2_SPINES:
     - DC2-SPINE1
     - DC2-SPINE2
     DC2_TENANTS_NETWORKS:
+    - DC2-L2LEAF1A
     - DC2-LEAF1A
     - DC2-LEAF1B
     - DC2-BL1A
     - DC2-BL1B
-    - DC2-L2LEAF1A
     EOS:
     - DC2-SPINE1
     - DC2-SPINE2
+    - DC2-L2LEAF1A
     - DC2-LEAF1A
     - DC2-LEAF1B
     - DC2-BL1A
     - DC2-BL1B
-    - DC2-L2LEAF1A
     all:
     - CVP-1
     - DC2-SPINE1
     - DC2-SPINE2
+    - DC2-L2LEAF1A
     - DC2-LEAF1A
     - DC2-LEAF1B
     - DC2-BL1A
     - DC2-BL1B
-    - DC2-L2LEAF1A
     ungrouped: []
 hardware_counters: null
 inventory_dir: /projects/ipspace-webinar-september15-2020/inventories/DC2
@@ -389,7 +389,7 @@ ntp_server:
 ntp_servers:
 - 0.north-america.pool.ntp.org
 - 1.north-america.pool.ntp.org
-omit: __omit_place_holder__56ab4463b409375d04d08d4b0e9d632719a9e0eb
+omit: __omit_place_holder__a9aefcfa915a9a333461655608fd1ebada48b672
 overlay_loopback_network_summary: 192.168.253.0/24
 p2p_uplinks_mtu: 1500
 playbook_dir: /projects/ipspace-webinar-september15-2020/playbooks
@@ -572,12 +572,32 @@ tcam_profile: null
 tenants:
     Tenant_A:
         l2vlans:
+            260:
+                name: Tenant_A_VMOTION
+                tags:
+                - vmotion
             261:
                 name: Tenant_A_NFS
                 tags:
                 - nfs
         mac_vrf_vni_base: 20000
         vrfs:
+            Tenant_A_APP_Zone:
+                svis:
+                    230:
+                        enabled: true
+                        ip_address_virtual: 10.2.30.1/24
+                        name: Tenant_A_APP_Zone_1
+                        tags:
+                        - app
+                        - erp1
+                    231:
+                        enabled: true
+                        ip_address_virtual: 10.2.31.1/24
+                        name: Tenant_A_APP_Zone_2
+                        tags:
+                        - app
+                vrf_vni: 12
             Tenant_A_OP_Zone:
                 svis:
                     210:

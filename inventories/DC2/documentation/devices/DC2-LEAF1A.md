@@ -207,9 +207,13 @@ username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAW
 | 212 | Tenant_A_OP_Zone_3 | none  |
 | 220 | Tenant_A_WEB_Zone_1 | none  |
 | 221 | Tenant_A_WEBZone_2 | none  |
+| 230 | Tenant_A_APP_Zone_1 | none  |
+| 231 | Tenant_A_APP_Zone_2 | none  |
+| 260 | Tenant_A_VMOTION | none  |
 | 261 | Tenant_A_NFS | none  |
 | 3009 | MLAG_iBGP_Tenant_A_OP_Zone | LEAF_PEER_L3  |
 | 3010 | MLAG_iBGP_Tenant_A_WEB_Zone | LEAF_PEER_L3  |
+| 3011 | MLAG_iBGP_Tenant_A_APP_Zone | LEAF_PEER_L3  |
 | 4093 | LEAF_PEER_L3 | LEAF_PEER_L3  |
 | 4094 | MLAG_PEER | MLAG  |
 
@@ -232,6 +236,15 @@ vlan 220
 vlan 221
    name Tenant_A_WEBZone_2
 !
+vlan 230
+   name Tenant_A_APP_Zone_1
+!
+vlan 231
+   name Tenant_A_APP_Zone_2
+!
+vlan 260
+   name Tenant_A_VMOTION
+!
 vlan 261
    name Tenant_A_NFS
 !
@@ -241,6 +254,10 @@ vlan 3009
 !
 vlan 3010
    name MLAG_iBGP_Tenant_A_WEB_Zone
+   trunk group LEAF_PEER_L3
+!
+vlan 3011
+   name MLAG_iBGP_Tenant_A_APP_Zone
    trunk group LEAF_PEER_L3
 !
 vlan 4093
@@ -259,6 +276,7 @@ vlan 4094
 | VRF Name | IP Routing |
 | -------- | ---------- |
 | MGMT |  disabled |
+| Tenant_A_APP_Zone |  enabled |
 | Tenant_A_OP_Zone |  enabled |
 | Tenant_A_WEB_Zone |  enabled |
 
@@ -267,6 +285,8 @@ vlan 4094
 ```eos
 !
 vrf instance MGMT
+!
+vrf instance Tenant_A_APP_Zone
 !
 vrf instance Tenant_A_OP_Zone
 !
@@ -279,7 +299,7 @@ vrf instance Tenant_A_WEB_Zone
 
 | Interface | Description | MTU | Type | Mode | Allowed VLANs (trunk) | Trunk Group | MLAG ID | EVPN ESI | VRF | IP Address | IPv6 Address |
 | --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | ------- | -------- | --- | ---------- | ------------ |
-| Port-Channel3 | DC2_L2LEAF1_Po1 | 1500 | switched | trunk | 210-211,220-221 | - | 3 | - | - | - | - |
+| Port-Channel3 | DC2_L2LEAF1_Po1 | 1500 | switched | trunk | 210-211,220-221,230-231 | - | 3 | - | - | - | - |
 | Port-Channel4 | server-2_PortChanne1 | 1500 | switched | trunk | 220-221,230-231,260-261 | - | 4 | - | - | - | - |
 | Port-Channel13 | MLAG_PEER_DC2-LEAF1B_Po13 | 1500 | switched | trunk | 2-4094 | LEAF_PEER_L3<br> MLAG | - | - | - | - | - |
 
@@ -289,7 +309,7 @@ vrf instance Tenant_A_WEB_Zone
 !
 interface Port-Channel3
    description DC2_L2LEAF1_Po1
-   switchport trunk allowed vlan 210-211,220-221
+   switchport trunk allowed vlan 210-211,220-221,230-231
    switchport mode trunk
    mlag 3
 !
@@ -315,7 +335,7 @@ interface Port-Channel13
 | --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | --- | ---------- | ---------------- | ------------------ |
 | Ethernet1 | P2P_LINK_TO_DC2-SPINE1_Ethernet1 | 1500 | routed | access | - | - | - | 172.31.252.1/31 | - | - |
 | Ethernet2 | P2P_LINK_TO_DC2-SPINE2_Ethernet1 | 1500 | routed | access | - | - | - | 172.31.252.3/31 | - | - |
-| Ethernet3 | DC2-L2LEAF1A_Ethernet1 | *1500 | *switched | *trunk | *210-211,220-221 | - | - | - | 3 | active |
+| Ethernet3 | DC2-L2LEAF1A_Ethernet1 | *1500 | *switched | *trunk | *210-211,220-221,230-231 | - | - | - | 3 | active |
 | Ethernet4 | server-2_Eth2 | *1500 | *switched | *trunk | *220-221,230-231,260-261 | - | - | - | 4 | active |
 | Ethernet13 | MLAG_PEER_DC2-LEAF1B_Ethernet13 | *1500 | *switched | *trunk | *2-4094 | *LEAF_PEER_L3<br> *MLAG | - | - | 13 | active |
 | Ethernet14 | MLAG_PEER_DC2-LEAF1B_Ethernet14 | *1500 | *switched | *trunk | *2-4094 | *LEAF_PEER_L3<br> *MLAG | - | - | 13 | active |
@@ -402,8 +422,11 @@ interface Loopback100
 | Vlan212 | Tenant_A_OP_Zone_3 | Tenant_A_OP_Zone | - | - | 10.2.12.1 |
 | Vlan220 | Tenant_A_WEB_Zone_1 | Tenant_A_WEB_Zone | - | 10.2.20.1/24 | - |
 | Vlan221 | Tenant_A_WEBZone_2 | Tenant_A_WEB_Zone | - | 10.2.21.1/24 | - |
+| Vlan230 | Tenant_A_APP_Zone_1 | Tenant_A_APP_Zone | - | 10.2.30.1/24 | - |
+| Vlan231 | Tenant_A_APP_Zone_2 | Tenant_A_APP_Zone | - | 10.2.31.1/24 | - |
 | Vlan3009 | MLAG_PEER_L3_iBGP: vrf Tenant_A_OP_Zone | Tenant_A_OP_Zone | 10.255.253.0/31 | - | - |
 | Vlan3010 | MLAG_PEER_L3_iBGP: vrf Tenant_A_WEB_Zone | Tenant_A_WEB_Zone | 10.255.253.0/31 | - | - |
+| Vlan3011 | MLAG_PEER_L3_iBGP: vrf Tenant_A_APP_Zone | Tenant_A_APP_Zone | 10.255.253.0/31 | - | - |
 | Vlan4093 | MLAG_PEER_L3_PEERING | Global Routing Table | 10.255.253.0/31 | - | - |
 | Vlan4094 | MLAG_PEER | Global Routing Table | 10.255.254.0/31 | - | - |
 
@@ -436,6 +459,16 @@ interface Vlan221
    vrf Tenant_A_WEB_Zone
    ip address virtual 10.2.21.1/24
 !
+interface Vlan230
+   description Tenant_A_APP_Zone_1
+   vrf Tenant_A_APP_Zone
+   ip address virtual 10.2.30.1/24
+!
+interface Vlan231
+   description Tenant_A_APP_Zone_2
+   vrf Tenant_A_APP_Zone
+   ip address virtual 10.2.31.1/24
+!
 interface Vlan3009
    description MLAG_PEER_L3_iBGP: vrf Tenant_A_OP_Zone
    vrf Tenant_A_OP_Zone
@@ -444,6 +477,11 @@ interface Vlan3009
 interface Vlan3010
    description MLAG_PEER_L3_iBGP: vrf Tenant_A_WEB_Zone
    vrf Tenant_A_WEB_Zone
+   ip address 10.255.253.0/31
+!
+interface Vlan3011
+   description MLAG_PEER_L3_iBGP: vrf Tenant_A_APP_Zone
+   vrf Tenant_A_APP_Zone
    ip address 10.255.253.0/31
 !
 interface Vlan4093
@@ -472,12 +510,16 @@ interface Vlan4094
 | 212 | 20212 |
 | 220 | 20220 |
 | 221 | 20221 |
+| 230 | 20230 |
+| 231 | 20231 |
+| 260 | 20260 |
 | 261 | 20261 |
 
 **VRF to VNI Mappings:**
 
 | VLAN | VNI |
 | ---- | --- |
+| Tenant_A_APP_Zone | 12 |
 | Tenant_A_OP_Zone | 10 |
 | Tenant_A_WEB_Zone | 11 |
 
@@ -494,7 +536,11 @@ interface Vxlan1
    vxlan vlan 212 vni 20212
    vxlan vlan 220 vni 20220
    vxlan vlan 221 vni 20221
+   vxlan vlan 230 vni 20230
+   vxlan vlan 231 vni 20231
+   vxlan vlan 260 vni 20260
    vxlan vlan 261 vni 20261
+   vxlan vrf Tenant_A_APP_Zone vni 12
    vxlan vrf Tenant_A_OP_Zone vni 10
    vxlan vrf Tenant_A_WEB_Zone vni 11
 ```
@@ -560,6 +606,7 @@ No Event Handler Defined
 | VRF | Routing Enabled |
 | --- | --------------- |
 | MGMT | False |
+| Tenant_A_APP_Zone | True |
 | Tenant_A_OP_Zone | True |
 | Tenant_A_WEB_Zone | True |
 
@@ -569,6 +616,7 @@ No Event Handler Defined
 !
 ip routing
 no ip routing vrf MGMT
+ip routing vrf Tenant_A_APP_Zone
 ip routing vrf Tenant_A_OP_Zone
 ip routing vrf Tenant_A_WEB_Zone
 ```
@@ -615,6 +663,7 @@ IPv6 Prefix lists not defined
 | VRF | IPv6 Routing Enabled |
 | --- | -------------------- |
 | MGMT | False |
+| Tenant_A_APP_Zone | False |
 | Tenant_A_OP_Zone | False |
 | Tenant_A_WEB_Zone | False |
 
@@ -755,8 +804,10 @@ router bfd
 
 | VLAN Aware Bundle | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute | VLANs |
 | ----------------- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ | ----- |
+| Tenant_A_APP_Zone | 192.168.253.3:12 |  12:12  |  |  | learned | 230-231 |
 | Tenant_A_NFS | 192.168.253.3:20261 |  20261:20261  |  |  | learned | 261 |
 | Tenant_A_OP_Zone | 192.168.253.3:10 |  10:10  |  |  | learned | 210-212 |
+| Tenant_A_VMOTION | 192.168.253.3:20260 |  20260:20260  |  |  | learned | 260 |
 | Tenant_A_WEB_Zone | 192.168.253.3:11 |  11:11  |  |  | learned | 220-221 |
 
 
@@ -764,6 +815,7 @@ router bfd
 
 | VRF | Route-Distinguisher | Redistribute |
 | --- | ------------------- | ------------ |
+| Tenant_A_APP_Zone | 192.168.253.3:12 | connected  |
 | Tenant_A_OP_Zone | 192.168.253.3:10 | connected  |
 | Tenant_A_WEB_Zone | 192.168.253.3:11 | connected  |
 
@@ -802,6 +854,12 @@ router bgp 65201
    neighbor 192.168.253.2 peer group EVPN-OVERLAY-PEERS
    redistribute connected route-map RM-CONN-2-BGP
    !
+   vlan-aware-bundle Tenant_A_APP_Zone
+      rd 192.168.253.3:12
+      route-target both 12:12
+      redistribute learned
+      vlan 230-231
+   !
    vlan-aware-bundle Tenant_A_NFS
       rd 192.168.253.3:20261
       route-target both 20261:20261
@@ -813,6 +871,12 @@ router bgp 65201
       route-target both 10:10
       redistribute learned
       vlan 210-212
+   !
+   vlan-aware-bundle Tenant_A_VMOTION
+      rd 192.168.253.3:20260
+      route-target both 20260:20260
+      redistribute learned
+      vlan 260
    !
    vlan-aware-bundle Tenant_A_WEB_Zone
       rd 192.168.253.3:11
@@ -829,6 +893,14 @@ router bgp 65201
       no neighbor EVPN-OVERLAY-PEERS activate
       neighbor IPv4-UNDERLAY-PEERS activate
       neighbor MLAG-IPv4-UNDERLAY-PEER activate
+   !
+   vrf Tenant_A_APP_Zone
+      rd 192.168.253.3:12
+      route-target import evpn 12:12
+      route-target export evpn 12:12
+      router-id 192.168.253.3
+      neighbor 10.255.253.1 peer group MLAG-IPv4-UNDERLAY-PEER
+      redistribute connected
    !
    vrf Tenant_A_OP_Zone
       rd 192.168.253.3:10
