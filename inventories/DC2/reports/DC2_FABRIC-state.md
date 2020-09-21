@@ -49,23 +49,23 @@
 | 52 | DC2-BL1B | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan4093 - MLAG_PEER_L3_PEERING | FAIL | interface status: down - line protocol status: lowerLayerDown |
 | 78 | DC2-BL1A | Interface State | Vxlan Interface Status & Line Protocol == "up" | Vxlan1 | FAIL | interface status: down - line protocol status: down |
 | 79 | DC2-BL1B | Interface State | Vxlan Interface Status & Line Protocol == "up" | Vxlan1 | FAIL | interface status: down - line protocol status: down |
-| 94 | DC2-BL1A | LLDP Topology | lldp topology - validate peer and interface | Ethernet1 - P2P_LINK_TO_DC2-SPINE1_Ethernet3 | FAIL | Interface Down - N/A |
-| 96 | DC2-BL1A | LLDP Topology | lldp topology - validate peer and interface | Ethernet3 - MLAG_PEER_DC2-BL1B_Ethernet3 | FAIL | Interface Down - N/A |
-| 97 | DC2-BL1A | LLDP Topology | lldp topology - validate peer and interface | Ethernet4 - MLAG_PEER_DC2-BL1B_Ethernet4 | FAIL | Interface Down - N/A |
-| 100 | DC2-BL1B | LLDP Topology | lldp topology - validate peer and interface | Ethernet3 - MLAG_PEER_DC2-BL1A_Ethernet3 | FAIL | Interface Down - N/A |
-| 101 | DC2-BL1B | LLDP Topology | lldp topology - validate peer and interface | Ethernet4 - MLAG_PEER_DC2-BL1A_Ethernet4 | FAIL | Interface Down - N/A |
-| 109 | DC2-LEAF1B | LLDP Topology | lldp topology - validate peer and interface | Ethernet1 - P2P_LINK_TO_DC2-SPINE1_Ethernet2 | FAIL | DC2-SPINE2.avd-lab.local - "Ethernet2" |
-| 110 | DC2-LEAF1B | LLDP Topology | lldp topology - validate peer and interface | Ethernet2 - P2P_LINK_TO_DC2-SPINE2_Ethernet2 | FAIL | DC2-SPINE1.avd-lab.local - "Ethernet2" |
-| 114 | DC2-SPINE1 | LLDP Topology | lldp topology - validate peer and interface | Ethernet3 - P2P_LINK_TO_DC2-BL1A_Ethernet1 | FAIL | Interface Down - N/A |
-| 117 | DC2-SPINE1 | LLDP Topology | lldp topology - validate peer and interface | Ethernet2 - P2P_LINK_TO_DC2-LEAF1B_Ethernet1 | FAIL | DC2-LEAF1B.avd-lab.local - "Ethernet2" |
-| 121 | DC2-SPINE2 | LLDP Topology | lldp topology - validate peer and interface | Ethernet2 - P2P_LINK_TO_DC2-LEAF1B_Ethernet2 | FAIL | DC2-LEAF1B.avd-lab.local - "Ethernet1" |
+| 94 | DC2-BL1A | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet1 - remote: P2P_LINK_TO_DC2-SPINE1_Ethernet3 | FAIL | remote: Interface Down - N/A |
+| 96 | DC2-BL1A | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet3 - remote: MLAG_PEER_DC2-BL1B_Ethernet3 | FAIL | remote: Interface Down - N/A |
+| 97 | DC2-BL1A | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet4 - remote: MLAG_PEER_DC2-BL1B_Ethernet4 | FAIL | remote: Interface Down - N/A |
+| 100 | DC2-BL1B | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet3 - remote: MLAG_PEER_DC2-BL1A_Ethernet3 | FAIL | remote: Interface Down - N/A |
+| 101 | DC2-BL1B | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet4 - remote: MLAG_PEER_DC2-BL1A_Ethernet4 | FAIL | remote: Interface Down - N/A |
+| 109 | DC2-LEAF1B | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet1 - remote: P2P_LINK_TO_DC2-SPINE1_Ethernet2 | FAIL | remote: DC2-SPINE2.avd-lab.local - "Ethernet2" |
+| 110 | DC2-LEAF1B | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet2 - remote: P2P_LINK_TO_DC2-SPINE2_Ethernet2 | FAIL | remote: DC2-SPINE1.avd-lab.local - "Ethernet2" |
+| 114 | DC2-SPINE1 | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet3 - remote: P2P_LINK_TO_DC2-BL1A_Ethernet1 | FAIL | remote: Interface Down - N/A |
+| 117 | DC2-SPINE1 | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet2 - remote: P2P_LINK_TO_DC2-LEAF1B_Ethernet1 | FAIL | remote: DC2-LEAF1B.avd-lab.local - "Ethernet2" |
+| 121 | DC2-SPINE2 | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet2 - remote: P2P_LINK_TO_DC2-LEAF1B_Ethernet2 | FAIL | remote: DC2-LEAF1B.avd-lab.local - "Ethernet1" |
 | 122 | DC2-BL1A | MLAG | MLAG State active & Status connected | MLAG | FAIL | state: active - negotiation_status: connecting |
 | 123 | DC2-BL1B | MLAG | MLAG State active & Status connected | MLAG | FAIL | state: active - negotiation_status: connecting |
-| 128 | DC2-LEAF1B | IP Reachability | ip reachability test p2p links | Source: DC2-LEAF1B_Ethernet1 | Destination: DC2-SPINE1_Ethernet2 | FAIL | 100% packet loss |
-| 129 | DC2-LEAF1B | IP Reachability | ip reachability test p2p links | Source: DC2-LEAF1B_Ethernet2 | Destination: DC2-SPINE2_Ethernet2 | FAIL | 100% packet loss |
-| 130 | DC2-SPINE1 | IP Reachability | ip reachability test p2p links | Source: DC2-SPINE1_Ethernet3 | Destination: DC2-BL1A_Ethernet1 | FAIL | 100% packet loss |
-| 133 | DC2-SPINE1 | IP Reachability | ip reachability test p2p links | Source: DC2-SPINE1_Ethernet2 | Destination: DC2-LEAF1B_Ethernet1 | FAIL | 100% packet loss |
-| 137 | DC2-SPINE2 | IP Reachability | ip reachability test p2p links | Source: DC2-SPINE2_Ethernet2 | Destination: DC2-LEAF1B_Ethernet2 | FAIL | 100% packet loss |
+| 128 | DC2-LEAF1B | IP Reachability | ip reachability test p2p links | Source: DC2-LEAF1B_Ethernet1 - Destination: DC2-SPINE1_Ethernet2 | FAIL | 100% packet loss |
+| 129 | DC2-LEAF1B | IP Reachability | ip reachability test p2p links | Source: DC2-LEAF1B_Ethernet2 - Destination: DC2-SPINE2_Ethernet2 | FAIL | 100% packet loss |
+| 130 | DC2-SPINE1 | IP Reachability | ip reachability test p2p links | Source: DC2-SPINE1_Ethernet3 - Destination: DC2-BL1A_Ethernet1 | FAIL | 100% packet loss |
+| 133 | DC2-SPINE1 | IP Reachability | ip reachability test p2p links | Source: DC2-SPINE1_Ethernet2 - Destination: DC2-LEAF1B_Ethernet1 | FAIL | 100% packet loss |
+| 137 | DC2-SPINE2 | IP Reachability | ip reachability test p2p links | Source: DC2-SPINE2_Ethernet2 - Destination: DC2-LEAF1B_Ethernet2 | FAIL | 100% packet loss |
 | 144 | DC2-BL1A | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 10.255.253.5 | FAIL | Session state "Active" |
 | 147 | DC2-BL1A | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.252.8 | FAIL | Session state "Connect" |
 | 148 | DC2-BL1B | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 10.255.253.4 | FAIL | Session state "Active" |
@@ -180,50 +180,50 @@
 | 91 | DC2-LEAF1B | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback100 - Tenant_A_OP_Zone_VTEP_DIAGNOSTICS | PASS |  |
 | 92 | DC2-SPINE1 | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS |  |
 | 93 | DC2-SPINE2 | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS |  |
-| 94 | DC2-BL1A | LLDP Topology | lldp topology - validate peer and interface | Ethernet1 - P2P_LINK_TO_DC2-SPINE1_Ethernet3 | FAIL | Interface Down - N/A |
-| 95 | DC2-BL1A | LLDP Topology | lldp topology - validate peer and interface | Ethernet2 - P2P_LINK_TO_DC2-SPINE2_Ethernet3 | PASS |  |
-| 96 | DC2-BL1A | LLDP Topology | lldp topology - validate peer and interface | Ethernet3 - MLAG_PEER_DC2-BL1B_Ethernet3 | FAIL | Interface Down - N/A |
-| 97 | DC2-BL1A | LLDP Topology | lldp topology - validate peer and interface | Ethernet4 - MLAG_PEER_DC2-BL1B_Ethernet4 | FAIL | Interface Down - N/A |
-| 98 | DC2-BL1B | LLDP Topology | lldp topology - validate peer and interface | Ethernet1 - P2P_LINK_TO_DC2-SPINE1_Ethernet4 | PASS |  |
-| 99 | DC2-BL1B | LLDP Topology | lldp topology - validate peer and interface | Ethernet2 - P2P_LINK_TO_DC2-SPINE2_Ethernet4 | PASS |  |
-| 100 | DC2-BL1B | LLDP Topology | lldp topology - validate peer and interface | Ethernet3 - MLAG_PEER_DC2-BL1A_Ethernet3 | FAIL | Interface Down - N/A |
-| 101 | DC2-BL1B | LLDP Topology | lldp topology - validate peer and interface | Ethernet4 - MLAG_PEER_DC2-BL1A_Ethernet4 | FAIL | Interface Down - N/A |
-| 102 | DC2-L2LEAF1A | LLDP Topology | lldp topology - validate peer and interface | Ethernet1 - DC2-LEAF1A_Ethernet3 | PASS |  |
-| 103 | DC2-L2LEAF1A | LLDP Topology | lldp topology - validate peer and interface | Ethernet2 - DC2-LEAF1B_Ethernet3 | PASS |  |
-| 104 | DC2-LEAF1A | LLDP Topology | lldp topology - validate peer and interface | Ethernet1 - P2P_LINK_TO_DC2-SPINE1_Ethernet1 | PASS |  |
-| 105 | DC2-LEAF1A | LLDP Topology | lldp topology - validate peer and interface | Ethernet2 - P2P_LINK_TO_DC2-SPINE2_Ethernet1 | PASS |  |
-| 106 | DC2-LEAF1A | LLDP Topology | lldp topology - validate peer and interface | Ethernet13 - MLAG_PEER_DC2-LEAF1B_Ethernet13 | PASS |  |
-| 107 | DC2-LEAF1A | LLDP Topology | lldp topology - validate peer and interface | Ethernet14 - MLAG_PEER_DC2-LEAF1B_Ethernet14 | PASS |  |
-| 108 | DC2-LEAF1A | LLDP Topology | lldp topology - validate peer and interface | Ethernet3 - DC2-L2LEAF1A_Ethernet1 | PASS |  |
-| 109 | DC2-LEAF1B | LLDP Topology | lldp topology - validate peer and interface | Ethernet1 - P2P_LINK_TO_DC2-SPINE1_Ethernet2 | FAIL | DC2-SPINE2.avd-lab.local - "Ethernet2" |
-| 110 | DC2-LEAF1B | LLDP Topology | lldp topology - validate peer and interface | Ethernet2 - P2P_LINK_TO_DC2-SPINE2_Ethernet2 | FAIL | DC2-SPINE1.avd-lab.local - "Ethernet2" |
-| 111 | DC2-LEAF1B | LLDP Topology | lldp topology - validate peer and interface | Ethernet13 - MLAG_PEER_DC2-LEAF1A_Ethernet13 | PASS |  |
-| 112 | DC2-LEAF1B | LLDP Topology | lldp topology - validate peer and interface | Ethernet14 - MLAG_PEER_DC2-LEAF1A_Ethernet14 | PASS |  |
-| 113 | DC2-LEAF1B | LLDP Topology | lldp topology - validate peer and interface | Ethernet3 - DC2-L2LEAF1A_Ethernet2 | PASS |  |
-| 114 | DC2-SPINE1 | LLDP Topology | lldp topology - validate peer and interface | Ethernet3 - P2P_LINK_TO_DC2-BL1A_Ethernet1 | FAIL | Interface Down - N/A |
-| 115 | DC2-SPINE1 | LLDP Topology | lldp topology - validate peer and interface | Ethernet4 - P2P_LINK_TO_DC2-BL1B_Ethernet1 | PASS |  |
-| 116 | DC2-SPINE1 | LLDP Topology | lldp topology - validate peer and interface | Ethernet1 - P2P_LINK_TO_DC2-LEAF1A_Ethernet1 | PASS |  |
-| 117 | DC2-SPINE1 | LLDP Topology | lldp topology - validate peer and interface | Ethernet2 - P2P_LINK_TO_DC2-LEAF1B_Ethernet1 | FAIL | DC2-LEAF1B.avd-lab.local - "Ethernet2" |
-| 118 | DC2-SPINE2 | LLDP Topology | lldp topology - validate peer and interface | Ethernet3 - P2P_LINK_TO_DC2-BL1A_Ethernet2 | PASS |  |
-| 119 | DC2-SPINE2 | LLDP Topology | lldp topology - validate peer and interface | Ethernet4 - P2P_LINK_TO_DC2-BL1B_Ethernet2 | PASS |  |
-| 120 | DC2-SPINE2 | LLDP Topology | lldp topology - validate peer and interface | Ethernet1 - P2P_LINK_TO_DC2-LEAF1A_Ethernet2 | PASS |  |
-| 121 | DC2-SPINE2 | LLDP Topology | lldp topology - validate peer and interface | Ethernet2 - P2P_LINK_TO_DC2-LEAF1B_Ethernet2 | FAIL | DC2-LEAF1B.avd-lab.local - "Ethernet1" |
+| 94 | DC2-BL1A | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet1 - remote: P2P_LINK_TO_DC2-SPINE1_Ethernet3 | FAIL | remote: Interface Down - N/A |
+| 95 | DC2-BL1A | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet2 - remote: P2P_LINK_TO_DC2-SPINE2_Ethernet3 | PASS |  |
+| 96 | DC2-BL1A | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet3 - remote: MLAG_PEER_DC2-BL1B_Ethernet3 | FAIL | remote: Interface Down - N/A |
+| 97 | DC2-BL1A | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet4 - remote: MLAG_PEER_DC2-BL1B_Ethernet4 | FAIL | remote: Interface Down - N/A |
+| 98 | DC2-BL1B | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet1 - remote: P2P_LINK_TO_DC2-SPINE1_Ethernet4 | PASS |  |
+| 99 | DC2-BL1B | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet2 - remote: P2P_LINK_TO_DC2-SPINE2_Ethernet4 | PASS |  |
+| 100 | DC2-BL1B | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet3 - remote: MLAG_PEER_DC2-BL1A_Ethernet3 | FAIL | remote: Interface Down - N/A |
+| 101 | DC2-BL1B | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet4 - remote: MLAG_PEER_DC2-BL1A_Ethernet4 | FAIL | remote: Interface Down - N/A |
+| 102 | DC2-L2LEAF1A | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet1 - remote: DC2-LEAF1A_Ethernet3 | PASS |  |
+| 103 | DC2-L2LEAF1A | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet2 - remote: DC2-LEAF1B_Ethernet3 | PASS |  |
+| 104 | DC2-LEAF1A | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet1 - remote: P2P_LINK_TO_DC2-SPINE1_Ethernet1 | PASS |  |
+| 105 | DC2-LEAF1A | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet2 - remote: P2P_LINK_TO_DC2-SPINE2_Ethernet1 | PASS |  |
+| 106 | DC2-LEAF1A | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet13 - remote: MLAG_PEER_DC2-LEAF1B_Ethernet13 | PASS |  |
+| 107 | DC2-LEAF1A | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet14 - remote: MLAG_PEER_DC2-LEAF1B_Ethernet14 | PASS |  |
+| 108 | DC2-LEAF1A | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet3 - remote: DC2-L2LEAF1A_Ethernet1 | PASS |  |
+| 109 | DC2-LEAF1B | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet1 - remote: P2P_LINK_TO_DC2-SPINE1_Ethernet2 | FAIL | remote: DC2-SPINE2.avd-lab.local - "Ethernet2" |
+| 110 | DC2-LEAF1B | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet2 - remote: P2P_LINK_TO_DC2-SPINE2_Ethernet2 | FAIL | remote: DC2-SPINE1.avd-lab.local - "Ethernet2" |
+| 111 | DC2-LEAF1B | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet13 - remote: MLAG_PEER_DC2-LEAF1A_Ethernet13 | PASS |  |
+| 112 | DC2-LEAF1B | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet14 - remote: MLAG_PEER_DC2-LEAF1A_Ethernet14 | PASS |  |
+| 113 | DC2-LEAF1B | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet3 - remote: DC2-L2LEAF1A_Ethernet2 | PASS |  |
+| 114 | DC2-SPINE1 | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet3 - remote: P2P_LINK_TO_DC2-BL1A_Ethernet1 | FAIL | remote: Interface Down - N/A |
+| 115 | DC2-SPINE1 | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet4 - remote: P2P_LINK_TO_DC2-BL1B_Ethernet1 | PASS |  |
+| 116 | DC2-SPINE1 | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet1 - remote: P2P_LINK_TO_DC2-LEAF1A_Ethernet1 | PASS |  |
+| 117 | DC2-SPINE1 | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet2 - remote: P2P_LINK_TO_DC2-LEAF1B_Ethernet1 | FAIL | remote: DC2-LEAF1B.avd-lab.local - "Ethernet2" |
+| 118 | DC2-SPINE2 | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet3 - remote: P2P_LINK_TO_DC2-BL1A_Ethernet2 | PASS |  |
+| 119 | DC2-SPINE2 | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet4 - remote: P2P_LINK_TO_DC2-BL1B_Ethernet2 | PASS |  |
+| 120 | DC2-SPINE2 | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet1 - remote: P2P_LINK_TO_DC2-LEAF1A_Ethernet2 | PASS |  |
+| 121 | DC2-SPINE2 | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet2 - remote: P2P_LINK_TO_DC2-LEAF1B_Ethernet2 | FAIL | remote: DC2-LEAF1B.avd-lab.local - "Ethernet1" |
 | 122 | DC2-BL1A | MLAG | MLAG State active & Status connected | MLAG | FAIL | state: active - negotiation_status: connecting |
 | 123 | DC2-BL1B | MLAG | MLAG State active & Status connected | MLAG | FAIL | state: active - negotiation_status: connecting |
 | 124 | DC2-LEAF1A | MLAG | MLAG State active & Status connected | MLAG | PASS |  |
 | 125 | DC2-LEAF1B | MLAG | MLAG State active & Status connected | MLAG | PASS |  |
-| 126 | DC2-LEAF1A | IP Reachability | ip reachability test p2p links | Source: DC2-LEAF1A_Ethernet1 | Destination: DC2-SPINE1_Ethernet1 | PASS |  |
-| 127 | DC2-LEAF1A | IP Reachability | ip reachability test p2p links | Source: DC2-LEAF1A_Ethernet2 | Destination: DC2-SPINE2_Ethernet1 | PASS |  |
-| 128 | DC2-LEAF1B | IP Reachability | ip reachability test p2p links | Source: DC2-LEAF1B_Ethernet1 | Destination: DC2-SPINE1_Ethernet2 | FAIL | 100% packet loss |
-| 129 | DC2-LEAF1B | IP Reachability | ip reachability test p2p links | Source: DC2-LEAF1B_Ethernet2 | Destination: DC2-SPINE2_Ethernet2 | FAIL | 100% packet loss |
-| 130 | DC2-SPINE1 | IP Reachability | ip reachability test p2p links | Source: DC2-SPINE1_Ethernet3 | Destination: DC2-BL1A_Ethernet1 | FAIL | 100% packet loss |
-| 131 | DC2-SPINE1 | IP Reachability | ip reachability test p2p links | Source: DC2-SPINE1_Ethernet4 | Destination: DC2-BL1B_Ethernet1 | PASS |  |
-| 132 | DC2-SPINE1 | IP Reachability | ip reachability test p2p links | Source: DC2-SPINE1_Ethernet1 | Destination: DC2-LEAF1A_Ethernet1 | PASS |  |
-| 133 | DC2-SPINE1 | IP Reachability | ip reachability test p2p links | Source: DC2-SPINE1_Ethernet2 | Destination: DC2-LEAF1B_Ethernet1 | FAIL | 100% packet loss |
-| 134 | DC2-SPINE2 | IP Reachability | ip reachability test p2p links | Source: DC2-SPINE2_Ethernet3 | Destination: DC2-BL1A_Ethernet2 | PASS |  |
-| 135 | DC2-SPINE2 | IP Reachability | ip reachability test p2p links | Source: DC2-SPINE2_Ethernet4 | Destination: DC2-BL1B_Ethernet2 | PASS |  |
-| 136 | DC2-SPINE2 | IP Reachability | ip reachability test p2p links | Source: DC2-SPINE2_Ethernet1 | Destination: DC2-LEAF1A_Ethernet2 | PASS |  |
-| 137 | DC2-SPINE2 | IP Reachability | ip reachability test p2p links | Source: DC2-SPINE2_Ethernet2 | Destination: DC2-LEAF1B_Ethernet2 | FAIL | 100% packet loss |
+| 126 | DC2-LEAF1A | IP Reachability | ip reachability test p2p links | Source: DC2-LEAF1A_Ethernet1 - Destination: DC2-SPINE1_Ethernet1 | PASS |  |
+| 127 | DC2-LEAF1A | IP Reachability | ip reachability test p2p links | Source: DC2-LEAF1A_Ethernet2 - Destination: DC2-SPINE2_Ethernet1 | PASS |  |
+| 128 | DC2-LEAF1B | IP Reachability | ip reachability test p2p links | Source: DC2-LEAF1B_Ethernet1 - Destination: DC2-SPINE1_Ethernet2 | FAIL | 100% packet loss |
+| 129 | DC2-LEAF1B | IP Reachability | ip reachability test p2p links | Source: DC2-LEAF1B_Ethernet2 - Destination: DC2-SPINE2_Ethernet2 | FAIL | 100% packet loss |
+| 130 | DC2-SPINE1 | IP Reachability | ip reachability test p2p links | Source: DC2-SPINE1_Ethernet3 - Destination: DC2-BL1A_Ethernet1 | FAIL | 100% packet loss |
+| 131 | DC2-SPINE1 | IP Reachability | ip reachability test p2p links | Source: DC2-SPINE1_Ethernet4 - Destination: DC2-BL1B_Ethernet1 | PASS |  |
+| 132 | DC2-SPINE1 | IP Reachability | ip reachability test p2p links | Source: DC2-SPINE1_Ethernet1 - Destination: DC2-LEAF1A_Ethernet1 | PASS |  |
+| 133 | DC2-SPINE1 | IP Reachability | ip reachability test p2p links | Source: DC2-SPINE1_Ethernet2 - Destination: DC2-LEAF1B_Ethernet1 | FAIL | 100% packet loss |
+| 134 | DC2-SPINE2 | IP Reachability | ip reachability test p2p links | Source: DC2-SPINE2_Ethernet3 - Destination: DC2-BL1A_Ethernet2 | PASS |  |
+| 135 | DC2-SPINE2 | IP Reachability | ip reachability test p2p links | Source: DC2-SPINE2_Ethernet4 - Destination: DC2-BL1B_Ethernet2 | PASS |  |
+| 136 | DC2-SPINE2 | IP Reachability | ip reachability test p2p links | Source: DC2-SPINE2_Ethernet1 - Destination: DC2-LEAF1A_Ethernet2 | PASS |  |
+| 137 | DC2-SPINE2 | IP Reachability | ip reachability test p2p links | Source: DC2-SPINE2_Ethernet2 - Destination: DC2-LEAF1B_Ethernet2 | FAIL | 100% packet loss |
 | 138 | DC2-BL1A | BGP | ArBGP is configured and operating | ArBGP | PASS |  |
 | 139 | DC2-BL1B | BGP | ArBGP is configured and operating | ArBGP | PASS |  |
 | 140 | DC2-LEAF1A | BGP | ArBGP is configured and operating | ArBGP | PASS |  |
