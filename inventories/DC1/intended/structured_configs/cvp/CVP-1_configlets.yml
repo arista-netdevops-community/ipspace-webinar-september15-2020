@@ -38,7 +38,7 @@ CVP_CONFIGLETS:
     \ 10.255.252.10/31\n!\ninterface Vxlan1\n   vxlan source-interface Loopback1\n\
     \   vxlan virtual-router encapsulation mac-address mlag-system-id\n   vxlan udp-port\
     \ 4789\n   vxlan vlan 113 vni 10113\n   vxlan vrf Tenant_A_OP_Zone vni 10\n!\n\
-    ip virtual-router mac-address 00:dc:00:00:00:0a\nip address virtual source-nat\
+    ip virtual-router mac-address 00:dc:00:00:00:0a\n!\nip address virtual source-nat\
     \ vrf Tenant_A_OP_Zone address 10.255.1.10\n!\nip routing\nno ip routing vrf MGMT\n\
     ip routing vrf Tenant_A_OP_Zone\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
     \   seq 10 permit 192.168.251.0/24 eq 32\n   seq 20 permit 192.168.252.0/24 eq\
@@ -120,7 +120,7 @@ CVP_CONFIGLETS:
     \ 10.255.252.11/31\n!\ninterface Vxlan1\n   vxlan source-interface Loopback1\n\
     \   vxlan virtual-router encapsulation mac-address mlag-system-id\n   vxlan udp-port\
     \ 4789\n   vxlan vlan 113 vni 10113\n   vxlan vrf Tenant_A_OP_Zone vni 10\n!\n\
-    ip virtual-router mac-address 00:dc:00:00:00:0a\nip address virtual source-nat\
+    ip virtual-router mac-address 00:dc:00:00:00:0a\n!\nip address virtual source-nat\
     \ vrf Tenant_A_OP_Zone address 10.255.1.11\n!\nip routing\nno ip routing vrf MGMT\n\
     ip routing vrf Tenant_A_OP_Zone\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
     \   seq 10 permit 192.168.251.0/24 eq 32\n   seq 20 permit 192.168.252.0/24 eq\
@@ -393,7 +393,7 @@ CVP_CONFIGLETS:
     \ vxlan vlan 130 vni 10130\n   vxlan vlan 131 vni 10131\n   vxlan vlan 160 vni\
     \ 10160\n   vxlan vlan 161 vni 10161\n   vxlan vrf Tenant_A_APP_Zone vni 12\n\
     \   vxlan vrf Tenant_A_OP_Zone vni 10\n   vxlan vrf Tenant_A_WEB_Zone vni 11\n\
-    !\nip virtual-router mac-address 00:dc:00:00:00:0a\nip address virtual source-nat\
+    !\nip virtual-router mac-address 00:dc:00:00:00:0a\n!\nip address virtual source-nat\
     \ vrf Tenant_A_OP_Zone address 10.255.1.6\n!\nip routing\nno ip routing vrf MGMT\n\
     ip routing vrf Tenant_A_APP_Zone\nip routing vrf Tenant_A_OP_Zone\nip routing\
     \ vrf Tenant_A_WEB_Zone\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n   seq 10\
@@ -519,7 +519,7 @@ CVP_CONFIGLETS:
     \ vxlan vlan 130 vni 10130\n   vxlan vlan 131 vni 10131\n   vxlan vlan 160 vni\
     \ 10160\n   vxlan vlan 161 vni 10161\n   vxlan vrf Tenant_A_APP_Zone vni 12\n\
     \   vxlan vrf Tenant_A_OP_Zone vni 10\n   vxlan vrf Tenant_A_WEB_Zone vni 11\n\
-    !\nip virtual-router mac-address 00:dc:00:00:00:0a\nip address virtual source-nat\
+    !\nip virtual-router mac-address 00:dc:00:00:00:0a\n!\nip address virtual source-nat\
     \ vrf Tenant_A_OP_Zone address 10.255.1.7\n!\nip routing\nno ip routing vrf MGMT\n\
     ip routing vrf Tenant_A_APP_Zone\nip routing vrf Tenant_A_OP_Zone\nip routing\
     \ vrf Tenant_A_WEB_Zone\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n   seq 10\
@@ -881,9 +881,9 @@ CVP_CONFIGLETS:
     \ 10131\n   vxlan vlan 160 vni 10160\n   vxlan vlan 161 vni 10161\n   vxlan vrf\
     \ Tenant_A_APP_Zone vni 12\n   vxlan vrf Tenant_A_OP_Zone vni 10\n   vxlan vrf\
     \ Tenant_A_WEB_Zone vni 11\n!\nip virtual-router mac-address 00:dc:00:00:00:0a\n\
-    ip address virtual source-nat vrf Tenant_A_OP_Zone address 10.255.1.8\n!\nip routing\n\
-    no ip routing vrf MGMT\nip routing vrf Tenant_A_APP_Zone\nip routing vrf Tenant_A_OP_Zone\n\
-    ip routing vrf Tenant_A_WEB_Zone\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    !\nip address virtual source-nat vrf Tenant_A_OP_Zone address 10.255.1.8\n!\n\
+    ip routing\nno ip routing vrf MGMT\nip routing vrf Tenant_A_APP_Zone\nip routing\
+    \ vrf Tenant_A_OP_Zone\nip routing vrf Tenant_A_WEB_Zone\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
     \   seq 10 permit 192.168.251.0/24 eq 32\n   seq 20 permit 192.168.252.0/24 eq\
     \ 32\n!\nip prefix-list PL-P2P-UNDERLAY\n   seq 10 permit 172.31.251.0/24 le 31\n\
     \   seq 20 permit 10.255.251.0/24 le 31\n!\nmlag configuration\n   domain-id DC1_SVC3\n\
@@ -1002,9 +1002,9 @@ CVP_CONFIGLETS:
     \ 10131\n   vxlan vlan 160 vni 10160\n   vxlan vlan 161 vni 10161\n   vxlan vrf\
     \ Tenant_A_APP_Zone vni 12\n   vxlan vrf Tenant_A_OP_Zone vni 10\n   vxlan vrf\
     \ Tenant_A_WEB_Zone vni 11\n!\nip virtual-router mac-address 00:dc:00:00:00:0a\n\
-    ip address virtual source-nat vrf Tenant_A_OP_Zone address 10.255.1.9\n!\nip routing\n\
-    no ip routing vrf MGMT\nip routing vrf Tenant_A_APP_Zone\nip routing vrf Tenant_A_OP_Zone\n\
-    ip routing vrf Tenant_A_WEB_Zone\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    !\nip address virtual source-nat vrf Tenant_A_OP_Zone address 10.255.1.9\n!\n\
+    ip routing\nno ip routing vrf MGMT\nip routing vrf Tenant_A_APP_Zone\nip routing\
+    \ vrf Tenant_A_OP_Zone\nip routing vrf Tenant_A_WEB_Zone\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
     \   seq 10 permit 192.168.251.0/24 eq 32\n   seq 20 permit 192.168.252.0/24 eq\
     \ 32\n!\nip prefix-list PL-P2P-UNDERLAY\n   seq 10 permit 172.31.251.0/24 le 31\n\
     \   seq 20 permit 10.255.251.0/24 le 31\n!\nmlag configuration\n   domain-id DC1_SVC3\n\
