@@ -10,9 +10,9 @@ leaf_id: 8
 switch_mgmt_ip: 192.168.200.112/24
 leaf_filter_tenants: ['Tenant_A']
 leaf_filter_tags: ['opzone', 'web', 'app']
-leaf_allowed_vrfs: ['Tenant_A_OP_Zone', 'Tenant_A_WEB_Zone']
-leaf_allowed_svis: [110, 111, 120, 121]
-leaf_allowed_vlans: [110, 111, 120, 121]
+leaf_allowed_vrfs: ['Tenant_A_APP_Zone', 'Tenant_A_OP_Zone', 'Tenant_A_WEB_Zone']
+leaf_allowed_svis: [130, 131, 110, 111, 120, 121]
+leaf_allowed_vlans: [130, 131, 110, 111, 120, 121]
 leaf_mlag: False
 
 service_routing_protocols_model: multi-agent
@@ -96,6 +96,12 @@ clock:
 vlans:
 
 ## Tenant_A ##
+  130:
+    tenant: Tenant_A
+    name: Tenant_A_APP_Zone_1
+  131:
+    tenant: Tenant_A
+    name: Tenant_A_APP_Zone_2
   110:
     tenant: Tenant_A
     name: Tenant_A_OP_Zone_1
@@ -117,7 +123,7 @@ vrfs:
 port_channel_interfaces:
   Port-Channel1:
     description: DC1-LEAF2A_Po7
-    vlans: 110-111,120-121
+    vlans: 110-111,120-121,130-131
     mode: trunk
 
 ### Ethernet Interfaces ###
