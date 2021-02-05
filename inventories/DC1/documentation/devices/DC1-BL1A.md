@@ -385,10 +385,10 @@ vlan 4094
 
 | Interface | Description | MTU | Type | Mode | Allowed VLANs (Trunk) | Trunk Group | VRF | IP Address | Channel-Group ID | Channel-Group Type |
 | --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | --- | ---------- | ---------------- | ------------------ |
-| Ethernet1 | P2P_LINK_TO_DC1-SPINE1_Ethernet6 | 1500 | routed | access | - | - | - | 172.31.251.41/31 | - | - |
-| Ethernet2 | P2P_LINK_TO_DC1-SPINE2_Ethernet6 | 1500 | routed | access | - | - | - | 172.31.251.43/31 | - | - |
-| Ethernet3 | P2P_LINK_TO_DC1-SPINE3_Ethernet6 | 1500 | routed | access | - | - | - | 172.31.251.45/31 | - | - |
-| Ethernet4 | P2P_LINK_TO_DC1-SPINE4_Ethernet6 | 1500 | routed | access | - | - | - | 172.31.251.47/31 | - | - |
+| Ethernet1 | P2P_LINK_TO_DC1-SPINE1_Ethernet6 | 1500 | routed | access | - | - | - | 172.31.252.41/31 | - | - |
+| Ethernet2 | P2P_LINK_TO_DC1-SPINE2_Ethernet6 | 1500 | routed | access | - | - | - | 172.31.252.43/31 | - | - |
+| Ethernet3 | P2P_LINK_TO_DC1-SPINE3_Ethernet6 | 1500 | routed | access | - | - | - | 172.31.252.45/31 | - | - |
+| Ethernet4 | P2P_LINK_TO_DC1-SPINE4_Ethernet6 | 1500 | routed | access | - | - | - | 172.31.252.47/31 | - | - |
 | Ethernet5 | MLAG_PEER_DC1-BL1B_Ethernet5 | *1500 | *switched | *trunk | *2-4094 | *LEAF_PEER_L3<br> *MLAG | - | - | 5 | active |
 | Ethernet6 | MLAG_PEER_DC1-BL1B_Ethernet6 | *1500 | *switched | *trunk | *2-4094 | *LEAF_PEER_L3<br> *MLAG | - | - | 5 | active |
 
@@ -402,22 +402,22 @@ vlan 4094
 interface Ethernet1
    description P2P_LINK_TO_DC1-SPINE1_Ethernet6
    no switchport
-   ip address 172.31.251.41/31
+   ip address 172.31.252.41/31
 !
 interface Ethernet2
    description P2P_LINK_TO_DC1-SPINE2_Ethernet6
    no switchport
-   ip address 172.31.251.43/31
+   ip address 172.31.252.43/31
 !
 interface Ethernet3
    description P2P_LINK_TO_DC1-SPINE3_Ethernet6
    no switchport
-   ip address 172.31.251.45/31
+   ip address 172.31.252.45/31
 !
 interface Ethernet4
    description P2P_LINK_TO_DC1-SPINE4_Ethernet6
    no switchport
-   ip address 172.31.251.47/31
+   ip address 172.31.252.47/31
 !
 interface Ethernet5
    description MLAG_PEER_DC1-BL1B_Ethernet5
@@ -674,10 +674,10 @@ Router ISIS not defined
 | Neighbor | Remote AS |
 | -------- | ---------
 | 10.255.251.11 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER |
-| 172.31.251.40 | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 172.31.251.42 | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 172.31.251.44 | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 172.31.251.46 | Inherited from peer group IPv4-UNDERLAY-PEERS |
+| 172.31.252.40 | Inherited from peer group IPv4-UNDERLAY-PEERS |
+| 172.31.252.42 | Inherited from peer group IPv4-UNDERLAY-PEERS |
+| 172.31.252.44 | Inherited from peer group IPv4-UNDERLAY-PEERS |
+| 172.31.252.46 | Inherited from peer group IPv4-UNDERLAY-PEERS |
 | 192.168.251.1 | Inherited from peer group EVPN-OVERLAY-PEERS |
 | 192.168.251.2 | Inherited from peer group EVPN-OVERLAY-PEERS |
 | 192.168.251.3 | Inherited from peer group EVPN-OVERLAY-PEERS |
@@ -728,10 +728,10 @@ router bgp 65104
    neighbor MLAG-IPv4-UNDERLAY-PEER send-community
    neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000
    neighbor 10.255.251.11 peer group MLAG-IPv4-UNDERLAY-PEER
-   neighbor 172.31.251.40 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.251.42 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.251.44 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.251.46 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.252.40 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.252.42 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.252.44 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.252.46 peer group IPv4-UNDERLAY-PEERS
    neighbor 192.168.251.1 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.251.2 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.251.3 peer group EVPN-OVERLAY-PEERS

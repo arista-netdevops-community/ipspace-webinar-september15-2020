@@ -158,7 +158,7 @@ ethernet_interfaces:
     description: P2P_LINK_TO_DC1-SPINE1_Ethernet7
     mtu: 1500
     type: routed
-    ip_address: 172.31.251.49/31
+    ip_address: 172.31.252.49/31
   Ethernet2:
     peer: DC1-SPINE2
     peer_interface: Ethernet7
@@ -166,7 +166,7 @@ ethernet_interfaces:
     description: P2P_LINK_TO_DC1-SPINE2_Ethernet7
     mtu: 1500
     type: routed
-    ip_address: 172.31.251.51/31
+    ip_address: 172.31.252.51/31
   Ethernet3:
     peer: DC1-SPINE3
     peer_interface: Ethernet7
@@ -174,7 +174,7 @@ ethernet_interfaces:
     description: P2P_LINK_TO_DC1-SPINE3_Ethernet7
     mtu: 1500
     type: routed
-    ip_address: 172.31.251.53/31
+    ip_address: 172.31.252.53/31
   Ethernet4:
     peer: DC1-SPINE4
     peer_interface: Ethernet7
@@ -182,7 +182,7 @@ ethernet_interfaces:
     description: P2P_LINK_TO_DC1-SPINE4_Ethernet7
     mtu: 1500
     type: routed
-    ip_address: 172.31.251.55/31
+    ip_address: 172.31.252.55/31
 ## mlag interfaces ##
   Ethernet5:
     peer: DC1-BL1A
@@ -356,13 +356,13 @@ router_bgp:
       send_community: true
       maximum_routes: 0
   neighbors:
-    172.31.251.48:
+    172.31.252.48:
       peer_group: IPv4-UNDERLAY-PEERS
-    172.31.251.50:
+    172.31.252.50:
       peer_group: IPv4-UNDERLAY-PEERS
-    172.31.251.52:
+    172.31.252.52:
       peer_group: IPv4-UNDERLAY-PEERS
-    172.31.251.54:
+    172.31.252.54:
       peer_group: IPv4-UNDERLAY-PEERS
     10.255.251.10:
       peer_group: MLAG-IPv4-UNDERLAY-PEER

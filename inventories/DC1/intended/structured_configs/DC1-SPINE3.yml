@@ -101,7 +101,7 @@ ethernet_interfaces:
     description: P2P_LINK_TO_DC1-BL1A_Ethernet3
     mtu: 1500
     type: routed
-    ip_address: 172.31.251.44/31
+    ip_address: 172.31.252.44/31
   Ethernet7:
     peer: DC1-BL1B
     peer_interface: Ethernet3
@@ -109,7 +109,7 @@ ethernet_interfaces:
     description: P2P_LINK_TO_DC1-BL1B_Ethernet3
     mtu: 1500
     type: routed
-    ip_address: 172.31.251.52/31
+    ip_address: 172.31.252.52/31
   Ethernet1:
     peer: DC1-LEAF1A
     peer_interface: Ethernet3
@@ -117,7 +117,7 @@ ethernet_interfaces:
     description: P2P_LINK_TO_DC1-LEAF1A_Ethernet3
     mtu: 1500
     type: routed
-    ip_address: 172.31.251.4/31
+    ip_address: 172.31.252.4/31
   Ethernet2:
     peer: DC1-LEAF2A
     peer_interface: Ethernet3
@@ -125,7 +125,7 @@ ethernet_interfaces:
     description: P2P_LINK_TO_DC1-LEAF2A_Ethernet3
     mtu: 1500
     type: routed
-    ip_address: 172.31.251.12/31
+    ip_address: 172.31.252.12/31
   Ethernet3:
     peer: DC1-LEAF2B
     peer_interface: Ethernet3
@@ -133,7 +133,7 @@ ethernet_interfaces:
     description: P2P_LINK_TO_DC1-LEAF2B_Ethernet3
     mtu: 1500
     type: routed
-    ip_address: 172.31.251.20/31
+    ip_address: 172.31.252.20/31
   Ethernet4:
     peer: DC1-SVC3A
     peer_interface: Ethernet3
@@ -141,7 +141,7 @@ ethernet_interfaces:
     description: P2P_LINK_TO_DC1-SVC3A_Ethernet3
     mtu: 1500
     type: routed
-    ip_address: 172.31.251.28/31
+    ip_address: 172.31.252.28/31
   Ethernet5:
     peer: DC1-SVC3B
     peer_interface: Ethernet3
@@ -149,7 +149,7 @@ ethernet_interfaces:
     description: P2P_LINK_TO_DC1-SVC3B_Ethernet3
     mtu: 1500
     type: routed
-    ip_address: 172.31.251.36/31
+    ip_address: 172.31.252.36/31
 
 
 ### Loopback Interfaces ###
@@ -227,43 +227,43 @@ router_bgp:
       send_community: true
       maximum_routes: 0
   neighbors:
-    172.31.251.45:
+    172.31.252.45:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: 65104
     192.168.251.10:
       peer_group: EVPN-OVERLAY-PEERS
       remote_as: 65104
-    172.31.251.53:
+    172.31.252.53:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: 65104
     192.168.251.11:
       peer_group: EVPN-OVERLAY-PEERS
       remote_as: 65104
-    172.31.251.5:
+    172.31.252.5:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: 65101
     192.168.251.5:
       peer_group: EVPN-OVERLAY-PEERS
       remote_as: 65101
-    172.31.251.13:
+    172.31.252.13:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: 65102
     192.168.251.6:
       peer_group: EVPN-OVERLAY-PEERS
       remote_as: 65102
-    172.31.251.21:
+    172.31.252.21:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: 65102
     192.168.251.7:
       peer_group: EVPN-OVERLAY-PEERS
       remote_as: 65102
-    172.31.251.29:
+    172.31.252.29:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: 65103
     192.168.251.8:
       peer_group: EVPN-OVERLAY-PEERS
       remote_as: 65103
-    172.31.251.37:
+    172.31.252.37:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: 65103
     192.168.251.9:

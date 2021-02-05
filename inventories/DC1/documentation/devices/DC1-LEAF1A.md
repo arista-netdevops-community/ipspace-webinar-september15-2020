@@ -352,10 +352,10 @@ vlan 121
 
 | Interface | Description | MTU | Type | Mode | Allowed VLANs (Trunk) | Trunk Group | VRF | IP Address | Channel-Group ID | Channel-Group Type |
 | --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | --- | ---------- | ---------------- | ------------------ |
-| Ethernet1 | P2P_LINK_TO_DC1-SPINE1_Ethernet1 | 1500 | routed | access | - | - | - | 172.31.251.1/31 | - | - |
-| Ethernet2 | P2P_LINK_TO_DC1-SPINE2_Ethernet1 | 1500 | routed | access | - | - | - | 172.31.251.3/31 | - | - |
-| Ethernet3 | P2P_LINK_TO_DC1-SPINE3_Ethernet1 | 1500 | routed | access | - | - | - | 172.31.251.5/31 | - | - |
-| Ethernet4 | P2P_LINK_TO_DC1-SPINE4_Ethernet1 | 1500 | routed | access | - | - | - | 172.31.251.7/31 | - | - |
+| Ethernet1 | P2P_LINK_TO_DC1-SPINE1_Ethernet1 | 1500 | routed | access | - | - | - | 172.31.252.1/31 | - | - |
+| Ethernet2 | P2P_LINK_TO_DC1-SPINE2_Ethernet1 | 1500 | routed | access | - | - | - | 172.31.252.3/31 | - | - |
+| Ethernet3 | P2P_LINK_TO_DC1-SPINE3_Ethernet1 | 1500 | routed | access | - | - | - | 172.31.252.5/31 | - | - |
+| Ethernet4 | P2P_LINK_TO_DC1-SPINE4_Ethernet1 | 1500 | routed | access | - | - | - | 172.31.252.7/31 | - | - |
 
 *Inherited from Port-Channel Interface
 
@@ -367,22 +367,22 @@ vlan 121
 interface Ethernet1
    description P2P_LINK_TO_DC1-SPINE1_Ethernet1
    no switchport
-   ip address 172.31.251.1/31
+   ip address 172.31.252.1/31
 !
 interface Ethernet2
    description P2P_LINK_TO_DC1-SPINE2_Ethernet1
    no switchport
-   ip address 172.31.251.3/31
+   ip address 172.31.252.3/31
 !
 interface Ethernet3
    description P2P_LINK_TO_DC1-SPINE3_Ethernet1
    no switchport
-   ip address 172.31.251.5/31
+   ip address 172.31.252.5/31
 !
 interface Ethernet4
    description P2P_LINK_TO_DC1-SPINE4_Ethernet1
    no switchport
-   ip address 172.31.251.7/31
+   ip address 172.31.252.7/31
 ```
 
 ## Port-Channel Interfaces
@@ -587,10 +587,10 @@ Router ISIS not defined
 
 | Neighbor | Remote AS |
 | -------- | ---------
-| 172.31.251.0 | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 172.31.251.2 | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 172.31.251.4 | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 172.31.251.6 | Inherited from peer group IPv4-UNDERLAY-PEERS |
+| 172.31.252.0 | Inherited from peer group IPv4-UNDERLAY-PEERS |
+| 172.31.252.2 | Inherited from peer group IPv4-UNDERLAY-PEERS |
+| 172.31.252.4 | Inherited from peer group IPv4-UNDERLAY-PEERS |
+| 172.31.252.6 | Inherited from peer group IPv4-UNDERLAY-PEERS |
 | 192.168.251.1 | Inherited from peer group EVPN-OVERLAY-PEERS |
 | 192.168.251.2 | Inherited from peer group EVPN-OVERLAY-PEERS |
 | 192.168.251.3 | Inherited from peer group EVPN-OVERLAY-PEERS |
@@ -634,10 +634,10 @@ router bgp 65101
    neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==
    neighbor IPv4-UNDERLAY-PEERS send-community
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
-   neighbor 172.31.251.0 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.251.2 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.251.4 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.251.6 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.252.0 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.252.2 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.252.4 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.252.6 peer group IPv4-UNDERLAY-PEERS
    neighbor 192.168.251.1 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.251.2 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.251.3 peer group EVPN-OVERLAY-PEERS

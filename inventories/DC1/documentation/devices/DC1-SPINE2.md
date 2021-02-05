@@ -329,13 +329,13 @@ No VLANs defined
 
 | Interface | Description | MTU | Type | Mode | Allowed VLANs (Trunk) | Trunk Group | VRF | IP Address | Channel-Group ID | Channel-Group Type |
 | --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | --- | ---------- | ---------------- | ------------------ |
-| Ethernet1 | P2P_LINK_TO_DC1-LEAF1A_Ethernet2 | 1500 | routed | access | - | - | - | 172.31.251.2/31 | - | - |
-| Ethernet2 | P2P_LINK_TO_DC1-LEAF2A_Ethernet2 | 1500 | routed | access | - | - | - | 172.31.251.10/31 | - | - |
-| Ethernet3 | P2P_LINK_TO_DC1-LEAF2B_Ethernet2 | 1500 | routed | access | - | - | - | 172.31.251.18/31 | - | - |
-| Ethernet4 | P2P_LINK_TO_DC1-SVC3A_Ethernet2 | 1500 | routed | access | - | - | - | 172.31.251.26/31 | - | - |
-| Ethernet5 | P2P_LINK_TO_DC1-SVC3B_Ethernet2 | 1500 | routed | access | - | - | - | 172.31.251.34/31 | - | - |
-| Ethernet6 | P2P_LINK_TO_DC1-BL1A_Ethernet2 | 1500 | routed | access | - | - | - | 172.31.251.42/31 | - | - |
-| Ethernet7 | P2P_LINK_TO_DC1-BL1B_Ethernet2 | 1500 | routed | access | - | - | - | 172.31.251.50/31 | - | - |
+| Ethernet1 | P2P_LINK_TO_DC1-LEAF1A_Ethernet2 | 1500 | routed | access | - | - | - | 172.31.252.2/31 | - | - |
+| Ethernet2 | P2P_LINK_TO_DC1-LEAF2A_Ethernet2 | 1500 | routed | access | - | - | - | 172.31.252.10/31 | - | - |
+| Ethernet3 | P2P_LINK_TO_DC1-LEAF2B_Ethernet2 | 1500 | routed | access | - | - | - | 172.31.252.18/31 | - | - |
+| Ethernet4 | P2P_LINK_TO_DC1-SVC3A_Ethernet2 | 1500 | routed | access | - | - | - | 172.31.252.26/31 | - | - |
+| Ethernet5 | P2P_LINK_TO_DC1-SVC3B_Ethernet2 | 1500 | routed | access | - | - | - | 172.31.252.34/31 | - | - |
+| Ethernet6 | P2P_LINK_TO_DC1-BL1A_Ethernet2 | 1500 | routed | access | - | - | - | 172.31.252.42/31 | - | - |
+| Ethernet7 | P2P_LINK_TO_DC1-BL1B_Ethernet2 | 1500 | routed | access | - | - | - | 172.31.252.50/31 | - | - |
 
 *Inherited from Port-Channel Interface
 
@@ -347,37 +347,37 @@ No VLANs defined
 interface Ethernet1
    description P2P_LINK_TO_DC1-LEAF1A_Ethernet2
    no switchport
-   ip address 172.31.251.2/31
+   ip address 172.31.252.2/31
 !
 interface Ethernet2
    description P2P_LINK_TO_DC1-LEAF2A_Ethernet2
    no switchport
-   ip address 172.31.251.10/31
+   ip address 172.31.252.10/31
 !
 interface Ethernet3
    description P2P_LINK_TO_DC1-LEAF2B_Ethernet2
    no switchport
-   ip address 172.31.251.18/31
+   ip address 172.31.252.18/31
 !
 interface Ethernet4
    description P2P_LINK_TO_DC1-SVC3A_Ethernet2
    no switchport
-   ip address 172.31.251.26/31
+   ip address 172.31.252.26/31
 !
 interface Ethernet5
    description P2P_LINK_TO_DC1-SVC3B_Ethernet2
    no switchport
-   ip address 172.31.251.34/31
+   ip address 172.31.252.34/31
 !
 interface Ethernet6
    description P2P_LINK_TO_DC1-BL1A_Ethernet2
    no switchport
-   ip address 172.31.251.42/31
+   ip address 172.31.252.42/31
 !
 interface Ethernet7
    description P2P_LINK_TO_DC1-BL1B_Ethernet2
    no switchport
-   ip address 172.31.251.50/31
+   ip address 172.31.252.50/31
 ```
 
 ## Port-Channel Interfaces
@@ -512,13 +512,13 @@ Router ISIS not defined
 
 | Neighbor | Remote AS |
 | -------- | ---------
-| 172.31.251.3 | 65101 |
-| 172.31.251.11 | 65102 |
-| 172.31.251.19 | 65102 |
-| 172.31.251.27 | 65103 |
-| 172.31.251.35 | 65103 |
-| 172.31.251.43 | 65104 |
-| 172.31.251.51 | 65104 |
+| 172.31.252.3 | 65101 |
+| 172.31.252.11 | 65102 |
+| 172.31.252.19 | 65102 |
+| 172.31.252.27 | 65103 |
+| 172.31.252.35 | 65103 |
+| 172.31.252.43 | 65104 |
+| 172.31.252.51 | 65104 |
 | 192.168.251.5 | 65101 |
 | 192.168.251.6 | 65102 |
 | 192.168.251.7 | 65102 |
@@ -554,20 +554,20 @@ router bgp 65100
    neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==
    neighbor IPv4-UNDERLAY-PEERS send-community
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
-   neighbor 172.31.251.3 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.251.3 remote-as 65101
-   neighbor 172.31.251.11 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.251.11 remote-as 65102
-   neighbor 172.31.251.19 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.251.19 remote-as 65102
-   neighbor 172.31.251.27 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.251.27 remote-as 65103
-   neighbor 172.31.251.35 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.251.35 remote-as 65103
-   neighbor 172.31.251.43 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.251.43 remote-as 65104
-   neighbor 172.31.251.51 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.251.51 remote-as 65104
+   neighbor 172.31.252.3 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.252.3 remote-as 65101
+   neighbor 172.31.252.11 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.252.11 remote-as 65102
+   neighbor 172.31.252.19 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.252.19 remote-as 65102
+   neighbor 172.31.252.27 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.252.27 remote-as 65103
+   neighbor 172.31.252.35 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.252.35 remote-as 65103
+   neighbor 172.31.252.43 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.252.43 remote-as 65104
+   neighbor 172.31.252.51 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.252.51 remote-as 65104
    neighbor 192.168.251.5 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.251.5 remote-as 65101
    neighbor 192.168.251.6 peer group EVPN-OVERLAY-PEERS
