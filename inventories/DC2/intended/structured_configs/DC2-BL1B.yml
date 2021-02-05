@@ -217,6 +217,10 @@ inventory_dir: /projects/ipspace-webinar-september15-2020/inventories/DC2
 inventory_file: /projects/ipspace-webinar-september15-2020/inventories/DC2/inventory.yml
 inventory_hostname: DC2-BL1B
 inventory_hostname_short: DC2-BL1B
+ip_extcommunity_lists: null
+ip_igmp_snooping:
+    globally_enabled: true
+    vlans: null
 ip_routing: true
 ip_virtual_router_mac_address: 00:dc:00:00:00:0b
 l2leaf:
@@ -338,7 +342,6 @@ local_users:
         privilege: 15
         role: network-admin
         sha512_password: $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.
-logging: null
 loopback_interfaces:
     Loopback0:
         description: EVPN_Overlay_Peering
@@ -389,7 +392,7 @@ ntp_server:
 ntp_servers:
 - 0.north-america.pool.ntp.org
 - 1.north-america.pool.ntp.org
-omit: __omit_place_holder__a9aefcfa915a9a333461655608fd1ebada48b672
+omit: __omit_place_holder__ddc932db8c7f357d7d0047481830f9a1600b0924
 overlay_loopback_network_summary: 192.168.253.0/24
 p2p_uplinks_mtu: 1500
 playbook_dir: /projects/ipspace-webinar-september15-2020/playbooks
@@ -415,12 +418,6 @@ prefix_lists:
                 action: permit 192.168.253.0/24 eq 32
             20:
                 action: permit 192.168.254.0/24 eq 32
-    PL-P2P-UNDERLAY:
-        sequence_numbers:
-            10:
-                action: permit 172.31.252.0/24 le 31
-            20:
-                action: permit 10.255.253.0/24 le 31
 queue_monitor_length: null
 queue_monitor_streaming: null
 redundancy: null
@@ -546,7 +543,7 @@ servers:
 service_routing_protocols_model: multi-agent
 spanning_tree:
     mode: mstp
-    no_spanning_tree_vlan: 4094
+    no_spanning_tree_vlan: 4093-4094
     priority: 4096
 spine:
     bgp_as: 65200
@@ -651,6 +648,7 @@ vlan_interfaces:
     Vlan4093:
         description: MLAG_PEER_L3_PEERING
         ip_address: 10.255.253.5/31
+        mtu: 1500
     Vlan4094:
         description: MLAG_PEER
         ip_address: 10.255.254.5/31

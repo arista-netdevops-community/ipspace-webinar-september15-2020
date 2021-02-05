@@ -2,7 +2,6 @@
 
 ### DC2-LEAF1B ###
 
-
 ### Leaf Info ###
 l3leaf_node_group: DC2_LEAF1
 switch_platform: vEOS-LAB
@@ -57,9 +56,6 @@ load_interval:
 ### Queue Monitor Lenght ###
 queue_monitor_length:
 
-### Logging ###
-logging:
-
 ### Name Servers ###
 name_server:
   source:
@@ -83,7 +79,7 @@ redundancy:
 spanning_tree:
   mode: mstp
   priority: 4096
-  no_spanning_tree_vlan: 4094
+  no_spanning_tree_vlan: 4093-4094
 
 
 ### AAA authorization ###
@@ -288,6 +284,7 @@ vlan_interfaces:
   Vlan4093:
     description: MLAG_PEER_L3_PEERING
     ip_address: 10.255.253.1/31
+    mtu: 1500
   Vlan4094:
     description: MLAG_PEER
     ip_address: 10.255.254.1/31
@@ -298,12 +295,14 @@ vlan_interfaces:
     tenant: Tenant_A
     tags: ['app', 'erp1']
     description: Tenant_A_APP_Zone_1
+    shutdown: false
     vrf: Tenant_A_APP_Zone
     ip_address_virtual: 10.2.30.1/24
   Vlan231:
     tenant: Tenant_A
     tags: ['app']
     description: Tenant_A_APP_Zone_2
+    shutdown: false
     vrf: Tenant_A_APP_Zone
     ip_address_virtual: 10.2.31.1/24
   Vlan3011:
@@ -316,18 +315,21 @@ vlan_interfaces:
     tenant: Tenant_A
     tags: ['opzone']
     description: Tenant_A_OP_Zone_1
+    shutdown: false
     vrf: Tenant_A_OP_Zone
     ip_address_virtual: 10.2.10.1/24
   Vlan211:
     tenant: Tenant_A
     tags: ['opzone']
     description: Tenant_A_OP_Zone_2
+    shutdown: false
     vrf: Tenant_A_OP_Zone
     ip_address_virtual: 10.2.11.1/24
   Vlan212:
     tenant: Tenant_A
     tags: ['DC1_LEAF2']
     description: Tenant_A_OP_Zone_3
+    shutdown: false
     vrf: Tenant_A_OP_Zone
     ip_virtual_router_address: 10.2.12.1
   Vlan3009:
@@ -340,12 +342,14 @@ vlan_interfaces:
     tenant: Tenant_A
     tags: ['web', 'erp1']
     description: Tenant_A_WEB_Zone_1
+    shutdown: false
     vrf: Tenant_A_WEB_Zone
     ip_address_virtual: 10.2.20.1/24
   Vlan221:
     tenant: Tenant_A
     tags: ['web']
     description: Tenant_A_WEBZone_2
+    shutdown: false
     vrf: Tenant_A_WEB_Zone
     ip_address_virtual: 10.2.21.1/24
   Vlan3010:
@@ -405,6 +409,11 @@ virtual_source_nat_vrfs:
   Tenant_A_OP_Zone:
     ip_address: 10.255.2.4
 
+ip_igmp_snooping:
+  globally_enabled: True
+  vlans:
+## Tenant_A ##
+
 ### static routes ###
 static_routes:
   - vrf: MGMT
@@ -419,12 +428,6 @@ prefix_lists:
         action: "permit 192.168.253.0/24 eq 32"
       20:
         action: "permit 192.168.254.0/24 eq 32"
-  PL-P2P-UNDERLAY:
-    sequence_numbers:
-      10:
-        action: "permit 172.31.252.0/24 le 31"
-      20:
-        action: "permit 10.255.253.0/24 le 31"
 
 ### MLAG Configuration ###
 mlag_configuration:
@@ -447,6 +450,7 @@ route_maps:
         type: permit
         match:
           - "ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY"
+
 ### Routing - BGP ###
 router_bgp:
   as: 65201
@@ -462,6 +466,13 @@ router_bgp:
       password: "AQQvKeimxJu+uGQ/yYvv9w=="
       maximum_routes: 12000
       send_community: true
+    MLAG-IPv4-UNDERLAY-PEER:
+      type: ipv4
+      remote_as: 65201
+      next_hop_self: true
+      password: "vnEaG8gMeQf3d3cN6PktXQ=="
+      maximum_routes: 12000
+      send_community: true
     EVPN-OVERLAY-PEERS:
       type: evpn
       remote_as: 65200
@@ -471,24 +482,17 @@ router_bgp:
       password: "q+VNViP5i4rVjW1cxFv2wA=="
       send_community: true
       maximum_routes: 0
-    MLAG-IPv4-UNDERLAY-PEER:
-      type: ipv4
-      remote_as: 65201
-      next_hop_self: true
-      password: "vnEaG8gMeQf3d3cN6PktXQ=="
-      maximum_routes: 12000
-      send_community: true
   neighbors:
     172.31.252.4:
       peer_group: IPv4-UNDERLAY-PEERS
     172.31.252.6:
       peer_group: IPv4-UNDERLAY-PEERS
+    10.255.253.0:
+      peer_group: MLAG-IPv4-UNDERLAY-PEER
     192.168.253.1:
       peer_group: EVPN-OVERLAY-PEERS
     192.168.253.2:
       peer_group: EVPN-OVERLAY-PEERS
-    10.255.253.0:
-      peer_group: MLAG-IPv4-UNDERLAY-PEER
   redistribute_routes:
     connected:
       route_map: RM-CONN-2-BGP
@@ -600,6 +604,9 @@ router_bgp:
           peer_group: MLAG-IPv4-UNDERLAY-PEER
       redistribute_routes:
         - connected
+
+### Extended Community Lists ###
+ip_extcommunity_lists:
 
 ### Routing - OSPF ###
 router_ospf:
