@@ -2,7 +2,6 @@
 
 ### DC1-LEAF2A ###
 
-
 ### Leaf Info ###
 l3leaf_node_group: DC1_LEAF2
 switch_platform: vEOS-LAB
@@ -57,9 +56,6 @@ load_interval:
 ### Queue Monitor Lenght ###
 queue_monitor_length:
 
-### Logging ###
-logging:
-
 ### Name Servers ###
 name_server:
   source:
@@ -83,7 +79,7 @@ redundancy:
 spanning_tree:
   mode: mstp
   priority: 4096
-  no_spanning_tree_vlan: 4094
+  no_spanning_tree_vlan: 4093-4094
 
 
 ### AAA authorization ###
@@ -304,6 +300,7 @@ vlan_interfaces:
   Vlan4093:
     description: MLAG_PEER_L3_PEERING
     ip_address: 10.255.251.2/31
+    mtu: 1500
   Vlan4094:
     description: MLAG_PEER
     ip_address: 10.255.252.2/31
@@ -314,12 +311,14 @@ vlan_interfaces:
     tenant: Tenant_A
     tags: ['app', 'erp1']
     description: Tenant_A_APP_Zone_1
+    shutdown: false
     vrf: Tenant_A_APP_Zone
     ip_address_virtual: 10.1.30.1/24
   Vlan131:
     tenant: Tenant_A
     tags: ['app']
     description: Tenant_A_APP_Zone_2
+    shutdown: false
     vrf: Tenant_A_APP_Zone
     ip_address_virtual: 10.1.31.1/24
   Vlan3011:
@@ -332,18 +331,21 @@ vlan_interfaces:
     tenant: Tenant_A
     tags: ['opzone']
     description: Tenant_A_OP_Zone_1
+    shutdown: false
     vrf: Tenant_A_OP_Zone
     ip_address_virtual: 10.1.10.1/24
   Vlan111:
     tenant: Tenant_A
     tags: ['opzone']
     description: Tenant_A_OP_Zone_2
+    shutdown: false
     vrf: Tenant_A_OP_Zone
     ip_address_virtual: 10.1.11.1/24
   Vlan112:
     tenant: Tenant_A
     tags: ['DC1_LEAF2']
     description: Tenant_A_OP_Zone_3
+    shutdown: false
     vrf: Tenant_A_OP_Zone
     ip_address: 10.1.12.2/24
     ip_virtual_router_address: 10.1.12.1
@@ -357,12 +359,14 @@ vlan_interfaces:
     tenant: Tenant_A
     tags: ['web', 'erp1']
     description: Tenant_A_WEB_Zone_1
+    shutdown: false
     vrf: Tenant_A_WEB_Zone
     ip_address_virtual: 10.1.20.1/24
   Vlan121:
     tenant: Tenant_A
     tags: ['web']
     description: Tenant_A_WEBZone_2
+    shutdown: false
     vrf: Tenant_A_WEB_Zone
     ip_address_virtual: 10.1.21.1/24
   Vlan3010:
@@ -422,6 +426,11 @@ virtual_source_nat_vrfs:
   Tenant_A_OP_Zone:
     ip_address: 10.255.1.6
 
+ip_igmp_snooping:
+  globally_enabled: True
+  vlans:
+## Tenant_A ##
+
 ### static routes ###
 static_routes:
   - vrf: MGMT
@@ -436,12 +445,6 @@ prefix_lists:
         action: "permit 192.168.251.0/24 eq 32"
       20:
         action: "permit 192.168.252.0/24 eq 32"
-  PL-P2P-UNDERLAY:
-    sequence_numbers:
-      10:
-        action: "permit 172.31.251.0/24 le 31"
-      20:
-        action: "permit 10.255.251.0/24 le 31"
 
 ### MLAG Configuration ###
 mlag_configuration:
@@ -464,6 +467,7 @@ route_maps:
         type: permit
         match:
           - "ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY"
+
 ### Routing - BGP ###
 router_bgp:
   as: 65102
@@ -479,6 +483,13 @@ router_bgp:
       password: "AQQvKeimxJu+uGQ/yYvv9w=="
       maximum_routes: 12000
       send_community: true
+    MLAG-IPv4-UNDERLAY-PEER:
+      type: ipv4
+      remote_as: 65102
+      next_hop_self: true
+      password: "vnEaG8gMeQf3d3cN6PktXQ=="
+      maximum_routes: 12000
+      send_community: true
     EVPN-OVERLAY-PEERS:
       type: evpn
       remote_as: 65100
@@ -488,13 +499,6 @@ router_bgp:
       password: "q+VNViP5i4rVjW1cxFv2wA=="
       send_community: true
       maximum_routes: 0
-    MLAG-IPv4-UNDERLAY-PEER:
-      type: ipv4
-      remote_as: 65102
-      next_hop_self: true
-      password: "vnEaG8gMeQf3d3cN6PktXQ=="
-      maximum_routes: 12000
-      send_community: true
   neighbors:
     172.31.251.8:
       peer_group: IPv4-UNDERLAY-PEERS
@@ -504,6 +508,8 @@ router_bgp:
       peer_group: IPv4-UNDERLAY-PEERS
     172.31.251.14:
       peer_group: IPv4-UNDERLAY-PEERS
+    10.255.251.3:
+      peer_group: MLAG-IPv4-UNDERLAY-PEER
     192.168.251.1:
       peer_group: EVPN-OVERLAY-PEERS
     192.168.251.2:
@@ -512,8 +518,6 @@ router_bgp:
       peer_group: EVPN-OVERLAY-PEERS
     192.168.251.4:
       peer_group: EVPN-OVERLAY-PEERS
-    10.255.251.3:
-      peer_group: MLAG-IPv4-UNDERLAY-PEER
   redistribute_routes:
     connected:
       route_map: RM-CONN-2-BGP
@@ -625,6 +629,9 @@ router_bgp:
           peer_group: MLAG-IPv4-UNDERLAY-PEER
       redistribute_routes:
         - connected
+
+### Extended Community Lists ###
+ip_extcommunity_lists:
 
 ### Routing - OSPF ###
 router_ospf:

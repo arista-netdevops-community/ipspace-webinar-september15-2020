@@ -56,9 +56,6 @@ load_interval:
 ### Queue Monitor Lenght ###
 queue_monitor_length:
 
-### Logging ###
-logging:
-
 ### Name Servers ###
 name_server:
   source:
@@ -82,7 +79,7 @@ redundancy:
 spanning_tree:
   mode: mstp
   priority: 16384
-  no_spanning_tree_vlan: 4094
+  no_spanning_tree_vlan: 4093-4094
 
 
 ### AAA authorization ###
@@ -215,6 +212,11 @@ tcam_profile:
 
 ### MAC address table ###
 mac_address_table:
+
+ip_igmp_snooping:
+  globally_enabled: True
+  vlans:
+## Tenant_A ##
 
 ### static routes ###
 static_routes:

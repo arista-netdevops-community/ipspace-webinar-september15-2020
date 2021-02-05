@@ -2,7 +2,6 @@
 
 ### DC1-LEAF1A ###
 
-
 ### Leaf Info ###
 l3leaf_node_group: DC1_LEAF1
 switch_platform: vEOS-LAB
@@ -50,9 +49,6 @@ load_interval:
 
 ### Queue Monitor Lenght ###
 queue_monitor_length:
-
-### Logging ###
-logging:
 
 ### Name Servers ###
 name_server:
@@ -195,24 +191,28 @@ vlan_interfaces:
     tenant: Tenant_A
     tags: ['app', 'erp1']
     description: Tenant_A_APP_Zone_1
+    shutdown: false
     vrf: Tenant_A_APP_Zone
     ip_address_virtual: 10.1.30.1/24
   Vlan131:
     tenant: Tenant_A
     tags: ['app']
     description: Tenant_A_APP_Zone_2
+    shutdown: false
     vrf: Tenant_A_APP_Zone
     ip_address_virtual: 10.1.31.1/24
   Vlan120:
     tenant: Tenant_A
     tags: ['web', 'erp1']
     description: Tenant_A_WEB_Zone_1
+    shutdown: false
     vrf: Tenant_A_WEB_Zone
     ip_address_virtual: 10.1.20.1/24
   Vlan121:
     tenant: Tenant_A
     tags: ['web']
     description: Tenant_A_WEBZone_2
+    shutdown: false
     vrf: Tenant_A_WEB_Zone
     ip_address_virtual: 10.1.21.1/24
 
@@ -250,6 +250,11 @@ ip_virtual_router_mac_address: 00:dc:00:00:00:0a
 
 virtual_source_nat_vrfs:
 
+ip_igmp_snooping:
+  globally_enabled: True
+  vlans:
+## Tenant_A ##
+
 ### static routes ###
 static_routes:
   - vrf: MGMT
@@ -264,10 +269,6 @@ prefix_lists:
         action: "permit 192.168.251.0/24 eq 32"
       20:
         action: "permit 192.168.252.0/24 eq 32"
-  PL-P2P-UNDERLAY:
-    sequence_numbers:
-      10:
-        action: "permit 172.31.251.0/24 le 31"
 
 
 ### route-maps ###
@@ -278,6 +279,7 @@ route_maps:
         type: permit
         match:
           - "ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY"
+
 ### Routing - BGP ###
 router_bgp:
   as: 65101
@@ -379,6 +381,9 @@ router_bgp:
             - "11:11"
       redistribute_routes:
         - connected
+
+### Extended Community Lists ###
+ip_extcommunity_lists:
 
 ### Routing - OSPF ###
 router_ospf:
