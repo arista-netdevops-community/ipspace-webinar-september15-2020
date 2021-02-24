@@ -437,10 +437,10 @@ No Interface Defaults defined
 
 | Interface | Description | Type | Channel Group | IP Address | VRF |  MTU | Shutdown | ACL In | ACL Out |
 | --------- | ----------- | -----| ------------- | ---------- | ----| ---- | -------- | ------ | ------- |
-| Ethernet1 |  P2P_LINK_TO_DC1-SPINE1_Ethernet5  |  routed  | - |  172.31.252.33/31  |  default  |  1500  |  false  |  -  |  -  |
-| Ethernet2 |  P2P_LINK_TO_DC1-SPINE2_Ethernet5  |  routed  | - |  172.31.252.35/31  |  default  |  1500  |  false  |  -  |  -  |
-| Ethernet3 |  P2P_LINK_TO_DC1-SPINE3_Ethernet5  |  routed  | - |  172.31.252.37/31  |  default  |  1500  |  false  |  -  |  -  |
-| Ethernet4 |  P2P_LINK_TO_DC1-SPINE4_Ethernet5  |  routed  | - |  172.31.252.39/31  |  default  |  1500  |  false  |  -  |  -  |
+| Ethernet1 |  P2P_LINK_TO_DC1-SPINE1_Ethernet5  |  routed  | - |  172.30.252.33/31  |  default  |  1500  |  false  |  -  |  -  |
+| Ethernet2 |  P2P_LINK_TO_DC1-SPINE2_Ethernet5  |  routed  | - |  172.30.252.35/31  |  default  |  1500  |  false  |  -  |  -  |
+| Ethernet3 |  P2P_LINK_TO_DC1-SPINE3_Ethernet5  |  routed  | - |  172.30.252.37/31  |  default  |  1500  |  false  |  -  |  -  |
+| Ethernet4 |  P2P_LINK_TO_DC1-SPINE4_Ethernet5  |  routed  | - |  172.30.252.39/31  |  default  |  1500  |  false  |  -  |  -  |
 
 ### Ethernet Interfaces Device Configuration
 
@@ -450,25 +450,25 @@ interface Ethernet1
    description P2P_LINK_TO_DC1-SPINE1_Ethernet5
    no shutdown
    no switchport
-   ip address 172.31.252.33/31
+   ip address 172.30.252.33/31
 !
 interface Ethernet2
    description P2P_LINK_TO_DC1-SPINE2_Ethernet5
    no shutdown
    no switchport
-   ip address 172.31.252.35/31
+   ip address 172.30.252.35/31
 !
 interface Ethernet3
    description P2P_LINK_TO_DC1-SPINE3_Ethernet5
    no shutdown
    no switchport
-   ip address 172.31.252.37/31
+   ip address 172.30.252.37/31
 !
 interface Ethernet4
    description P2P_LINK_TO_DC1-SPINE4_Ethernet5
    no shutdown
    no switchport
-   ip address 172.31.252.39/31
+   ip address 172.30.252.39/31
 !
 interface Ethernet5
    description MLAG_PEER_DC1-SVC3A_Ethernet5
@@ -809,10 +809,10 @@ Router ISIS not defined
 | Neighbor | Remote AS | VRF |
 | -------- | --------- | --- |
 | 10.255.251.6 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | default |
-| 172.31.252.32 | Inherited from peer group IPv4-UNDERLAY-PEERS | default |
-| 172.31.252.34 | Inherited from peer group IPv4-UNDERLAY-PEERS | default |
-| 172.31.252.36 | Inherited from peer group IPv4-UNDERLAY-PEERS | default |
-| 172.31.252.38 | Inherited from peer group IPv4-UNDERLAY-PEERS | default |
+| 172.30.252.32 | Inherited from peer group IPv4-UNDERLAY-PEERS | default |
+| 172.30.252.34 | Inherited from peer group IPv4-UNDERLAY-PEERS | default |
+| 172.30.252.36 | Inherited from peer group IPv4-UNDERLAY-PEERS | default |
+| 172.30.252.38 | Inherited from peer group IPv4-UNDERLAY-PEERS | default |
 | 192.168.251.1 | 65100 | default |
 | 192.168.251.2 | 65100 | default |
 | 192.168.251.3 | 65100 | default |
@@ -868,10 +868,10 @@ router bgp 65103
    neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000
    neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN in
    neighbor 10.255.251.6 peer group MLAG-IPv4-UNDERLAY-PEER
-   neighbor 172.31.252.32 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.252.34 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.252.36 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.252.38 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.30.252.32 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.30.252.34 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.30.252.36 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.30.252.38 peer group IPv4-UNDERLAY-PEERS
    neighbor 192.168.251.1 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.251.1 remote-as 65100
    neighbor 192.168.251.1 description DC1-SPINE1

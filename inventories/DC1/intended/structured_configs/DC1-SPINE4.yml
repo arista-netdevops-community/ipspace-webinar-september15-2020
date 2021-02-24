@@ -76,7 +76,7 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.252.46/31
+    ip_address: 172.30.252.46/31
   Ethernet7:
     peer: DC1-BL1B
     peer_interface: Ethernet4
@@ -85,7 +85,7 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.252.54/31
+    ip_address: 172.30.252.54/31
   Ethernet1:
     peer: DC1-LEAF1A
     peer_interface: Ethernet4
@@ -94,7 +94,7 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.252.6/31
+    ip_address: 172.30.252.6/31
   Ethernet2:
     peer: DC1-LEAF2A
     peer_interface: Ethernet4
@@ -103,7 +103,7 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.252.14/31
+    ip_address: 172.30.252.14/31
   Ethernet3:
     peer: DC1-LEAF2B
     peer_interface: Ethernet4
@@ -112,7 +112,7 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.252.22/31
+    ip_address: 172.30.252.22/31
   Ethernet4:
     peer: DC1-SVC3A
     peer_interface: Ethernet4
@@ -121,7 +121,7 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.252.30/31
+    ip_address: 172.30.252.30/31
   Ethernet5:
     peer: DC1-SVC3B
     peer_interface: Ethernet4
@@ -130,7 +130,7 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.252.38/31
+    ip_address: 172.30.252.38/31
 loopback_interfaces:
   Loopback0:
     description: EVPN_Overlay_Peering
@@ -187,25 +187,25 @@ router_bgp:
       maximum_routes: 0
       next_hop_unchanged: true
   neighbors:
-    172.31.252.47:
+    172.30.252.47:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: 65104
-    172.31.252.55:
+    172.30.252.55:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: 65104
-    172.31.252.7:
+    172.30.252.7:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: 65101
-    172.31.252.15:
+    172.30.252.15:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: 65102
-    172.31.252.23:
+    172.30.252.23:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: 65102
-    172.31.252.31:
+    172.30.252.31:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: 65103
-    172.31.252.39:
+    172.30.252.39:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: 65103
     192.168.251.10:

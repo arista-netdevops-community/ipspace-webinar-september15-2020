@@ -361,13 +361,13 @@ No Interface Defaults defined
 
 | Interface | Description | Type | Channel Group | IP Address | VRF |  MTU | Shutdown | ACL In | ACL Out |
 | --------- | ----------- | -----| ------------- | ---------- | ----| ---- | -------- | ------ | ------- |
-| Ethernet1 |  P2P_LINK_TO_DC1-LEAF1A_Ethernet3  |  routed  | - |  172.31.252.4/31  |  default  |  1500  |  false  |  -  |  -  |
-| Ethernet2 |  P2P_LINK_TO_DC1-LEAF2A_Ethernet3  |  routed  | - |  172.31.252.12/31  |  default  |  1500  |  false  |  -  |  -  |
-| Ethernet3 |  P2P_LINK_TO_DC1-LEAF2B_Ethernet3  |  routed  | - |  172.31.252.20/31  |  default  |  1500  |  false  |  -  |  -  |
-| Ethernet4 |  P2P_LINK_TO_DC1-SVC3A_Ethernet3  |  routed  | - |  172.31.252.28/31  |  default  |  1500  |  false  |  -  |  -  |
-| Ethernet5 |  P2P_LINK_TO_DC1-SVC3B_Ethernet3  |  routed  | - |  172.31.252.36/31  |  default  |  1500  |  false  |  -  |  -  |
-| Ethernet6 |  P2P_LINK_TO_DC1-BL1A_Ethernet3  |  routed  | - |  172.31.252.44/31  |  default  |  1500  |  false  |  -  |  -  |
-| Ethernet7 |  P2P_LINK_TO_DC1-BL1B_Ethernet3  |  routed  | - |  172.31.252.52/31  |  default  |  1500  |  false  |  -  |  -  |
+| Ethernet1 |  P2P_LINK_TO_DC1-LEAF1A_Ethernet3  |  routed  | - |  172.30.252.4/31  |  default  |  1500  |  false  |  -  |  -  |
+| Ethernet2 |  P2P_LINK_TO_DC1-LEAF2A_Ethernet3  |  routed  | - |  172.30.252.12/31  |  default  |  1500  |  false  |  -  |  -  |
+| Ethernet3 |  P2P_LINK_TO_DC1-LEAF2B_Ethernet3  |  routed  | - |  172.30.252.20/31  |  default  |  1500  |  false  |  -  |  -  |
+| Ethernet4 |  P2P_LINK_TO_DC1-SVC3A_Ethernet3  |  routed  | - |  172.30.252.28/31  |  default  |  1500  |  false  |  -  |  -  |
+| Ethernet5 |  P2P_LINK_TO_DC1-SVC3B_Ethernet3  |  routed  | - |  172.30.252.36/31  |  default  |  1500  |  false  |  -  |  -  |
+| Ethernet6 |  P2P_LINK_TO_DC1-BL1A_Ethernet3  |  routed  | - |  172.30.252.44/31  |  default  |  1500  |  false  |  -  |  -  |
+| Ethernet7 |  P2P_LINK_TO_DC1-BL1B_Ethernet3  |  routed  | - |  172.30.252.52/31  |  default  |  1500  |  false  |  -  |  -  |
 
 ### Ethernet Interfaces Device Configuration
 
@@ -377,43 +377,43 @@ interface Ethernet1
    description P2P_LINK_TO_DC1-LEAF1A_Ethernet3
    no shutdown
    no switchport
-   ip address 172.31.252.4/31
+   ip address 172.30.252.4/31
 !
 interface Ethernet2
    description P2P_LINK_TO_DC1-LEAF2A_Ethernet3
    no shutdown
    no switchport
-   ip address 172.31.252.12/31
+   ip address 172.30.252.12/31
 !
 interface Ethernet3
    description P2P_LINK_TO_DC1-LEAF2B_Ethernet3
    no shutdown
    no switchport
-   ip address 172.31.252.20/31
+   ip address 172.30.252.20/31
 !
 interface Ethernet4
    description P2P_LINK_TO_DC1-SVC3A_Ethernet3
    no shutdown
    no switchport
-   ip address 172.31.252.28/31
+   ip address 172.30.252.28/31
 !
 interface Ethernet5
    description P2P_LINK_TO_DC1-SVC3B_Ethernet3
    no shutdown
    no switchport
-   ip address 172.31.252.36/31
+   ip address 172.30.252.36/31
 !
 interface Ethernet6
    description P2P_LINK_TO_DC1-BL1A_Ethernet3
    no shutdown
    no switchport
-   ip address 172.31.252.44/31
+   ip address 172.30.252.44/31
 !
 interface Ethernet7
    description P2P_LINK_TO_DC1-BL1B_Ethernet3
    no shutdown
    no switchport
-   ip address 172.31.252.52/31
+   ip address 172.30.252.52/31
 ```
 
 ## Port-Channel Interfaces
@@ -557,13 +557,13 @@ Router ISIS not defined
 
 | Neighbor | Remote AS | VRF |
 | -------- | --------- | --- |
-| 172.31.252.5 | 65101 | default |
-| 172.31.252.13 | 65102 | default |
-| 172.31.252.21 | 65102 | default |
-| 172.31.252.29 | 65103 | default |
-| 172.31.252.37 | 65103 | default |
-| 172.31.252.45 | 65104 | default |
-| 172.31.252.53 | 65104 | default |
+| 172.30.252.5 | 65101 | default |
+| 172.30.252.13 | 65102 | default |
+| 172.30.252.21 | 65102 | default |
+| 172.30.252.29 | 65103 | default |
+| 172.30.252.37 | 65103 | default |
+| 172.30.252.45 | 65104 | default |
+| 172.30.252.53 | 65104 | default |
 | 192.168.251.5 | 65101 | default |
 | 192.168.251.6 | 65102 | default |
 | 192.168.251.7 | 65102 | default |
@@ -599,20 +599,20 @@ router bgp 65100
    neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==
    neighbor IPv4-UNDERLAY-PEERS send-community
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
-   neighbor 172.31.252.5 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.252.5 remote-as 65101
-   neighbor 172.31.252.13 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.252.13 remote-as 65102
-   neighbor 172.31.252.21 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.252.21 remote-as 65102
-   neighbor 172.31.252.29 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.252.29 remote-as 65103
-   neighbor 172.31.252.37 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.252.37 remote-as 65103
-   neighbor 172.31.252.45 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.252.45 remote-as 65104
-   neighbor 172.31.252.53 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.252.53 remote-as 65104
+   neighbor 172.30.252.5 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.30.252.5 remote-as 65101
+   neighbor 172.30.252.13 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.30.252.13 remote-as 65102
+   neighbor 172.30.252.21 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.30.252.21 remote-as 65102
+   neighbor 172.30.252.29 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.30.252.29 remote-as 65103
+   neighbor 172.30.252.37 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.30.252.37 remote-as 65103
+   neighbor 172.30.252.45 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.30.252.45 remote-as 65104
+   neighbor 172.30.252.53 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.30.252.53 remote-as 65104
    neighbor 192.168.251.5 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.251.5 remote-as 65101
    neighbor 192.168.251.5 description DC1-LEAF1A

@@ -171,7 +171,7 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.252.17/31
+    ip_address: 172.30.252.17/31
   Ethernet2:
     peer: DC1-SPINE2
     peer_interface: Ethernet3
@@ -180,7 +180,7 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.252.19/31
+    ip_address: 172.30.252.19/31
   Ethernet3:
     peer: DC1-SPINE3
     peer_interface: Ethernet3
@@ -189,7 +189,7 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.252.21/31
+    ip_address: 172.30.252.21/31
   Ethernet4:
     peer: DC1-SPINE4
     peer_interface: Ethernet3
@@ -198,7 +198,7 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.252.23/31
+    ip_address: 172.30.252.23/31
   Ethernet5:
     peer: DC1-LEAF2A
     peer_interface: Ethernet5
@@ -412,13 +412,13 @@ router_bgp:
       send_community: true
       maximum_routes: 0
   neighbors:
-    172.31.252.16:
+    172.30.252.16:
       peer_group: IPv4-UNDERLAY-PEERS
-    172.31.252.18:
+    172.30.252.18:
       peer_group: IPv4-UNDERLAY-PEERS
-    172.31.252.20:
+    172.30.252.20:
       peer_group: IPv4-UNDERLAY-PEERS
-    172.31.252.22:
+    172.30.252.22:
       peer_group: IPv4-UNDERLAY-PEERS
     10.255.251.2:
       peer_group: MLAG-IPv4-UNDERLAY-PEER
