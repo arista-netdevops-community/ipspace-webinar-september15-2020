@@ -353,6 +353,8 @@ vlan internal order ascending range 1006 1199
 | 111 | Tenant_A_OP_Zone_2 | none  |
 | 120 | Tenant_A_WEB_Zone_1 | none  |
 | 121 | Tenant_A_WEBZone_2 | none  |
+| 130 | Tenant_A_APP_Zone_1 | none  |
+| 131 | Tenant_A_APP_Zone_2 | none  |
 
 ## VLANs Device Configuration
 
@@ -369,6 +371,12 @@ vlan 120
 !
 vlan 121
    name Tenant_A_WEBZone_2
+!
+vlan 130
+   name Tenant_A_APP_Zone_1
+!
+vlan 131
+   name Tenant_A_APP_Zone_2
 ```
 
 # Interfaces
@@ -385,8 +393,8 @@ No Interface Defaults defined
 
 | Interface | Description | Mode | VLANs | Native VLAN | Trunk Group | Channel-Group |
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
-| Ethernet1 | DC1-LEAF2A_Ethernet7 | *trunk | *110-111,120-121 | *- | *- | 1 |
-| Ethernet2 | DC1-LEAF2B_Ethernet7 | *trunk | *110-111,120-121 | *- | *- | 1 |
+| Ethernet1 | DC1-LEAF2A_Ethernet7 | *trunk | *110-111,120-121,130-131 | *- | *- | 1 |
+| Ethernet2 | DC1-LEAF2B_Ethernet7 | *trunk | *110-111,120-121,130-131 | *- | *- | 1 |
 | Ethernet3 |  server-1_Eth1 | access | 110 | - | - | - |
 
 *Inherited from Port-Channel Interface
@@ -420,7 +428,7 @@ interface Ethernet3
 
 | Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
-| Port-Channel1 | DC1-LEAF2A_Po7 | switched | trunk | 110-111,120-121 | - | - | - | - | - | - |
+| Port-Channel1 | DC1-LEAF2A_Po7 | switched | trunk | 110-111,120-121,130-131 | - | - | - | - | - | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -430,7 +438,7 @@ interface Port-Channel1
    description DC1-LEAF2A_Po7
    no shutdown
    switchport
-   switchport trunk allowed vlan 110-111,120-121
+   switchport trunk allowed vlan 110-111,120-121,130-131
    switchport mode trunk
 ```
 
