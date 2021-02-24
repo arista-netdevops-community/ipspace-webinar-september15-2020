@@ -13,6 +13,7 @@
   - [Management API](#Management-api-http)
 - [Authentication](#authentication)
   - [Local Users](#local-users)
+  - [Enable Password](#enable-password)
   - [TACACS Servers](#tacacs-servers)
   - [IP TACACS Source Interfaces](#ip-tacacs-source-interfaces)
   - [RADIUS Servers](#radius-servers)
@@ -35,6 +36,7 @@
 - [Internal VLAN Allocation Policy](#internal-vlan-allocation-policy)
 - [VLANs](#vlans)
 - [Interfaces](#interfaces)
+  - [Interface Defaults](#interface-defaults)
   - [Ethernet Interfaces](#ethernet-interfaces)
   - [Port-Channel Interfaces](#port-channel-interfaces)
   - [Loopback Interfaces](#loopback-interfaces)
@@ -46,6 +48,7 @@
   - [IPv6 Routing](#ipv6-routing)
   - [Static Routes](#static-routes)
   - [IPv6 Static Routes](#ipv6-static-routes)
+  - [Router OSPF](#router-ospf)
   - [Router ISIS](#router-isis)
   - [Router BGP](#router-bgp)
   - [Router BFD](#router-bfd)
@@ -70,6 +73,10 @@
 - [Platform](#platform)
 - [Router L2 VPN](#router-l2-vpn)
 - [IP DHCP Relay](#ip-dhcp-relay)
+- [Errdisable](#errdisable)
+- [MAC security](#mac-security)
+- [QOS](#qos)
+- [QOS Profiles](#qos-profiles)
 
 # Management
 
@@ -95,6 +102,7 @@
 !
 interface Management1
    description oob_management
+   no shutdown
    vrf MGMT
    ip address 192.168.200.114/24
 ```
@@ -154,6 +162,10 @@ ntp server vrf MGMT 0.north-america.pool.ntp.org prefer
 ntp server vrf MGMT 1.north-america.pool.ntp.org
 ```
 
+## PTP
+
+PTP is not defined.
+
 ## Management SSH
 
 Management SSH not defined
@@ -206,6 +218,10 @@ username admin privilege 15 role network-admin secret sha512 $6$Df86J4/SFMDE3/1K
 username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.
 ```
 
+## Enable Password
+
+Enable password not defined
+
 ## TACACS Servers
 
 TACACS servers not defined
@@ -248,9 +264,9 @@ Aliases not defined
 
 ### TerminAttr Daemon Summary
 
-| CV Compression | Ingest gRPC URL | Ingest Authentication Key | Smash Excludes | Ingest Exclude | Ingest VRF |  NTP VRF |
-| -------------- | --------------- | ------------------------- | -------------- | -------------- | ---------- | -------- |
-| gzip | 192.168.200.11:9910 | telarista | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | MGMT | MGMT |
+| CV Compression | Ingest gRPC URL | Ingest Authentication Key | Smash Excludes | Ingest Exclude | Ingest VRF |  NTP VRF | AAA Disabled |
+| -------------- | --------------- | ------------------------- | -------------- | -------------- | ---------- | -------- | ------ |
+| gzip | 192.168.200.11:9910 | telarista | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | MGMT | MGMT | False |
 
 ### TerminAttr Daemon Device Configuration
 
@@ -293,7 +309,7 @@ No event handler defined
 | --------- | --------------- | ------------ | --------- |
 | DC1_L2LEAF2 | Vlan4094 | 10.255.252.16 | Port-Channel3 |
 
-Dual primary detection is enabled. The detection delay is 5 seconds.
+Dual primary detection is disabled.
 
 ## MLAG Device Configuration
 
@@ -303,9 +319,7 @@ mlag configuration
    domain-id DC1_L2LEAF2
    local-interface Vlan4094
    peer-address 10.255.252.16
-   peer-address heartbeat 192.168.200.113 vrf MGMT
    peer-link Port-Channel3
-   dual-primary detection delay 5 action errdisable all-interfaces
    reload-delay mlag 300
    reload-delay non-mlag 330
 ```
@@ -314,20 +328,24 @@ mlag configuration
 
 ## Spanning Tree Summary
 
-Mode: mstp
+STP mode: **mstp**
 
 ### MSTP Instance and Priority
 
-| Instance | Priority |
+| Instance(s) | Priority |
 | -------- | -------- |
 | 0 | 16384 |
+
+### Global Spanning-Tree Settings
+
+Spanning Tree disabled for VLANs: **4094**
 
 ## Spanning Tree Device Configuration
 
 ```eos
 !
 spanning-tree mode mstp
-no spanning-tree vlan-id 4093-4094
+no spanning-tree vlan-id 4094
 spanning-tree mst 0 priority 16384
 ```
 
@@ -397,19 +415,24 @@ vlan 4094
 
 # Interfaces
 
+## Interface Defaults
+
+No Interface Defaults defined
+
 ## Ethernet Interfaces
 
 ### Ethernet Interfaces Summary
 
-| Interface | Description | MTU | Type | Mode | Allowed VLANs (Trunk) | Trunk Group | VRF | IP Address | Channel-Group ID | Channel-Group Type |
-| --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | --- | ---------- | ---------------- | ------------------ |
-| Ethernet1 | DC1-SVC3A_Ethernet8 | *1500 | *switched | *trunk | *110-111,120-121,130-131,160-161 | - | - | - | 1 | active |
-| Ethernet2 | DC1-SVC3B_Ethernet8 | *1500 | *switched | *trunk | *110-111,120-121,130-131,160-161 | - | - | - | 1 | active |
-| Ethernet3 | MLAG_PEER_DC1-L2LEAF2A_Ethernet3 | *1500 | *switched | *trunk | *2-4094 | *MLAG | - | - | 3 | active |
-| Ethernet4 | MLAG_PEER_DC1-L2LEAF2A_Ethernet4 | *1500 | *switched | *trunk | *2-4094 | *MLAG | - | - | 3 | active |
+#### L2
+
+| Interface | Description | Mode | VLANs | Native VLAN | Trunk Group | Channel-Group |
+| --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
+| Ethernet1 | DC1-SVC3A_Ethernet8 | *trunk | *110-111,120-121,130-131,160-161 | *- | *- | 1 |
+| Ethernet2 | DC1-SVC3B_Ethernet8 | *trunk | *110-111,120-121,130-131,160-161 | *- | *- | 1 |
+| Ethernet3 | MLAG_PEER_DC1-L2LEAF2A_Ethernet3 | *trunk | *2-4094 | *- | *['MLAG'] | 3 |
+| Ethernet4 | MLAG_PEER_DC1-L2LEAF2A_Ethernet4 | *trunk | *2-4094 | *- | *['MLAG'] | 3 |
 
 *Inherited from Port-Channel Interface
-
 
 ### Ethernet Interfaces Device Configuration
 
@@ -417,18 +440,22 @@ vlan 4094
 !
 interface Ethernet1
    description DC1-SVC3A_Ethernet8
+   no shutdown
    channel-group 1 mode active
 !
 interface Ethernet2
    description DC1-SVC3B_Ethernet8
+   no shutdown
    channel-group 1 mode active
 !
 interface Ethernet3
    description MLAG_PEER_DC1-L2LEAF2A_Ethernet3
+   no shutdown
    channel-group 3 mode active
 !
 interface Ethernet4
    description MLAG_PEER_DC1-L2LEAF2A_Ethernet4
+   no shutdown
    channel-group 3 mode active
 ```
 
@@ -436,10 +463,12 @@ interface Ethernet4
 
 ### Port-Channel Interfaces Summary
 
-| Interface | Description | MTU | Type | Mode | Allowed VLANs (trunk) | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI | VRF | IP Address | IPv6 Address |
-| --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | --------------------- ! ------------------ | ------- | -------- | --- | ---------- | ------------ |
-| Port-Channel1 | DC1-SVC3B_Po7 | 1500 | switched | trunk | 110-111,120-121,130-131,160-161 | - | - | - | 1 | - | - | - | - |
-| Port-Channel3 | MLAG_PEER_DC1-L2LEAF2A_Po3 | 1500 | switched | trunk | 2-4094 | MLAG | - | - | - | - | - | - | - |
+#### L2
+
+| Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
+| --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
+| Port-Channel1 | DC1-SVC3B_Po7 | switched | trunk | 110-111,120-121,130-131,160-161 | - | - | - | - | 1 | - |
+| Port-Channel3 | MLAG_PEER_DC1-L2LEAF2A_Po3 | switched | trunk | 2-4094 | - | ['MLAG'] | - | - | - | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -447,12 +476,16 @@ interface Ethernet4
 !
 interface Port-Channel1
    description DC1-SVC3B_Po7
+   no shutdown
+   switchport
    switchport trunk allowed vlan 110-111,120-121,130-131,160-161
    switchport mode trunk
    mlag 1
 !
 interface Port-Channel3
    description MLAG_PEER_DC1-L2LEAF2A_Po3
+   no shutdown
+   switchport
    switchport trunk allowed vlan 2-4094
    switchport mode trunk
    switchport trunk group MLAG
@@ -466,9 +499,16 @@ No loopback interfaces defined
 
 ### VLAN Interfaces Summary
 
-| Interface | Description | VRF | IP Address | IP Address Virtual | IP Router Virtual Address (vARP) |
-| --------- | ----------- | --- | ---------- | ------------------ | -------------------------------- |
-| Vlan4094 | MLAG_PEER | default | 10.255.252.17/31 | - | - |
+| Interface | Description | VRF |  MTU | Shutdown |
+| --------- | ----------- | --- | ---- | -------- |
+| Vlan4094 |  MLAG_PEER  |  default  |  1500  |  false  |
+
+#### IPv4
+
+| Interface | VRF | IP Address | IP Address Virtual | IP Router Virtual Address | VRRP | ACL In | ACL Out |
+| --------- | --- | ---------- | ------------------ | ------------------------- | ---- | ------ | ------- |
+| Vlan4094 |  default  |  10.255.252.17/31  |  -  |  -  |  -  |  -  |  -  |
+
 
 
 ### VLAN Interfaces Device Configuration
@@ -477,6 +517,7 @@ No loopback interfaces defined
 !
 interface Vlan4094
    description MLAG_PEER
+   no shutdown
    no autostate
    ip address 10.255.252.17/31
 ```
@@ -497,7 +538,7 @@ IP virtual router MAC address not defined
 
 | VRF | Routing Enabled |
 | --- | --------------- |
-| default | true| | MGMT | false |
+| default | true|| MGMT | false |
 
 ### IP Routing Device Configuration
 
@@ -535,6 +576,14 @@ ip route vrf MGMT 0.0.0.0/0 192.168.200.1
 
 IPv6 static routes not defined
 
+## ARP
+
+Global ARP timeout not defined.
+
+## Router OSPF
+
+Router OSPF not defined
+
 ## Router ISIS
 
 Router ISIS not defined
@@ -564,6 +613,15 @@ router bfd
 ## IP IGMP Snooping
 
 ### IP IGMP Snooping Summary
+
+IGMP snooping is globally enabled.
+
+
+### IP IGMP Snooping Device Configuration
+
+```eos
+```
+
 
 ## Router Multicast
 
@@ -647,6 +705,22 @@ Router L2 VPN not defined
 # IP DHCP Relay
 
 IP DHCP relay not defined
+
+# Errdisable
+
+Errdisable is not defined.
+
+# MACsec
+
+MACsec not defined
+
+# QOS
+
+QOS is not defined.
+
+# QOS Profiles
+
+QOS Profiles are not defined
 
 # Custom Templates
 

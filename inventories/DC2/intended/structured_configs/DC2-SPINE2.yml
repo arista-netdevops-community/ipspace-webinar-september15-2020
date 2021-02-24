@@ -1,73 +1,52 @@
-## Ansible Generated ##
-
-### DC2-SPINE2 ###
-
-### Spine Info ###
 switch_platform: vEOS-LAB
 switch_mgmt_ip: 192.168.200.152/24
-
+switch_bgp_as: 65200
+switch_router_id: 192.168.253.2
+switch_evpn_role: server
+switch_evpn_route_servers: []
+switch_evpn_route_clients:
+- DC2-BL1A
+- DC2-BL1B
+- DC2-LEAF1A
+- DC2-LEAF1B
 service_routing_protocols_model: multi-agent
 ip_routing: true
-
-### Hardware Counters
-hardware_counters:
-
-### Daemon TerminAttr ###
+hardware_counters: null
 daemon_terminattr:
   ingestgrpcurl:
     ips:
-      - 192.168.200.11
+    - 192.168.200.11
     port: 9910
   ingestauth_key: telarista
   ingestvrf: MGMT
-  smashexcludes: "ale,flexCounter,hardware,kni,pulse,strata"
-  ingestexclude: "/Sysdb/cell/1/agent,/Sysdb/cell/2/agent"
-
+  smashexcludes: ale,flexCounter,hardware,kni,pulse,strata
+  ingestexclude: /Sysdb/cell/1/agent,/Sysdb/cell/2/agent
+  disable_aaa: false
 vlan_internal_order:
   allocation: ascending
   range:
     beginning: 1006
     ending: 1199
-### Event Monitor ###
-event_monitor:
-
-### Event Handler ###
-event_handlers:
-
-### Load Interval ###
-load_interval:
-
-### Queue Monitor Lenght ###
-queue_monitor_length:
-
-### Name Servers ###
+event_monitor: null
+event_handlers: null
+load_interval: null
+queue_monitor_length: null
 name_server:
   source:
     vrf: MGMT
   nodes:
-    - 192.168.200.5
-
-### NTP Servers ###
+  - 192.168.200.5
 ntp_server:
   local_interface:
     vrf: MGMT
     interface: Management1
   nodes:
-    - 0.north-america.pool.ntp.org
-    - 1.north-america.pool.ntp.org
-
-### Redundancy ###
-redundancy:
-
-### Spanning-tree ###
+  - 0.north-america.pool.ntp.org
+  - 1.north-america.pool.ntp.org
+redundancy: null
 spanning_tree:
   mode: none
-
-
-### AAA authorization ###
-aaa_authorization:
-
-### local users ###
+aaa_authorization: null
 local_users:
   admin:
     privilege: 15
@@ -77,22 +56,14 @@ local_users:
     privilege: 15
     role: network-admin
     sha512_password: $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.
-
-### Clock Timezone ###
-clock:
-
-
-### VRFs ###
+clock: null
 vrfs:
   MGMT:
-    ip_routing: False
-### bfd multihop ###
+    ip_routing: false
 bfd_multihop:
   interval: 1200
   min_rx: 1200
   multiplier: 3
-
-### Ethernet Interfaces ###
 ethernet_interfaces:
   Ethernet3:
     peer: DC2-BL1A
@@ -101,6 +72,7 @@ ethernet_interfaces:
     description: P2P_LINK_TO_DC2-BL1A_Ethernet2
     mtu: 1500
     type: routed
+    shutdown: false
     ip_address: 172.31.252.10/31
   Ethernet4:
     peer: DC2-BL1B
@@ -109,6 +81,7 @@ ethernet_interfaces:
     description: P2P_LINK_TO_DC2-BL1B_Ethernet2
     mtu: 1500
     type: routed
+    shutdown: false
     ip_address: 172.31.252.14/31
   Ethernet1:
     peer: DC2-LEAF1A
@@ -117,6 +90,7 @@ ethernet_interfaces:
     description: P2P_LINK_TO_DC2-LEAF1A_Ethernet2
     mtu: 1500
     type: routed
+    shutdown: false
     ip_address: 172.31.252.2/31
   Ethernet2:
     peer: DC2-LEAF1B
@@ -125,115 +99,97 @@ ethernet_interfaces:
     description: P2P_LINK_TO_DC2-LEAF1B_Ethernet2
     mtu: 1500
     type: routed
+    shutdown: false
     ip_address: 172.31.252.6/31
-
-
-### Loopback Interfaces ###
 loopback_interfaces:
   Loopback0:
     description: EVPN_Overlay_Peering
+    shutdown: false
     ip_address: 192.168.253.2/32
-
-
-### Management Interfaces ###
 management_interfaces:
   Management1:
     description: oob_management
+    shutdown: false
     vrf: MGMT
     ip_address: 192.168.200.152/24
     gateway: 192.168.200.1
-
-### TCAM Profiles ###
-tcam_profile:
-
-### MAC address table ###
-mac_address_table:
-
-### static routes ###
+tcam_profile: null
+platform: null
+mac_address_table: null
 static_routes:
-  - vrf: MGMT
-    destination_address_prefix: 0.0.0.0/0
-    gateway: 192.168.200.1
-
-### prefix-lists ###
+- vrf: MGMT
+  destination_address_prefix: 0.0.0.0/0
+  gateway: 192.168.200.1
 prefix_lists:
   PL-LOOPBACKS-EVPN-OVERLAY:
     sequence_numbers:
       10:
-        action: "permit 192.168.253.0/24 le 32"
-
-
-### route-maps ###
+        action: permit 192.168.253.0/24 le 32
 route_maps:
   RM-CONN-2-BGP:
     sequence_numbers:
       10:
         type: permit
         match:
-          - "ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY"
-
-
-### peer-filters ###
-peer_filters:
-
-
-### Routing - BGP ###
+        - ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
+peer_filters: null
 router_bgp:
   as: 65200
   router_id: 192.168.253.2
   bgp_defaults:
-    - no bgp default ipv4-unicast
-    - distance bgp 20 200 200
-    - maximum-paths 2 ecmp 2
+  - no bgp default ipv4-unicast
+  - distance bgp 20 200 200
+  - maximum-paths 4 ecmp 4
   peer_groups:
     IPv4-UNDERLAY-PEERS:
       type: ipv4
       peer_filter: LEAF-AS-RANGE
-      password: "AQQvKeimxJu+uGQ/yYvv9w=="
+      password: AQQvKeimxJu+uGQ/yYvv9w==
       maximum_routes: 12000
       send_community: true
     EVPN-OVERLAY-PEERS:
       type: evpn
-      peer_filter: LEAF-AS-RANGE
-      next_hop_unchanged: true
       update_source: Loopback0
       bfd: true
-      ebgp_multihop: 3
-      password: "q+VNViP5i4rVjW1cxFv2wA=="
+      ebgp_multihop: '3'
+      password: q+VNViP5i4rVjW1cxFv2wA==
       send_community: true
       maximum_routes: 0
+      next_hop_unchanged: true
   neighbors:
     172.31.252.11:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: 65202
-    192.168.253.5:
-      peer_group: EVPN-OVERLAY-PEERS
-      remote_as: 65202
     172.31.252.15:
       peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65202
-    192.168.253.6:
-      peer_group: EVPN-OVERLAY-PEERS
       remote_as: 65202
     172.31.252.3:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: 65201
-    192.168.253.3:
-      peer_group: EVPN-OVERLAY-PEERS
-      remote_as: 65201
     172.31.252.7:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: 65201
+    192.168.253.5:
+      peer_group: EVPN-OVERLAY-PEERS
+      description: DC2-BL1A
+      remote_as: 65202
+    192.168.253.6:
+      peer_group: EVPN-OVERLAY-PEERS
+      description: DC2-BL1B
+      remote_as: 65202
+    192.168.253.3:
+      peer_group: EVPN-OVERLAY-PEERS
+      description: DC2-LEAF1A
+      remote_as: 65201
     192.168.253.4:
       peer_group: EVPN-OVERLAY-PEERS
+      description: DC2-LEAF1B
       remote_as: 65201
   redistribute_routes:
     connected:
       route_map: RM-CONN-2-BGP
   address_family_evpn:
     peer_groups:
-      IPv4-UNDERLAY-PEERS:
-        activate: false
       EVPN-OVERLAY-PEERS:
         activate: true
   address_family_ipv4:
@@ -242,18 +198,11 @@ router_bgp:
         activate: true
       EVPN-OVERLAY-PEERS:
         activate: false
-
-### Routing - OSPF ###
-router_ospf:
-
-### Routing - ISIS ###
-router_isis:
-
-### Queue Monitor Streaming ###
-queue_monitor_streaming:
-
-### Management API http ###
+  address_family_rtc: null
+router_ospf: null
+router_isis: null
+queue_monitor_streaming: null
 management_api_http:
-  enable_https: True
+  enable_https: true
   enable_vrfs:
-    MGMT:
+    MGMT: null
