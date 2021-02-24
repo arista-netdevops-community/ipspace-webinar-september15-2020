@@ -371,6 +371,7 @@ vlan internal order ascending range 1006 1199
 | VLAN ID | Name | Trunk Groups |
 | ------- | ---- | ------------ |
 | 110 | Tenant_A_OP_Zone_1 | none  |
+| 111 | Tenant_A_OP_Zone_2 | none  |
 | 120 | Tenant_A_WEB_Zone_1 | none  |
 | 121 | Tenant_A_WEBZone_2 | none  |
 | 160 | Tenant_A_VMOTION | none  |
@@ -385,6 +386,9 @@ vlan internal order ascending range 1006 1199
 !
 vlan 110
    name Tenant_A_OP_Zone_1
+!
+vlan 111
+   name Tenant_A_OP_Zone_2
 !
 vlan 120
    name Tenant_A_WEB_Zone_1
@@ -428,8 +432,8 @@ No Interface Defaults defined
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
 | Ethernet5 | MLAG_PEER_DC1-SVC3B_Ethernet5 | *trunk | *2-4094 | *- | *['LEAF_PEER_L3', 'MLAG'] | 5 |
 | Ethernet6 | MLAG_PEER_DC1-SVC3B_Ethernet6 | *trunk | *2-4094 | *- | *['LEAF_PEER_L3', 'MLAG'] | 5 |
-| Ethernet7 | DC1-L2LEAF2A_Ethernet1 | *trunk | *110,120-121,160 | *- | *- | 7 |
-| Ethernet8 | DC1-L2LEAF2B_Ethernet1 | *trunk | *110,120-121,160 | *- | *- | 7 |
+| Ethernet7 | DC1-L2LEAF2A_Ethernet1 | *trunk | *110-111,120-121,160 | *- | *- | 7 |
+| Ethernet8 | DC1-L2LEAF2B_Ethernet1 | *trunk | *110-111,120-121,160 | *- | *- | 7 |
 
 *Inherited from Port-Channel Interface
 
@@ -500,7 +504,7 @@ interface Ethernet8
 | Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
 | Port-Channel5 | MLAG_PEER_DC1-SVC3B_Po5 | switched | trunk | 2-4094 | - | ['LEAF_PEER_L3', 'MLAG'] | - | - | - | - |
-| Port-Channel7 | DC1_L2LEAF2_Po1 | switched | trunk | 110,120-121,160 | - | - | - | - | 7 | - |
+| Port-Channel7 | DC1_L2LEAF2_Po1 | switched | trunk | 110-111,120-121,160 | - | - | - | - | 7 | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -519,7 +523,7 @@ interface Port-Channel7
    description DC1_L2LEAF2_Po1
    no shutdown
    switchport
-   switchport trunk allowed vlan 110,120-121,160
+   switchport trunk allowed vlan 110-111,120-121,160
    switchport mode trunk
    mlag 7
 ```
@@ -573,6 +577,7 @@ interface Loopback100
 | Interface | Description | VRF |  MTU | Shutdown |
 | --------- | ----------- | --- | ---- | -------- |
 | Vlan110 |  Tenant_A_OP_Zone_1  |  Tenant_A_OP_Zone  |  -  |  false  |
+| Vlan111 |  Tenant_A_OP_Zone_2  |  Tenant_A_OP_Zone  |  -  |  false  |
 | Vlan120 |  Tenant_A_WEB_Zone_1  |  Tenant_A_WEB_Zone  |  -  |  false  |
 | Vlan121 |  Tenant_A_WEBZone_2  |  Tenant_A_WEB_Zone  |  -  |  false  |
 | Vlan3009 |  MLAG_PEER_L3_iBGP: vrf Tenant_A_OP_Zone  |  Tenant_A_OP_Zone  |  1500  |  false  |
@@ -585,6 +590,7 @@ interface Loopback100
 | Interface | VRF | IP Address | IP Address Virtual | IP Router Virtual Address | VRRP | ACL In | ACL Out |
 | --------- | --- | ---------- | ------------------ | ------------------------- | ---- | ------ | ------- |
 | Vlan110 |  Tenant_A_OP_Zone  |  -  |  10.1.10.1/24  |  -  |  -  |  -  |  -  |
+| Vlan111 |  Tenant_A_OP_Zone  |  -  |  10.1.11.1/24  |  -  |  -  |  -  |  -  |
 | Vlan120 |  Tenant_A_WEB_Zone  |  -  |  10.1.20.1/24  |  -  |  -  |  -  |  -  |
 | Vlan121 |  Tenant_A_WEB_Zone  |  -  |  10.1.21.1/24  |  -  |  -  |  -  |  -  |
 | Vlan3009 |  Tenant_A_OP_Zone  |  10.255.251.6/31  |  -  |  -  |  -  |  -  |  -  |
@@ -603,6 +609,12 @@ interface Vlan110
    no shutdown
    vrf Tenant_A_OP_Zone
    ip address virtual 10.1.10.1/24
+!
+interface Vlan111
+   description Tenant_A_OP_Zone_2
+   no shutdown
+   vrf Tenant_A_OP_Zone
+   ip address virtual 10.1.11.1/24
 !
 interface Vlan120
    description Tenant_A_WEB_Zone_1
@@ -653,6 +665,7 @@ interface Vlan4094
 | VLAN | VNI |
 | ---- | --- |
 | 110 | 10110 |
+| 111 | 10111 |
 | 120 | 10120 |
 | 121 | 10121 |
 | 160 | 10160 |
@@ -673,6 +686,7 @@ interface Vxlan1
    vxlan virtual-router encapsulation mac-address mlag-system-id
    vxlan udp-port 4789
    vxlan vlan 110 vni 10110
+   vxlan vlan 111 vni 10111
    vxlan vlan 120 vni 10120
    vxlan vlan 121 vni 10121
    vxlan vlan 160 vni 10160
@@ -828,7 +842,7 @@ Router ISIS not defined
 
 | VLAN Aware Bundle | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute | VLANs |
 | ----------------- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ | ----- |
-| Tenant_A_OP_Zone | 192.168.251.8:10 |  10:10  |  |  | learned | 110 |
+| Tenant_A_OP_Zone | 192.168.251.8:10 |  10:10  |  |  | learned | 110-111 |
 | Tenant_A_VMOTION | 192.168.251.8:10160 |  10160:10160  |  |  | learned | 160 |
 | Tenant_A_WEB_Zone | 192.168.251.8:11 |  11:11  |  |  | learned | 120-121 |
 
@@ -890,7 +904,7 @@ router bgp 65103
       rd 192.168.251.8:10
       route-target both 10:10
       redistribute learned
-      vlan 110
+      vlan 110-111
    !
    vlan-aware-bundle Tenant_A_VMOTION
       rd 192.168.251.8:10160
