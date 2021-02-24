@@ -370,21 +370,12 @@ vlan internal order ascending range 1006 1199
 
 | VLAN ID | Name | Trunk Groups |
 | ------- | ---- | ------------ |
-| 113 | Tenant_A_OP_Zone_WAN | none  |
-| 3009 | MLAG_iBGP_Tenant_A_OP_Zone | LEAF_PEER_L3  |
 | 4093 | LEAF_PEER_L3 | LEAF_PEER_L3  |
 | 4094 | MLAG_PEER | MLAG  |
 
 ## VLANs Device Configuration
 
 ```eos
-!
-vlan 113
-   name Tenant_A_OP_Zone_WAN
-!
-vlan 3009
-   name MLAG_iBGP_Tenant_A_OP_Zone
-   trunk group LEAF_PEER_L3
 !
 vlan 4093
    name LEAF_PEER_L3
@@ -496,7 +487,6 @@ interface Port-Channel5
 | --------- | ----------- | --- | ---------- |
 | Loopback0 | EVPN_Overlay_Peering | default | 192.168.251.10/32 |
 | Loopback1 | VTEP_VXLAN_Tunnel_Source | default | 192.168.252.10/32 |
-| Loopback100 | Tenant_A_OP_Zone_VTEP_DIAGNOSTICS | Tenant_A_OP_Zone | 10.255.1.10/32 |
 
 #### IPv6
 
@@ -504,7 +494,6 @@ interface Port-Channel5
 | --------- | ----------- | --- | ------------ |
 | Loopback0 | EVPN_Overlay_Peering | default | - |
 | Loopback1 | VTEP_VXLAN_Tunnel_Source | default | - |
-| Loopback100 | Tenant_A_OP_Zone_VTEP_DIAGNOSTICS | Tenant_A_OP_Zone | - |
 
 
 ### Loopback Interfaces Device Configuration
@@ -520,12 +509,6 @@ interface Loopback1
    description VTEP_VXLAN_Tunnel_Source
    no shutdown
    ip address 192.168.252.10/32
-!
-interface Loopback100
-   description Tenant_A_OP_Zone_VTEP_DIAGNOSTICS
-   no shutdown
-   vrf Tenant_A_OP_Zone
-   ip address 10.255.1.10/32
 ```
 
 ## VLAN Interfaces
@@ -534,8 +517,6 @@ interface Loopback100
 
 | Interface | Description | VRF |  MTU | Shutdown |
 | --------- | ----------- | --- | ---- | -------- |
-| Vlan113 |  Tenant_A_OP_Zone_WAN  |  Tenant_A_OP_Zone  |  -  |  false  |
-| Vlan3009 |  MLAG_PEER_L3_iBGP: vrf Tenant_A_OP_Zone  |  Tenant_A_OP_Zone  |  1500  |  false  |
 | Vlan4093 |  MLAG_PEER_L3_PEERING  |  default  |  1500  |  false  |
 | Vlan4094 |  MLAG_PEER  |  default  |  1500  |  false  |
 
@@ -543,8 +524,6 @@ interface Loopback100
 
 | Interface | VRF | IP Address | IP Address Virtual | IP Router Virtual Address | VRRP | ACL In | ACL Out |
 | --------- | --- | ---------- | ------------------ | ------------------------- | ---- | ------ | ------- |
-| Vlan113 |  Tenant_A_OP_Zone  |  10.1.13.1/24  |  -  |  -  |  -  |  -  |  -  |
-| Vlan3009 |  Tenant_A_OP_Zone  |  10.255.251.10/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4093 |  default  |  10.255.251.10/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4094 |  default  |  10.255.252.10/31  |  -  |  -  |  -  |  -  |  -  |
 
@@ -553,18 +532,6 @@ interface Loopback100
 ### VLAN Interfaces Device Configuration
 
 ```eos
-!
-interface Vlan113
-   description Tenant_A_OP_Zone_WAN
-   no shutdown
-   vrf Tenant_A_OP_Zone
-   ip address 10.1.13.1/24
-!
-interface Vlan3009
-   description MLAG_PEER_L3_iBGP: vrf Tenant_A_OP_Zone
-   no shutdown
-   vrf Tenant_A_OP_Zone
-   ip address 10.255.251.10/31
 !
 interface Vlan4093
    description MLAG_PEER_L3_PEERING
@@ -590,13 +557,7 @@ interface Vlan4094
 
 | VLAN | VNI |
 | ---- | --- |
-| 113 | 10113 |
-
-#### VRF to VNI Mappings
-
-| VLAN | VNI |
-| ---- | --- |
-| Tenant_A_OP_Zone | 10 |
+| N/A | N/A |
 
 ### VXLAN Interface Device Configuration
 
@@ -606,8 +567,6 @@ interface Vxlan1
    vxlan source-interface Loopback1
    vxlan virtual-router encapsulation mac-address mlag-system-id
    vxlan udp-port 4789
-   vxlan vlan 113 vni 10113
-   vxlan vrf Tenant_A_OP_Zone vni 10
 ```
 
 # Routing
@@ -633,7 +592,6 @@ ip virtual-router mac-address 00:dc:00:00:00:0a
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | true|| MGMT | false |
-| Tenant_A_OP_Zone | true |
 
 ### IP Routing Device Configuration
 
@@ -641,7 +599,6 @@ ip virtual-router mac-address 00:dc:00:00:00:0a
 !
 ip routing
 no ip routing vrf MGMT
-ip routing vrf Tenant_A_OP_Zone
 ```
 
 ## IPv6 Routing
@@ -651,7 +608,6 @@ ip routing vrf Tenant_A_OP_Zone
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | false || MGMT | false |
-| Tenant_A_OP_Zone | false |
 
 
 ## Static Routes
@@ -744,23 +700,12 @@ Router ISIS not defined
 | 192.168.251.2 | 65100 | default |
 | 192.168.251.3 | 65100 | default |
 | 192.168.251.4 | 65100 | default |
-| 10.255.251.11 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Tenant_A_OP_Zone |
 
 ### Router BGP EVPN Address Family
 
 #### Router BGP EVPN MAC-VRFs
 
-##### VLAN aware bundles
-
-| VLAN Aware Bundle | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute | VLANs |
-| ----------------- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ | ----- |
-| Tenant_A_OP_Zone | 192.168.251.10:10 |  10:10  |  |  | learned | 113 |
-
 #### Router BGP EVPN VRFs
-
-| VRF | Route-Distinguisher | Redistribute |
-| --- | ------------------- | ------------ |
-| Tenant_A_OP_Zone | 192.168.251.10:10 | connected |
 
 ### Router BGP Device Configuration
 
@@ -809,12 +754,6 @@ router bgp 65104
    neighbor 192.168.251.4 description DC1-SPINE4
    redistribute connected route-map RM-CONN-2-BGP
    !
-   vlan-aware-bundle Tenant_A_OP_Zone
-      rd 192.168.251.10:10
-      route-target both 10:10
-      redistribute learned
-      vlan 113
-   !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate
    !
@@ -822,14 +761,6 @@ router bgp 65104
       no neighbor EVPN-OVERLAY-PEERS activate
       neighbor IPv4-UNDERLAY-PEERS activate
       neighbor MLAG-IPv4-UNDERLAY-PEER activate
-   !
-   vrf Tenant_A_OP_Zone
-      rd 192.168.251.10:10
-      route-target import evpn 10:10
-      route-target export evpn 10:10
-      router-id 192.168.251.10
-      neighbor 10.255.251.11 peer group MLAG-IPv4-UNDERLAY-PEER
-      redistribute connected
 ```
 
 ## Router BFD
@@ -962,31 +893,17 @@ IPv6 extended access-lists not defined
 | VRF Name | IP Routing |
 | -------- | ---------- |
 | MGMT | disabled |
-| Tenant_A_OP_Zone | enabled |
 
 ## VRF Instances Device Configuration
 
 ```eos
 !
 vrf instance MGMT
-!
-vrf instance Tenant_A_OP_Zone
 ```
 
 # Virtual Source NAT
 
-## Virtual Source NAT Summary
-
-| Source NAT VRF | Source NAT IP Address |
-| -------------- | --------------------- |
-| Tenant_A_OP_Zone | 10.255.1.10 |
-
-## Virtual Source NAT Configuration
-
-```eos
-!
-ip address virtual source-nat vrf Tenant_A_OP_Zone address 10.255.1.10
-```
+Virtual source NAT not defined
 
 # Platform
 
