@@ -18,16 +18,11 @@ leaf_filter_tags:
 - web
 - app
 leaf_allowed_vrfs:
-- Tenant_A_APP_Zone
 - Tenant_A_WEB_Zone
 leaf_allowed_svis:
-- 130
-- 131
 - 120
 - 121
 leaf_allowed_vlans:
-- 130
-- 131
 - 120
 - 121
 leaf_mlag: false
@@ -83,12 +78,6 @@ local_users:
     sha512_password: $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.
 clock: null
 vlans:
-  130:
-    tenant: Tenant_A
-    name: Tenant_A_APP_Zone_1
-  131:
-    tenant: Tenant_A
-    name: Tenant_A_APP_Zone_2
   120:
     tenant: Tenant_A
     name: Tenant_A_WEB_Zone_1
@@ -98,9 +87,6 @@ vlans:
 vrfs:
   MGMT:
     ip_routing: false
-  Tenant_A_APP_Zone:
-    tenant: Tenant_A
-    ip_routing: true
   Tenant_A_WEB_Zone:
     tenant: Tenant_A
     ip_routing: true
@@ -163,23 +149,6 @@ management_interfaces:
     ip_address: 192.168.200.105/24
     gateway: 192.168.200.1
 vlan_interfaces:
-  Vlan130:
-    tenant: Tenant_A
-    tags:
-    - app
-    - erp1
-    description: Tenant_A_APP_Zone_1
-    shutdown: false
-    vrf: Tenant_A_APP_Zone
-    ip_address_virtual: 10.1.30.1/24
-  Vlan131:
-    tenant: Tenant_A
-    tags:
-    - app
-    description: Tenant_A_APP_Zone_2
-    shutdown: false
-    vrf: Tenant_A_APP_Zone
-    ip_address_virtual: 10.1.31.1/24
   Vlan120:
     tenant: Tenant_A
     tags:
@@ -204,17 +173,11 @@ vxlan_tunnel_interface:
     vxlan_udp_port: 4789
     vxlan_vni_mappings:
       vlans:
-        130:
-          vni: 10130
-        131:
-          vni: 10131
         120:
           vni: 10120
         121:
           vni: 10121
       vrfs:
-        Tenant_A_APP_Zone:
-          vni: 12
         Tenant_A_WEB_Zone:
           vni: 11
 tcam_profile: null
@@ -306,22 +269,6 @@ router_bgp:
   address_family_rtc: null
   vlan_aware_bundles: null
   vlans:
-    130:
-      tenant: Tenant_A
-      rd: 192.168.251.5:10130
-      route_targets:
-        both:
-        - 10130:10130
-      redistribute_routes:
-      - learned
-    131:
-      tenant: Tenant_A
-      rd: 192.168.251.5:10131
-      route_targets:
-        both:
-        - 10131:10131
-      redistribute_routes:
-      - learned
     120:
       tenant: Tenant_A
       rd: 192.168.251.5:10120
@@ -339,18 +286,6 @@ router_bgp:
       redistribute_routes:
       - learned
   vrfs:
-    Tenant_A_APP_Zone:
-      router_id: 192.168.251.5
-      rd: 192.168.251.5:12
-      route_targets:
-        import:
-          evpn:
-          - '12:12'
-        export:
-          evpn:
-          - '12:12'
-      redistribute_routes:
-      - connected
     Tenant_A_WEB_Zone:
       router_id: 192.168.251.5
       rd: 192.168.251.5:11
