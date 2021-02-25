@@ -22,14 +22,19 @@ leaf_filter_tags:
 - vmotion
 - nfs
 leaf_allowed_vrfs:
+- Tenant_A_APP_Zone
 - Tenant_A_OP_Zone
 - Tenant_A_WEB_Zone
 leaf_allowed_svis:
+- 130
+- 131
 - 110
 - 111
 - 120
 - 121
 leaf_allowed_vlans:
+- 130
+- 131
 - 110
 - 111
 - 120
@@ -105,6 +110,17 @@ vlans:
     name: MLAG_PEER
     trunk_groups:
     - MLAG
+  130:
+    tenant: Tenant_A
+    name: Tenant_A_APP_Zone_1
+  131:
+    tenant: Tenant_A
+    name: Tenant_A_APP_Zone_2
+  3011:
+    tenant: Tenant_A
+    name: MLAG_iBGP_Tenant_A_APP_Zone
+    trunk_groups:
+    - LEAF_PEER_L3
   110:
     tenant: Tenant_A
     name: Tenant_A_OP_Zone_1
@@ -133,6 +149,9 @@ vlans:
 vrfs:
   MGMT:
     ip_routing: false
+  Tenant_A_APP_Zone:
+    tenant: Tenant_A
+    ip_routing: true
   Tenant_A_OP_Zone:
     tenant: Tenant_A
     ip_routing: true
@@ -148,7 +167,7 @@ port_channel_interfaces:
     description: DC1_L2LEAF2_Po1
     type: switched
     shutdown: false
-    vlans: 110-111,120-121,160
+    vlans: 110-111,120-121,130-131,160
     mode: trunk
     mlag: 7
   Port-Channel5:
@@ -270,6 +289,31 @@ vlan_interfaces:
     ip_address: 10.255.252.6/31
     no_autostate: true
     mtu: 1500
+  Vlan130:
+    tenant: Tenant_A
+    tags:
+    - app
+    - erp1
+    description: Tenant_A_APP_Zone_1
+    shutdown: false
+    vrf: Tenant_A_APP_Zone
+    ip_address_virtual: 10.1.30.1/24
+  Vlan131:
+    tenant: Tenant_A
+    tags:
+    - app
+    description: Tenant_A_APP_Zone_2
+    shutdown: false
+    vrf: Tenant_A_APP_Zone
+    ip_address_virtual: 10.1.31.1/24
+  Vlan3011:
+    tenant: Tenant_A
+    type: underlay_peering
+    shutdown: false
+    description: 'MLAG_PEER_L3_iBGP: vrf Tenant_A_APP_Zone'
+    vrf: Tenant_A_APP_Zone
+    ip_address: 10.255.251.6/31
+    mtu: 1500
   Vlan110:
     tenant: Tenant_A
     tags:
@@ -328,6 +372,10 @@ vxlan_tunnel_interface:
     vxlan_udp_port: 4789
     vxlan_vni_mappings:
       vlans:
+        130:
+          vni: 10130
+        131:
+          vni: 10131
         110:
           vni: 10110
         111:
@@ -339,6 +387,8 @@ vxlan_tunnel_interface:
         160:
           vni: 10160
       vrfs:
+        Tenant_A_APP_Zone:
+          vni: 12
         Tenant_A_OP_Zone:
           vni: 10
         Tenant_A_WEB_Zone:
@@ -461,6 +511,22 @@ router_bgp:
   address_family_rtc: null
   vlan_aware_bundles: null
   vlans:
+    130:
+      tenant: Tenant_A
+      rd: 192.168.251.8:10130
+      route_targets:
+        both:
+        - 10130:10130
+      redistribute_routes:
+      - learned
+    131:
+      tenant: Tenant_A
+      rd: 192.168.251.8:10131
+      route_targets:
+        both:
+        - 10131:10131
+      redistribute_routes:
+      - learned
     110:
       tenant: Tenant_A
       rd: 192.168.251.8:10110
@@ -502,6 +568,21 @@ router_bgp:
       redistribute_routes:
       - learned
   vrfs:
+    Tenant_A_APP_Zone:
+      router_id: 192.168.251.8
+      rd: 192.168.251.8:12
+      route_targets:
+        import:
+          evpn:
+          - '12:12'
+        export:
+          evpn:
+          - '12:12'
+      neighbors:
+        10.255.251.7:
+          peer_group: MLAG-IPv4-UNDERLAY-PEER
+      redistribute_routes:
+      - connected
     Tenant_A_OP_Zone:
       router_id: 192.168.251.8
       rd: 192.168.251.8:10
