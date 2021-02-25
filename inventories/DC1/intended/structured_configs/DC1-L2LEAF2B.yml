@@ -7,19 +7,14 @@ leaf_filter_tenants:
 leaf_filter_tags:
 - all
 leaf_allowed_vrfs:
-- Tenant_A_APP_Zone
 - Tenant_A_OP_Zone
 - Tenant_A_WEB_Zone
 leaf_allowed_svis:
-- 130
-- 131
 - 110
 - 111
 - 120
 - 121
 leaf_allowed_vlans:
-- 130
-- 131
 - 110
 - 111
 - 120
@@ -90,12 +85,6 @@ vlans:
     name: MLAG_PEER
     trunk_groups:
     - MLAG
-  130:
-    tenant: Tenant_A
-    name: Tenant_A_APP_Zone_1
-  131:
-    tenant: Tenant_A
-    name: Tenant_A_APP_Zone_2
   110:
     tenant: Tenant_A
     name: Tenant_A_OP_Zone_1
@@ -119,7 +108,7 @@ port_channel_interfaces:
     description: DC1-SVC3B_Po7
     type: switched
     shutdown: false
-    vlans: 110-111,120-121,130-131,160
+    vlans: 110-111,120-121,160
     mode: trunk
     mlag: 1
   Port-Channel3:
