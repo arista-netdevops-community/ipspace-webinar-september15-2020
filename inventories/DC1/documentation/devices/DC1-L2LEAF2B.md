@@ -190,7 +190,7 @@ daemon TerminAttr
 
 | Domain-id | Local-interface | Peer-address | Peer-link |
 | --------- | --------------- | ------------ | --------- |
-| DC1_L2LEAF2 | Vlan4094 | 10.255.252.16 | Port-Channel3 |
+| DC1_L2LEAF2 | Vlan4094 | 10.255.252.2 | Port-Channel3 |
 
 Dual primary detection is disabled.
 
@@ -201,7 +201,7 @@ Dual primary detection is disabled.
 mlag configuration
    domain-id DC1_L2LEAF2
    local-interface Vlan4094
-   peer-address 10.255.252.16
+   peer-address 10.255.252.2
    peer-link Port-Channel3
    reload-delay mlag 300
    reload-delay non-mlag 330
@@ -382,7 +382,7 @@ interface Port-Channel3
 
 | Interface | VRF | IP Address | IP Address Virtual | IP Router Virtual Address | VRRP | ACL In | ACL Out |
 | --------- | --- | ---------- | ------------------ | ------------------------- | ---- | ------ | ------- |
-| Vlan4094 |  default  |  10.255.252.17/31  |  -  |  -  |  -  |  -  |  -  |
+| Vlan4094 |  default  |  10.255.252.3/31  |  -  |  -  |  -  |  -  |  -  |
 
 
 ### VLAN Interfaces Device Configuration
@@ -394,7 +394,7 @@ interface Vlan4094
    no shutdown
    mtu 1500
    no autostate
-   ip address 10.255.252.17/31
+   ip address 10.255.252.3/31
 ```
 
 # Routing

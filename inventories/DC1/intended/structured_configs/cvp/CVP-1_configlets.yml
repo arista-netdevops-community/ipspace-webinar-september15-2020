@@ -240,9 +240,9 @@ CVP_CONFIGLETS:
     \ MLAG_PEER_DC1-L2LEAF2B_Ethernet4\n   no shutdown\n   channel-group 3 mode active\n\
     !\ninterface Management1\n   description oob_management\n   no shutdown\n   vrf\
     \ MGMT\n   ip address 192.168.200.113/24\n!\ninterface Vlan4094\n   description\
-    \ MLAG_PEER\n   no shutdown\n   mtu 1500\n   no autostate\n   ip address 10.255.252.16/31\n\
+    \ MLAG_PEER\n   no shutdown\n   mtu 1500\n   no autostate\n   ip address 10.255.252.2/31\n\
     !\nip routing\nno ip routing vrf MGMT\n!\nmlag configuration\n   domain-id DC1_L2LEAF2\n\
-    \   local-interface Vlan4094\n   peer-address 10.255.252.17\n   peer-link Port-Channel3\n\
+    \   local-interface Vlan4094\n   peer-address 10.255.252.3\n   peer-link Port-Channel3\n\
     \   reload-delay mlag 300\n   reload-delay non-mlag 330\n!\nip route vrf MGMT\
     \ 0.0.0.0/0 192.168.200.1\n!\nmanagement api http-commands\n   protocol https\n\
     \   no shutdown\n   !\n   vrf MGMT\n      no shutdown\n!\nend\n"
@@ -275,9 +275,9 @@ CVP_CONFIGLETS:
     \ MLAG_PEER_DC1-L2LEAF2A_Ethernet4\n   no shutdown\n   channel-group 3 mode active\n\
     !\ninterface Management1\n   description oob_management\n   no shutdown\n   vrf\
     \ MGMT\n   ip address 192.168.200.114/24\n!\ninterface Vlan4094\n   description\
-    \ MLAG_PEER\n   no shutdown\n   mtu 1500\n   no autostate\n   ip address 10.255.252.17/31\n\
+    \ MLAG_PEER\n   no shutdown\n   mtu 1500\n   no autostate\n   ip address 10.255.252.3/31\n\
     !\nip routing\nno ip routing vrf MGMT\n!\nmlag configuration\n   domain-id DC1_L2LEAF2\n\
-    \   local-interface Vlan4094\n   peer-address 10.255.252.16\n   peer-link Port-Channel3\n\
+    \   local-interface Vlan4094\n   peer-address 10.255.252.2\n   peer-link Port-Channel3\n\
     \   reload-delay mlag 300\n   reload-delay non-mlag 330\n!\nip route vrf MGMT\
     \ 0.0.0.0/0 192.168.200.1\n!\nmanagement api http-commands\n   protocol https\n\
     \   no shutdown\n   !\n   vrf MGMT\n      no shutdown\n!\nend\n"

@@ -293,7 +293,7 @@ l2leaf:
         - app
       nodes:
         DC1-L2LEAF1A:
-          id: 8
+          id: 1
           mgmt_ip: 192.168.200.112/24
           l3leaf_interfaces:
           - Ethernet7
@@ -301,13 +301,13 @@ l2leaf:
     DC1_L2LEAF2:
       nodes:
         DC1-L2LEAF2A:
-          id: 9
+          id: 2
           mgmt_ip: 192.168.200.113/24
           l3leaf_interfaces:
           - Ethernet7
           - Ethernet7
         DC1-L2LEAF2B:
-          id: 10
+          id: 3
           mgmt_ip: 192.168.200.114/24
           l3leaf_interfaces:
           - Ethernet8
@@ -351,7 +351,7 @@ ansible_facts:
     underlay_routing_protocol: ebgp
     overlay_routing_protocol: ebgp
     group: DC1_L2LEAF1
-    id: 8
+    id: 1
     mgmt_ip: 192.168.200.112/24
     spanning_tree_mode: mstp
     igmp_snooping_enabled: true
@@ -442,7 +442,7 @@ switch:
   underlay_routing_protocol: ebgp
   overlay_routing_protocol: ebgp
   group: DC1_L2LEAF1
-  id: 8
+  id: 1
   mgmt_ip: 192.168.200.112/24
   spanning_tree_mode: mstp
   igmp_snooping_enabled: true
@@ -683,7 +683,7 @@ groups:
   - DC1-SVC3B
   - DC1-BL1A
   - DC1-BL1B
-omit: __omit_place_holder__35aa2e9aa092ccd0159f7adbadaae3a8fafbbb5a
+omit: __omit_place_holder__50d447d2b1783d314535ce7efe591995fbe960fe
 ansible_version:
   string: 2.10.8
   full: 2.10.8

@@ -135,17 +135,17 @@ l2leaf:
         tags: [ opzone, web, app ]
       nodes:
         DC1-L2LEAF1A:
-          id: 8
+          id: 1
           mgmt_ip: 192.168.200.112/24
           l3leaf_interfaces: [ Ethernet7, Ethernet7 ]
     DC1_L2LEAF2:
       nodes:
         DC1-L2LEAF2A:
-          id: 9
+          id: 2
           mgmt_ip: 192.168.200.113/24
           l3leaf_interfaces: [ Ethernet7, Ethernet7 ]
         DC1-L2LEAF2B:
-          id: 10
+          id: 3
           mgmt_ip: 192.168.200.114/24
           l3leaf_interfaces: [ Ethernet8, Ethernet8 ]
 
