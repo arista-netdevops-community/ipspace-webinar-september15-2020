@@ -1,20 +1,60 @@
 # DC1-L2LEAF1A
+# Table of Contents
+<!-- toc -->
+
+- [Management](#management)
+  - [Management Interfaces](#management-interfaces)
+  - [DNS Domain](#dns-domain)
+  - [Name Servers](#name-servers)
+  - [NTP](#ntp)
+  - [Management API HTTP](#management-api-http)
+- [Authentication](#authentication)
+  - [Local Users](#local-users)
+- [Monitoring](#monitoring)
+  - [TerminAttr Daemon](#terminattr-daemon)
+- [Spanning Tree](#spanning-tree)
+  - [Spanning Tree Summary](#spanning-tree-summary)
+  - [Spanning Tree Device Configuration](#spanning-tree-device-configuration)
+- [Internal VLAN Allocation Policy](#internal-vlan-allocation-policy)
+  - [Internal VLAN Allocation Policy Summary](#internal-vlan-allocation-policy-summary)
+  - [Internal VLAN Allocation Policy Configuration](#internal-vlan-allocation-policy-configuration)
+- [VLANs](#vlans)
+  - [VLANs Summary](#vlans-summary)
+  - [VLANs Device Configuration](#vlans-device-configuration)
+- [Interfaces](#interfaces)
+  - [Ethernet Interfaces](#ethernet-interfaces)
+  - [Port-Channel Interfaces](#port-channel-interfaces)
+- [Routing](#routing)
+  - [IP Routing](#ip-routing)
+  - [IPv6 Routing](#ipv6-routing)
+  - [Static Routes](#static-routes)
+- [Multicast](#multicast)
+  - [IP IGMP Snooping](#ip-igmp-snooping)
+- [Filters](#filters)
+- [ACL](#acl)
+- [VRF Instances](#vrf-instances)
+  - [VRF Instances Summary](#vrf-instances-summary)
+  - [VRF Instances Device Configuration](#vrf-instances-device-configuration)
+- [Quality Of Service](#quality-of-service)
+
+<!-- toc -->
+# Management
 
 ## Management Interfaces
 
 ### Management Interfaces Summary
 
-IPv4
+#### IPv4
 
-| Management Interface | description | VRF | IP Address | Gateway |
-| -------------------- | ----------- | --- | ---------- | ------- |
-| Management1 | oob_management | MGMT | 192.168.200.112/24 | 192.168.200.1 |
+| Management Interface | description | Type | VRF | IP Address | Gateway |
+| -------------------- | ----------- | ---- | --- | ---------- | ------- |
+| Management1 | oob_management | oob | MGMT | 192.168.200.112/24 | 192.168.200.1 |
 
-IPv6
+#### IPv6
 
-| Management Interface | description | VRF | IPv6 Address | IPv6 Gateway |
-| -------------------- | ----------- | --- | ------------ | ------------ |
-| Management1 | oob_management | MGMT | ||
+| Management Interface | description | Type | VRF | IPv6 Address | IPv6 Gateway |
+| -------------------- | ----------- | ---- | --- | ------------ | ------------ |
+| Management1 | oob_management | oob | MGMT | -  | - |
 
 ### Management Interfaces Device Configuration
 
@@ -22,63 +62,22 @@ IPv6
 !
 interface Management1
    description oob_management
+   no shutdown
    vrf MGMT
    ip address 192.168.200.112/24
 ```
 
-## Hardware Counters
+## DNS Domain
 
-No Hardware Counters defined
+### DNS domain: avd-lab.local
 
-## Aliases
-Aliases not defined
-
-## TerminAttr Daemon
-
-### TerminAttr Daemon Summary
-
-| CV Compression | Ingest gRPC URL | Ingest Authentication Key | Smash Excludes | Ingest Exclude | Ingest VRF |  NTP VRF |
-| -------------- | --------------- | ------------------------- | -------------- | -------------- | ---------- | -------- |
-| gzip | 192.168.200.11:9910 | telarista | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | MGMT | MGMT |
-
-### TerminAttr Daemon Device Configuration
+### DNS Domain Device Configuration
 
 ```eos
 !
-daemon TerminAttr
-   exec /usr/bin/TerminAttr -ingestgrpcurl=192.168.200.11:9910 -cvcompression=gzip -ingestauth=key,telarista -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs
-   no shutdown
-```
-
-## IP DHCP Relay
-
-IP DHCP Relay not defined
-
-## Internal VLAN allocation Policy
-
-### Internal VLAN Allocation Policy Summary
-
-| Policy Allocation | Range Beginning | Range Ending |
-| ------------------| --------------- | ------------ |
-| ascending | 1006 | 1199 |
-
-### Internal VLAN Allocation Policy Configuration
-
-```eos
+dns domain avd-lab.local
 !
-vlan internal order ascending range 1006 1199
 ```
-
-## IP IGMP Snooping
-
-
-## Logging
-
-No logging settings defined
-
-## Domain Lookup
-
-DNS domain lookup not defined
 
 ## Name Servers
 
@@ -94,26 +93,13 @@ DNS domain lookup not defined
 ip name-server vrf MGMT 192.168.200.5
 ```
 
-## DNS Domain
-
-
-### DNS domain: avd-lab.local
-
-### DNS Domain Device Configuration
-
-```eos
-dns domain avd-lab.local
-!
-```
-
 ## NTP
 
 ### NTP Summary
 
-Local Interface: Management1
+- Local Interface: Management1
 
-VRF: MGMT
-
+- VRF: MGMT
 
 | Node | Primary |
 | ---- | ------- |
@@ -129,60 +115,40 @@ ntp server vrf MGMT 0.north-america.pool.ntp.org prefer
 ntp server vrf MGMT 1.north-america.pool.ntp.org
 ```
 
-## Router L2 VPN
+## Management API HTTP
 
-Router L2 VPN not defined
+### Management API HTTP Summary
 
-## SFlow
+| HTTP | HTTPS |
+| ---------- | ---------- |
+| default | true |
 
-No sFlow defined
+### Management API VRF Access
 
-## Spanning Tree
+| VRF Name | IPv4 ACL | IPv6 ACL |
+| -------- | -------- | -------- |
+| MGMT | - | - |
 
-### Spanning Tree Summary
 
-Mode: mstp
-
-**MSTP Instance and Priority**:
-
-| Instance | Priority |
-| -------- | -------- |
-| 0 | 16384 |
-
-### Spanning Tree Device Configuration
+### Management API HTTP Configuration
 
 ```eos
 !
-spanning-tree mode mstp
-spanning-tree mst 0 priority 16384
+management api http-commands
+   protocol https
+   no shutdown
+   !
+   vrf MGMT
+      no shutdown
 ```
 
-
-TACACS Servers Not Configured
-
-
-IP TACACS source interfaces not defined
-
-
-AAA server groups not defined
-
-## AAA Authentication
-
-AAA authentication not defined
-
-## AAA Authorization
-
-AAA authorization not defined
-
-## AAA Accounting
-
-AAA accounting not defined
+# Authentication
 
 ## Local Users
 
 ### Local Users Summary
 
-| User | Privilege | role |
+| User | Privilege | Role |
 | ---- | --------- | ---- |
 | admin | 15 | network-admin |
 | cvpadmin | 15 | network-admin |
@@ -195,9 +161,66 @@ username admin privilege 15 role network-admin secret sha512 $6$Df86J4/SFMDE3/1K
 username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.
 ```
 
-## VLANs
+# Monitoring
 
-### VLANs Summary
+## TerminAttr Daemon
+
+### TerminAttr Daemon Summary
+
+| CV Compression | Ingest gRPC URL | Ingest Authentication Key | Smash Excludes | Ingest Exclude | Ingest VRF |  NTP VRF | AAA Disabled |
+| -------------- | --------------- | ------------------------- | -------------- | -------------- | ---------- | -------- | ------ |
+| gzip | 192.168.200.11:9910 | telarista | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | MGMT | MGMT | False |
+
+### TerminAttr Daemon Device Configuration
+
+```eos
+!
+daemon TerminAttr
+   exec /usr/bin/TerminAttr -ingestgrpcurl=192.168.200.11:9910 -cvcompression=gzip -ingestauth=key,telarista -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs
+   no shutdown
+```
+
+# Spanning Tree
+
+## Spanning Tree Summary
+
+STP mode: **mstp**
+
+### MSTP Instance and Priority
+
+| Instance(s) | Priority |
+| -------- | -------- |
+| 0 | 16384 |
+
+### Global Spanning-Tree Settings
+
+
+## Spanning Tree Device Configuration
+
+```eos
+!
+spanning-tree mode mstp
+spanning-tree mst 0 priority 16384
+```
+
+# Internal VLAN Allocation Policy
+
+## Internal VLAN Allocation Policy Summary
+
+| Policy Allocation | Range Beginning | Range Ending |
+| ------------------| --------------- | ------------ |
+| ascending | 1006 | 1199 |
+
+## Internal VLAN Allocation Policy Configuration
+
+```eos
+!
+vlan internal order ascending range 1006 1199
+```
+
+# VLANs
+
+## VLANs Summary
 
 | VLAN ID | Name | Trunk Groups |
 | ------- | ---- | ------------ |
@@ -208,7 +231,7 @@ username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAW
 | 130 | Tenant_A_APP_Zone_1 | none  |
 | 131 | Tenant_A_APP_Zone_2 | none  |
 
-### VLANs Device Configuration
+## VLANs Device Configuration
 
 ```eos
 !
@@ -231,49 +254,19 @@ vlan 131
    name Tenant_A_APP_Zone_2
 ```
 
-## VRF Instances
-
-### VRF Instances Summary
-
-| VRF Name | IP Routing |
-| -------- | ---------- |
-| MGMT |  disabled |
-
-### VRF Instances Device Configuration
-
-```eos
-!
-vrf instance MGMT
-```
-
-## Port-Channel Interfaces
-
-### Port-Channel Interfaces Summary
-
-| Interface | Description | MTU | Type | Mode | Allowed VLANs (trunk) | Trunk Group | MLAG ID | EVPN ESI | VRF | IP Address | IPv6 Address |
-| --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | ------- | -------- | --- | ---------- | ------------ |
-| Port-Channel1 | DC1-LEAF2A_Po7 | 1500 | switched | trunk | 110-111,120-121,130-131 | - | 1 | - | - | - | - |
-
-### Port-Channel Interfaces Device Configuration
-
-```eos
-!
-interface Port-Channel1
-   description DC1-LEAF2A_Po7
-   switchport trunk allowed vlan 110-111,120-121,130-131
-   switchport mode trunk
-   mlag 1
-```
+# Interfaces
 
 ## Ethernet Interfaces
 
 ### Ethernet Interfaces Summary
 
-| Interface | Description | MTU | Type | Mode | Allowed VLANs (Trunk) | Trunk Group | VRF | IP Address | Channel-Group ID | Channel-Group Type |
-| --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | --- | ---------- | ---------------- | ------------------ |
-| Ethernet1 | DC1-LEAF2A_Ethernet7 | *1500 | *switched | *trunk | *110-111,120-121,130-131 | - | - | - | 1 | active |
-| Ethernet2 | DC1-LEAF2B_Ethernet7 | *1500 | *switched | *trunk | *110-111,120-121,130-131 | - | - | - | 1 | active |
-| Ethernet3 | server-1_Eth1 | 1500 | switched | access | 110 | - | - | - | - | - |
+#### L2
+
+| Interface | Description | Mode | VLANs | Native VLAN | Trunk Group | Channel-Group |
+| --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
+| Ethernet1 | DC1-LEAF2A_Ethernet7 | *trunk | *110-111,120-121,130-131 | *- | *- | 1 |
+| Ethernet2 | DC1-LEAF2B_Ethernet7 | *trunk | *110-111,120-121,130-131 | *- | *- | 1 |
+| Ethernet3 |  server-1_Eth1 | access | 110 | - | - | - |
 
 *Inherited from Port-Channel Interface
 
@@ -283,66 +276,45 @@ interface Port-Channel1
 !
 interface Ethernet1
    description DC1-LEAF2A_Ethernet7
+   no shutdown
    channel-group 1 mode active
 !
 interface Ethernet2
    description DC1-LEAF2B_Ethernet7
+   no shutdown
    channel-group 1 mode active
 !
 interface Ethernet3
    description server-1_Eth1
+   no shutdown
+   switchport
    switchport access vlan 110
+   switchport mode access
 ```
 
-## Loopback Interfaces
+## Port-Channel Interfaces
 
-No Loopback interfaces defined
+### Port-Channel Interfaces Summary
 
-## VLAN Interfaces
+#### L2
 
-No VLAN interfaces defined
+| Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
+| --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
+| Port-Channel1 | DC1_LEAF2_Po7 | switched | trunk | 110-111,120-121,130-131 | - | - | - | - | - | - |
 
-## VXLAN Interface
-
-No VXLAN interface defined
-
-## Virtual Router MAC Address & Virtual Source NAT
-
-
-## IPv6 Extended Access-lists
-
-IPv6 Extended Access-lists not defined
-
-## IPv6 Standard Access-lists
-
-IPv6 Standard Access-lists not defined
-
-## Extended Access-lists
-
-Extended Access-lists not defined
-
-## Standard Access-lists
-
-Standard Access-lists not defined
-
-## Static Routes
-
-### Static Routes Summary
-
-| VRF | Destination Prefix | Fowarding Address / Interface |
-| --- | ------------------ | ----------------------------- |
-| MGMT | 0.0.0.0/0 | 192.168.200.1 |
-
-### Static Routes Device Configuration
+### Port-Channel Interfaces Device Configuration
 
 ```eos
 !
-ip route vrf MGMT 0.0.0.0/0 192.168.200.1
+interface Port-Channel1
+   description DC1_LEAF2_Po7
+   no shutdown
+   switchport
+   switchport trunk allowed vlan 110-111,120-121,130-131
+   switchport mode trunk
 ```
 
-## Event Handler
-
-No Event Handler Defined
+# Routing
 
 ## IP Routing
 
@@ -350,7 +322,7 @@ No Event Handler Defined
 
 | VRF | Routing Enabled |
 | --- | --------------- |
-| MGMT | False |
+| default | true|| MGMT | false |
 
 ### IP Routing Device Configuration
 
@@ -359,84 +331,61 @@ No Event Handler Defined
 ip routing
 no ip routing vrf MGMT
 ```
-
-## Prefix Lists
-
-Prefix lists not defined
-
-## IPv6 Prefix Lists
-
-IPv6 Prefix lists not defined
-
 ## IPv6 Routing
 
 ### IPv6 Routing Summary
 
-| VRF | IPv6 Routing Enabled |
-| --- | -------------------- |
-| MGMT | False |
+| VRF | Routing Enabled |
+| --- | --------------- |
+| default | false || MGMT | false |
 
-### IPv6 Routing Device Configuration
 
-```eos
-```
+## Static Routes
 
-## MLAG
+### Static Routes Summary
 
-MLAG not defined
+| VRF | Destination Prefix | Next Hop IP             | Exit interface      | Administrative Distance       | Tag               | Route Name                    | Metric         |
+| --- | ------------------ | ----------------------- | ------------------- | ----------------------------- | ----------------- | ----------------------------- | -------------- |
+| MGMT  | 0.0.0.0/0 |  192.168.200.1  |  -  |  1  |  -  |  -  |  - |
 
-## Community Lists
-
-Community Lists not defined
-
-## Route Maps
-
-No route maps defined
-
-## Peer Filters
-
-No Peer Filters defined
-
-## Router BFD
-
-### Router BFD Multihop Summary
-
-| Interval | Minimum RX | Multiplier |
-| -------- | ---------- | ---------- |
-| 1200 | 1200 | 3 |
-
-### Router BFD Multihop Device Configuration
+### Static Routes Device Configuration
 
 ```eos
 !
-router bfd
-   multihop interval 1200 min-rx 1200 multiplier 3
+ip route vrf MGMT 0.0.0.0/0 192.168.200.1
 ```
 
-## Router BGP
+# Multicast
 
-Router BGP not defined
+## IP IGMP Snooping
 
-## Router Multicast
+### IP IGMP Snooping Summary
 
-Routing multicast not defined
+IGMP snooping is globally enabled.
 
-## Router PIM Sparse Mode
 
-Router PIM sparse mode not defined
+### IP IGMP Snooping Device Configuration
 
-## VM Tracer Sessions
+```eos
+```
 
-No VM tracer session defined
+# Filters
 
-## Management Security
+# ACL
 
-Management Security not defined
+# VRF Instances
 
-## Platform
+## VRF Instances Summary
 
-No Platform parameters defined
+| VRF Name | IP Routing |
+| -------- | ---------- |
+| MGMT | disabled |
 
-## Router ISIS
+## VRF Instances Device Configuration
 
-Router ISIS not defined
+```eos
+!
+vrf instance MGMT
+```
+
+# Quality Of Service
