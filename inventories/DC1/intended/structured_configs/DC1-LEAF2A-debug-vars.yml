@@ -360,6 +360,8 @@ ansible_facts:
       reload_delay:
         mlag: 300
         non_mlag: 330
+      feature_support:
+        queue_monitor_length_notify: false
     configure_tenants: true
     filter_tenants:
     - Tenant_A
@@ -503,6 +505,8 @@ switch:
     reload_delay:
       mlag: 300
       non_mlag: 330
+    feature_support:
+      queue_monitor_length_notify: false
   configure_tenants: true
   filter_tenants:
   - Tenant_A
@@ -787,7 +791,7 @@ groups:
   - DC1-SVC3B
   - DC1-BL1A
   - DC1-BL1B
-omit: __omit_place_holder__50d447d2b1783d314535ce7efe591995fbe960fe
+omit: __omit_place_holder__4fc0de0d2a23e05d6912fadee34ed094d030b188
 ansible_version:
   string: 2.10.8
   full: 2.10.8

@@ -90,7 +90,6 @@ ethernet_interfaces:
     shutdown: false
     mode: access
     vlans: 110
-    profile: TENANT_A_OPZone
 port_channel_interfaces:
   Port-Channel1:
     description: DC1_LEAF2_Po7

@@ -31,6 +31,7 @@
   - [VLAN Interfaces](#vlan-interfaces)
   - [VXLAN Interface](#vxlan-interface)
 - [Routing](#routing)
+  - [Service Routing Protocols Model](#service-routing-protocols-model)
   - [Virtual Router MAC Address](#virtual-router-mac-address)
   - [IP Routing](#ip-routing)
   - [IPv6 Routing](#ipv6-routing)
@@ -264,19 +265,19 @@ vlan internal order ascending range 1006 1199
 
 | VLAN ID | Name | Trunk Groups |
 | ------- | ---- | ------------ |
-| 110 | Tenant_A_OP_Zone_1 | none  |
-| 111 | Tenant_A_OP_Zone_2 | none  |
-| 120 | Tenant_A_WEB_Zone_1 | none  |
-| 121 | Tenant_A_WEBZone_2 | none  |
-| 130 | Tenant_A_APP_Zone_1 | none  |
-| 131 | Tenant_A_APP_Zone_2 | none  |
-| 160 | Tenant_A_VMOTION | none  |
-| 161 | Tenant_A_NFS | none  |
-| 3009 | MLAG_iBGP_Tenant_A_OP_Zone | LEAF_PEER_L3  |
-| 3010 | MLAG_iBGP_Tenant_A_WEB_Zone | LEAF_PEER_L3  |
-| 3011 | MLAG_iBGP_Tenant_A_APP_Zone | LEAF_PEER_L3  |
-| 4093 | LEAF_PEER_L3 | LEAF_PEER_L3  |
-| 4094 | MLAG_PEER | MLAG  |
+| 110 | Tenant_A_OP_Zone_1 | - |
+| 111 | Tenant_A_OP_Zone_2 | - |
+| 120 | Tenant_A_WEB_Zone_1 | - |
+| 121 | Tenant_A_WEBZone_2 | - |
+| 130 | Tenant_A_APP_Zone_1 | - |
+| 131 | Tenant_A_APP_Zone_2 | - |
+| 160 | Tenant_A_VMOTION | - |
+| 161 | Tenant_A_NFS | - |
+| 3009 | MLAG_iBGP_Tenant_A_OP_Zone | LEAF_PEER_L3 |
+| 3010 | MLAG_iBGP_Tenant_A_WEB_Zone | LEAF_PEER_L3 |
+| 3011 | MLAG_iBGP_Tenant_A_APP_Zone | LEAF_PEER_L3 |
+| 4093 | LEAF_PEER_L3 | LEAF_PEER_L3 |
+| 4094 | MLAG_PEER | MLAG |
 
 ## VLANs Device Configuration
 
@@ -642,6 +643,14 @@ interface Vxlan1
 ```
 
 # Routing
+## Service Routing Protocols Model
+
+Multi agent routing protocol model enabled
+
+```eos
+!
+service routing protocols model multi-agent
+```
 
 ## Virtual Router MAC Address
 

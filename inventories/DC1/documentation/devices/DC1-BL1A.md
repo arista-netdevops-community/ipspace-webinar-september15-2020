@@ -31,6 +31,7 @@
   - [VLAN Interfaces](#vlan-interfaces)
   - [VXLAN Interface](#vxlan-interface)
 - [Routing](#routing)
+  - [Service Routing Protocols Model](#service-routing-protocols-model)
   - [Virtual Router MAC Address](#virtual-router-mac-address)
   - [IP Routing](#ip-routing)
   - [IPv6 Routing](#ipv6-routing)
@@ -264,10 +265,10 @@ vlan internal order ascending range 1006 1199
 
 | VLAN ID | Name | Trunk Groups |
 | ------- | ---- | ------------ |
-| 113 | Tenant_A_OP_Zone_WAN | none  |
-| 3009 | MLAG_iBGP_Tenant_A_OP_Zone | LEAF_PEER_L3  |
-| 4093 | LEAF_PEER_L3 | LEAF_PEER_L3  |
-| 4094 | MLAG_PEER | MLAG  |
+| 113 | Tenant_A_OP_Zone_WAN | - |
+| 3009 | MLAG_iBGP_Tenant_A_OP_Zone | LEAF_PEER_L3 |
+| 4093 | LEAF_PEER_L3 | LEAF_PEER_L3 |
+| 4094 | MLAG_PEER | MLAG |
 
 ## VLANs Device Configuration
 
@@ -507,6 +508,14 @@ interface Vxlan1
 ```
 
 # Routing
+## Service Routing Protocols Model
+
+Multi agent routing protocol model enabled
+
+```eos
+!
+service routing protocols model multi-agent
+```
 
 ## Virtual Router MAC Address
 

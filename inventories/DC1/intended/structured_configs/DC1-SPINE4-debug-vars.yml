@@ -245,6 +245,8 @@ ansible_facts:
       reload_delay:
         mlag: 300
         non_mlag: 330
+      feature_support:
+        queue_monitor_length_notify: false
     router_id: 192.168.251.4
     loopback_network_summary: 192.168.251.0/24
     bgp_as: 65100
@@ -273,6 +275,8 @@ switch:
     reload_delay:
       mlag: 300
       non_mlag: 330
+    feature_support:
+      queue_monitor_length_notify: false
   router_id: 192.168.251.4
   loopback_network_summary: 192.168.251.0/24
   bgp_as: 65100
@@ -438,7 +442,7 @@ groups:
   - DC1-SVC3B
   - DC1-BL1A
   - DC1-BL1B
-omit: __omit_place_holder__50d447d2b1783d314535ce7efe591995fbe960fe
+omit: __omit_place_holder__4fc0de0d2a23e05d6912fadee34ed094d030b188
 ansible_version:
   string: 2.10.8
   full: 2.10.8
