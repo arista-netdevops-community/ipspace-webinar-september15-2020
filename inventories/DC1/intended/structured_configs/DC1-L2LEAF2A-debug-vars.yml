@@ -130,8 +130,14 @@ bgp_peer_groups:
   MLAG_IPv4_UNDERLAY_PEER:
     password: vnEaG8gMeQf3d3cN6PktXQ==
 spine:
-  platform: vEOS-LAB
   bgp_as: 65100
+  defaults:
+    bgp_as: 65100
+    bgp_defaults:
+    - no bgp default ipv4-unicast
+    - distance bgp 20 200 200
+    loopback_ipv4_pool: 192.168.251.0/24
+    platform: vEOS-LAB
   leaf_as_range: 65101-65132
   nodes:
     DC1-SPINE1:
@@ -146,10 +152,33 @@ spine:
     DC1-SPINE4:
       id: 4
       mgmt_ip: 192.168.200.104/24
+  platform: vEOS-LAB
 l3leaf:
   defaults:
+    bgp_defaults:
+    - no bgp default ipv4-unicast
+    - distance bgp 20 200 200
+    loopback_ipv4_offset: 4
+    loopback_ipv4_pool: 192.168.251.0/24
+    loopback_network_offset: 4
+    mlag_interfaces:
+    - Ethernet5
+    - Ethernet6
     platform: vEOS-LAB
+    spanning_tree_mode: mstp
+    spanning_tree_priority: 4096
     spines:
+    - DC1-SPINE1
+    - DC1-SPINE2
+    - DC1-SPINE3
+    - DC1-SPINE4
+    uplink_interfaces:
+    - Ethernet1
+    - Ethernet2
+    - Ethernet3
+    - Ethernet4
+    uplink_ipv4_pool: 172.31.251.0/24
+    uplink_switches:
     - DC1-SPINE1
     - DC1-SPINE2
     - DC1-SPINE3
@@ -159,100 +188,26 @@ l3leaf:
     - Ethernet2
     - Ethernet3
     - Ethernet4
-    mlag_interfaces:
-    - Ethernet5
-    - Ethernet6
-    spanning_tree_mode: mstp
-    spanning_tree_priority: 4096
     virtual_router_mac_address: 00:dc:00:00:00:0a
+    vtep_loopback_ipv4_pool: 192.168.252.0/24
   node_groups:
-    DC1_LEAF1:
-      bgp_as: 65101
-      filter:
-        tenants:
-        - all
-        tags:
-        - web
-        - app
-      nodes:
-        DC1-LEAF1A:
-          id: 1
-          mgmt_ip: 192.168.200.105/24
-          spine_interfaces:
-          - Ethernet1
-          - Ethernet1
-          - Ethernet1
-          - Ethernet1
-    DC1_LEAF2:
-      bgp_as: 65102
-      filter:
-        tenants:
-        - Tenant_A
-        tags:
-        - opzone
-        - web
-        - app
-        - db
-        - vmotion
-        - nfs
-      nodes:
-        DC1-LEAF2A:
-          id: 2
-          mgmt_ip: 192.168.200.106/24
-          spine_interfaces:
-          - Ethernet2
-          - Ethernet2
-          - Ethernet2
-          - Ethernet2
-        DC1-LEAF2B:
-          id: 3
-          mgmt_ip: 192.168.200.107/24
-          spine_interfaces:
-          - Ethernet3
-          - Ethernet3
-          - Ethernet3
-          - Ethernet3
-    DC1_SVC3:
-      bgp_as: 65103
-      filter:
-        tenants:
-        - Tenant_A
-        tags:
-        - opzone
-        - web
-        - app
-        - db
-        - vmotion
-        - nfs
-      nodes:
-        DC1-SVC3A:
-          id: 4
-          mgmt_ip: 192.168.200.108/24
-          spine_interfaces:
-          - Ethernet4
-          - Ethernet4
-          - Ethernet4
-          - Ethernet4
-        DC1-SVC3B:
-          id: 5
-          mgmt_ip: 192.168.200.109/24
-          spine_interfaces:
-          - Ethernet5
-          - Ethernet5
-          - Ethernet5
-          - Ethernet5
     DC1_BL1:
       bgp_as: 65104
       filter:
-        tenants:
-        - all
         tags:
         - wan
+        tenants:
+        - all
       nodes:
         DC1-BL1A:
           id: 6
           mgmt_ip: 192.168.200.110/24
           spine_interfaces:
+          - Ethernet6
+          - Ethernet6
+          - Ethernet6
+          - Ethernet6
+          uplink_switch_interfaces:
           - Ethernet6
           - Ethernet6
           - Ethernet6
@@ -265,51 +220,171 @@ l3leaf:
           - Ethernet7
           - Ethernet7
           - Ethernet7
-l2leaf:
-  defaults:
-    platform: vEOS-LAB
-    parent_l3leafs:
-    - DC1-SVC3A
-    - DC1-SVC3B
-    uplink_interfaces:
-    - Ethernet1
-    - Ethernet2
-    mlag_interfaces:
-    - Ethernet3
-    - Ethernet4
-    spanning_tree_mode: mstp
-    spanning_tree_priority: 16384
-  node_groups:
-    DC1_L2LEAF1:
-      parent_l3leafs:
-      - DC1-LEAF2A
-      - DC1-LEAF2B
+          uplink_switch_interfaces:
+          - Ethernet7
+          - Ethernet7
+          - Ethernet7
+          - Ethernet7
+    DC1_LEAF1:
+      bgp_as: 65101
       filter:
+        tags:
+        - web
+        - app
         tenants:
-        - Tenant_A
+        - all
+      nodes:
+        DC1-LEAF1A:
+          id: 1
+          mgmt_ip: 192.168.200.105/24
+          spine_interfaces:
+          - Ethernet1
+          - Ethernet1
+          - Ethernet1
+          - Ethernet1
+          uplink_switch_interfaces:
+          - Ethernet1
+          - Ethernet1
+          - Ethernet1
+          - Ethernet1
+    DC1_LEAF2:
+      bgp_as: 65102
+      filter:
         tags:
         - opzone
         - web
         - app
+        - db
+        - vmotion
+        - nfs
+        tenants:
+        - Tenant_A
+      nodes:
+        DC1-LEAF2A:
+          id: 2
+          mgmt_ip: 192.168.200.106/24
+          spine_interfaces:
+          - Ethernet2
+          - Ethernet2
+          - Ethernet2
+          - Ethernet2
+          uplink_switch_interfaces:
+          - Ethernet2
+          - Ethernet2
+          - Ethernet2
+          - Ethernet2
+        DC1-LEAF2B:
+          id: 3
+          mgmt_ip: 192.168.200.107/24
+          spine_interfaces:
+          - Ethernet3
+          - Ethernet3
+          - Ethernet3
+          - Ethernet3
+          uplink_switch_interfaces:
+          - Ethernet3
+          - Ethernet3
+          - Ethernet3
+          - Ethernet3
+    DC1_SVC3:
+      bgp_as: 65103
+      filter:
+        tags:
+        - opzone
+        - web
+        - app
+        - db
+        - vmotion
+        - nfs
+        tenants:
+        - Tenant_A
+      nodes:
+        DC1-SVC3A:
+          id: 4
+          mgmt_ip: 192.168.200.108/24
+          spine_interfaces:
+          - Ethernet4
+          - Ethernet4
+          - Ethernet4
+          - Ethernet4
+          uplink_switch_interfaces:
+          - Ethernet4
+          - Ethernet4
+          - Ethernet4
+          - Ethernet4
+        DC1-SVC3B:
+          id: 5
+          mgmt_ip: 192.168.200.109/24
+          spine_interfaces:
+          - Ethernet5
+          - Ethernet5
+          - Ethernet5
+          - Ethernet5
+          uplink_switch_interfaces:
+          - Ethernet5
+          - Ethernet5
+          - Ethernet5
+          - Ethernet5
+l2leaf:
+  defaults:
+    mlag_interfaces:
+    - Ethernet3
+    - Ethernet4
+    parent_l3leafs:
+    - DC1-SVC3A
+    - DC1-SVC3B
+    platform: vEOS-LAB
+    spanning_tree_mode: mstp
+    spanning_tree_priority: 16384
+    uplink_interfaces:
+    - Ethernet1
+    - Ethernet2
+    uplink_switches:
+    - DC1-SVC3A
+    - DC1-SVC3B
+  node_groups:
+    DC1_L2LEAF1:
+      filter:
+        tags:
+        - opzone
+        - web
+        - app
+        tenants:
+        - Tenant_A
       nodes:
         DC1-L2LEAF1A:
           id: 1
-          mgmt_ip: 192.168.200.112/24
           l3leaf_interfaces:
           - Ethernet7
           - Ethernet7
+          mgmt_ip: 192.168.200.112/24
+          uplink_switch_interfaces:
+          - Ethernet7
+          - Ethernet7
+      parent_l3leafs:
+      - DC1-LEAF2A
+      - DC1-LEAF2B
+      uplink_switches:
+      - DC1-LEAF2A
+      - DC1-LEAF2B
     DC1_L2LEAF2:
       nodes:
         DC1-L2LEAF2A:
           id: 2
-          mgmt_ip: 192.168.200.113/24
           l3leaf_interfaces:
+          - Ethernet7
+          - Ethernet7
+          mgmt_ip: 192.168.200.113/24
+          uplink_switch_interfaces:
           - Ethernet7
           - Ethernet7
         DC1-L2LEAF2B:
           id: 3
-          mgmt_ip: 192.168.200.114/24
           l3leaf_interfaces:
+          - Ethernet8
+          - Ethernet8
+          mgmt_ip: 192.168.200.114/24
+          uplink_switch_interfaces:
           - Ethernet8
           - Ethernet8
 spine_bgp_defaults:
@@ -333,8 +408,8 @@ cv_configlets:
     DC1-BL1B:
     - DC1-CUSTOM_DCI_DC1-BL1B
 type: l2leaf
-inventory_file: /home/cbuchmann/arista-ansible/ipspace-webinar-september15-2020/inventories/DC1/inventory.yml
-inventory_dir: /home/cbuchmann/arista-ansible/ipspace-webinar-september15-2020/inventories/DC1
+inventory_file: /projects/ipspace-webinar-september15-2020/inventories/DC1/inventory.yml
+inventory_dir: /projects/ipspace-webinar-september15-2020/inventories/DC1
 ansible_host: 192.168.200.113
 inventory_hostname: DC1-L2LEAF2A
 inventory_hostname_short: DC1-L2LEAF2A
@@ -347,15 +422,395 @@ group_names:
 - DC1_TENANTS_NETWORKS
 - EOS
 ansible_facts:
+  upgraded_data_model:
+    spine:
+      defaults:
+        platform: vEOS-LAB
+        bgp_as: 65100
+        loopback_ipv4_pool: 192.168.251.0/24
+        bgp_defaults:
+        - no bgp default ipv4-unicast
+        - distance bgp 20 200 200
+      nodes: {}
+    l3leaf:
+      defaults:
+        loopback_ipv4_pool: 192.168.251.0/24
+        loopback_network_offset: 4
+        vtep_loopback_ipv4_pool: 192.168.252.0/24
+        uplink_interfaces:
+        - Ethernet1
+        - Ethernet2
+        - Ethernet3
+        - Ethernet4
+        uplink_switches:
+        - DC1-SPINE1
+        - DC1-SPINE2
+        - DC1-SPINE3
+        - DC1-SPINE4
+        uplink_ipv4_pool: 172.31.251.0/24
+        bgp_defaults:
+        - no bgp default ipv4-unicast
+        - distance bgp 20 200 200
+      node_groups:
+        DC1_LEAF1:
+          nodes:
+            DC1-LEAF1A:
+              uplink_switch_interfaces:
+              - Ethernet1
+              - Ethernet1
+              - Ethernet1
+              - Ethernet1
+        DC1_LEAF2:
+          nodes:
+            DC1-LEAF2A:
+              uplink_switch_interfaces:
+              - Ethernet2
+              - Ethernet2
+              - Ethernet2
+              - Ethernet2
+            DC1-LEAF2B:
+              uplink_switch_interfaces:
+              - Ethernet3
+              - Ethernet3
+              - Ethernet3
+              - Ethernet3
+        DC1_SVC3:
+          nodes:
+            DC1-SVC3A:
+              uplink_switch_interfaces:
+              - Ethernet4
+              - Ethernet4
+              - Ethernet4
+              - Ethernet4
+            DC1-SVC3B:
+              uplink_switch_interfaces:
+              - Ethernet5
+              - Ethernet5
+              - Ethernet5
+              - Ethernet5
+        DC1_BL1:
+          nodes:
+            DC1-BL1A:
+              uplink_switch_interfaces:
+              - Ethernet6
+              - Ethernet6
+              - Ethernet6
+              - Ethernet6
+            DC1-BL1B:
+              uplink_switch_interfaces:
+              - Ethernet7
+              - Ethernet7
+              - Ethernet7
+              - Ethernet7
+    l2leaf:
+      defaults:
+        uplink_switches:
+        - DC1-SVC3A
+        - DC1-SVC3B
+      node_groups:
+        DC1_L2LEAF1:
+          uplink_switches:
+          - DC1-LEAF2A
+          - DC1-LEAF2B
+          nodes:
+            DC1-L2LEAF1A:
+              uplink_switch_interfaces:
+              - Ethernet7
+              - Ethernet7
+        DC1_L2LEAF2:
+          nodes:
+            DC1-L2LEAF2A:
+              uplink_switch_interfaces:
+              - Ethernet7
+              - Ethernet7
+            DC1-L2LEAF2B:
+              uplink_switch_interfaces:
+              - Ethernet8
+              - Ethernet8
+  l2leaf:
+    defaults:
+      mlag_interfaces:
+      - Ethernet3
+      - Ethernet4
+      parent_l3leafs:
+      - DC1-SVC3A
+      - DC1-SVC3B
+      platform: vEOS-LAB
+      spanning_tree_mode: mstp
+      spanning_tree_priority: 16384
+      uplink_interfaces:
+      - Ethernet1
+      - Ethernet2
+      uplink_switches:
+      - DC1-SVC3A
+      - DC1-SVC3B
+    node_groups:
+      DC1_L2LEAF1:
+        filter:
+          tags:
+          - opzone
+          - web
+          - app
+          tenants:
+          - Tenant_A
+        nodes:
+          DC1-L2LEAF1A:
+            id: 1
+            l3leaf_interfaces:
+            - Ethernet7
+            - Ethernet7
+            mgmt_ip: 192.168.200.112/24
+            uplink_switch_interfaces:
+            - Ethernet7
+            - Ethernet7
+        parent_l3leafs:
+        - DC1-LEAF2A
+        - DC1-LEAF2B
+        uplink_switches:
+        - DC1-LEAF2A
+        - DC1-LEAF2B
+      DC1_L2LEAF2:
+        nodes:
+          DC1-L2LEAF2A:
+            id: 2
+            l3leaf_interfaces:
+            - Ethernet7
+            - Ethernet7
+            mgmt_ip: 192.168.200.113/24
+            uplink_switch_interfaces:
+            - Ethernet7
+            - Ethernet7
+          DC1-L2LEAF2B:
+            id: 3
+            l3leaf_interfaces:
+            - Ethernet8
+            - Ethernet8
+            mgmt_ip: 192.168.200.114/24
+            uplink_switch_interfaces:
+            - Ethernet8
+            - Ethernet8
+  l3leaf:
+    defaults:
+      bgp_defaults:
+      - no bgp default ipv4-unicast
+      - distance bgp 20 200 200
+      loopback_ipv4_offset: 4
+      loopback_ipv4_pool: 192.168.251.0/24
+      loopback_network_offset: 4
+      mlag_interfaces:
+      - Ethernet5
+      - Ethernet6
+      platform: vEOS-LAB
+      spanning_tree_mode: mstp
+      spanning_tree_priority: 4096
+      spines:
+      - DC1-SPINE1
+      - DC1-SPINE2
+      - DC1-SPINE3
+      - DC1-SPINE4
+      uplink_interfaces:
+      - Ethernet1
+      - Ethernet2
+      - Ethernet3
+      - Ethernet4
+      uplink_ipv4_pool: 172.31.251.0/24
+      uplink_switches:
+      - DC1-SPINE1
+      - DC1-SPINE2
+      - DC1-SPINE3
+      - DC1-SPINE4
+      uplink_to_spine_interfaces:
+      - Ethernet1
+      - Ethernet2
+      - Ethernet3
+      - Ethernet4
+      virtual_router_mac_address: 00:dc:00:00:00:0a
+      vtep_loopback_ipv4_pool: 192.168.252.0/24
+    node_groups:
+      DC1_BL1:
+        bgp_as: 65104
+        filter:
+          tags:
+          - wan
+          tenants:
+          - all
+        nodes:
+          DC1-BL1A:
+            id: 6
+            mgmt_ip: 192.168.200.110/24
+            spine_interfaces:
+            - Ethernet6
+            - Ethernet6
+            - Ethernet6
+            - Ethernet6
+            uplink_switch_interfaces:
+            - Ethernet6
+            - Ethernet6
+            - Ethernet6
+            - Ethernet6
+          DC1-BL1B:
+            id: 7
+            mgmt_ip: 192.168.200.111/24
+            spine_interfaces:
+            - Ethernet7
+            - Ethernet7
+            - Ethernet7
+            - Ethernet7
+            uplink_switch_interfaces:
+            - Ethernet7
+            - Ethernet7
+            - Ethernet7
+            - Ethernet7
+      DC1_LEAF1:
+        bgp_as: 65101
+        filter:
+          tags:
+          - web
+          - app
+          tenants:
+          - all
+        nodes:
+          DC1-LEAF1A:
+            id: 1
+            mgmt_ip: 192.168.200.105/24
+            spine_interfaces:
+            - Ethernet1
+            - Ethernet1
+            - Ethernet1
+            - Ethernet1
+            uplink_switch_interfaces:
+            - Ethernet1
+            - Ethernet1
+            - Ethernet1
+            - Ethernet1
+      DC1_LEAF2:
+        bgp_as: 65102
+        filter:
+          tags:
+          - opzone
+          - web
+          - app
+          - db
+          - vmotion
+          - nfs
+          tenants:
+          - Tenant_A
+        nodes:
+          DC1-LEAF2A:
+            id: 2
+            mgmt_ip: 192.168.200.106/24
+            spine_interfaces:
+            - Ethernet2
+            - Ethernet2
+            - Ethernet2
+            - Ethernet2
+            uplink_switch_interfaces:
+            - Ethernet2
+            - Ethernet2
+            - Ethernet2
+            - Ethernet2
+          DC1-LEAF2B:
+            id: 3
+            mgmt_ip: 192.168.200.107/24
+            spine_interfaces:
+            - Ethernet3
+            - Ethernet3
+            - Ethernet3
+            - Ethernet3
+            uplink_switch_interfaces:
+            - Ethernet3
+            - Ethernet3
+            - Ethernet3
+            - Ethernet3
+      DC1_SVC3:
+        bgp_as: 65103
+        filter:
+          tags:
+          - opzone
+          - web
+          - app
+          - db
+          - vmotion
+          - nfs
+          tenants:
+          - Tenant_A
+        nodes:
+          DC1-SVC3A:
+            id: 4
+            mgmt_ip: 192.168.200.108/24
+            spine_interfaces:
+            - Ethernet4
+            - Ethernet4
+            - Ethernet4
+            - Ethernet4
+            uplink_switch_interfaces:
+            - Ethernet4
+            - Ethernet4
+            - Ethernet4
+            - Ethernet4
+          DC1-SVC3B:
+            id: 5
+            mgmt_ip: 192.168.200.109/24
+            spine_interfaces:
+            - Ethernet5
+            - Ethernet5
+            - Ethernet5
+            - Ethernet5
+            uplink_switch_interfaces:
+            - Ethernet5
+            - Ethernet5
+            - Ethernet5
+            - Ethernet5
+  spine:
+    bgp_as: 65100
+    defaults:
+      bgp_as: 65100
+      bgp_defaults:
+      - no bgp default ipv4-unicast
+      - distance bgp 20 200 200
+      loopback_ipv4_pool: 192.168.251.0/24
+      platform: vEOS-LAB
+    leaf_as_range: 65101-65132
+    nodes:
+      DC1-SPINE1:
+        id: 1
+        mgmt_ip: 192.168.200.101/24
+      DC1-SPINE2:
+        id: 2
+        mgmt_ip: 192.168.200.102/24
+      DC1-SPINE3:
+        id: 3
+        mgmt_ip: 192.168.200.103/24
+      DC1-SPINE4:
+        id: 4
+        mgmt_ip: 192.168.200.104/24
+    platform: vEOS-LAB
   switch:
+    type: l2leaf
+    node_type_key: l2leaf
+    connected_endpoints: true
+    default_evpn_role: none
+    mlag_support: true
+    network_services_l2: true
+    network_services_l3: false
+    underlay_router: false
+    uplink_type: port-channel
+    vtep: false
+    ip_addressing:
+      router_id: designs/l3ls-evpn/ip-addressing/router-id.j2
+      mlag_ip_primary: designs/l3ls-evpn/ip-addressing/mlag-ip-primary.j2
+      mlag_ip_secondary: designs/l3ls-evpn/ip-addressing/mlag-ip-secondary.j2
+      mlag_l3_ip_primary: designs/l3ls-evpn/ip-addressing/mlag-l3-ip-primary.j2
+      mlag_l3_ip_secondary: designs/l3ls-evpn/ip-addressing/mlag-l3-ip-secondary.j2
+      p2p_uplinks_ip: designs/l3ls-evpn/ip-addressing/p2p-uplinks-ip.j2
+      p2p_uplinks_peer_ip: designs/l3ls-evpn/ip-addressing/p2p-uplinks-peer-ip.j2
+      vtep_ip_mlag: designs/l3ls-evpn/ip-addressing/vtep-ip-mlag.j2
+      vtep_ip: designs/l3ls-evpn/ip-addressing/vtep-ip.j2
     underlay_routing_protocol: ebgp
     overlay_routing_protocol: ebgp
     group: DC1_L2LEAF2
     id: 2
     mgmt_ip: 192.168.200.113/24
-    spanning_tree_mode: mstp
-    igmp_snooping_enabled: true
-    spanning_tree_priority: 16384
     platform: vEOS-LAB
     platform_settings:
       platforms:
@@ -365,22 +820,27 @@ ansible_facts:
         non_mlag: 330
       feature_support:
         queue_monitor_length_notify: false
-    configure_tenants: true
     filter_tenants:
     - all
     filter_tags:
     - all
+    spanning_tree_mode: mstp
+    spanning_tree_priority: 16384
+    igmp_snooping_enabled: true
+    max_uplink_switches: 2
+    max_parallel_uplinks: 1
     uplink_switches:
     - DC1-SVC3A
     - DC1-SVC3B
-    uplink_interfaces:
-    - Ethernet1
-    - Ethernet2
     uplink_switch_interfaces:
     - Ethernet7
     - Ethernet7
+    uplink_interfaces:
+    - Ethernet1
+    - Ethernet2
     mlag: true
     mlag_group: DC1_L2LEAF2
+    mlag_ibgp_origin_incomplete: true
     mlag_peer_vlan: 4094
     mlag_dual_primary_detection: false
     mlag_interfaces:
@@ -388,9 +848,9 @@ ansible_facts:
     - Ethernet4
     mlag_role: primary
     mlag_peer: DC1-L2LEAF2B
+    mlag_peer_mgmt_ip: 192.168.200.114
     mlag_ip: 10.255.252.2
     mlag_peer_ip: 10.255.252.3
-    mlag_peer_mgmt_ip: 192.168.200.114
     tenants:
       Tenant_A:
         vrfs:
@@ -402,6 +862,8 @@ ansible_facts:
             svis:
             - 110
             - 111
+            - 112
+            - 113
           Tenant_A_WEB_Zone:
             svis:
             - 120
@@ -414,6 +876,8 @@ ansible_facts:
     - 131
     - 110
     - 111
+    - 112
+    - 113
     - 120
     - 121
     - 160
@@ -459,15 +923,146 @@ ansible_facts:
     peers:
     - DC1-SVC3A
     - DC1-SVC3B
+    vlans:
+    - 130
+    - 131
+    - 110
+    - 111
+    - 120
+    - 121
+    - 160
+    - 161
+upgraded_data_model:
+  spine:
+    defaults:
+      platform: vEOS-LAB
+      bgp_as: 65100
+      loopback_ipv4_pool: 192.168.251.0/24
+      bgp_defaults:
+      - no bgp default ipv4-unicast
+      - distance bgp 20 200 200
+    nodes: {}
+  l3leaf:
+    defaults:
+      loopback_ipv4_pool: 192.168.251.0/24
+      loopback_network_offset: 4
+      vtep_loopback_ipv4_pool: 192.168.252.0/24
+      uplink_interfaces:
+      - Ethernet1
+      - Ethernet2
+      - Ethernet3
+      - Ethernet4
+      uplink_switches:
+      - DC1-SPINE1
+      - DC1-SPINE2
+      - DC1-SPINE3
+      - DC1-SPINE4
+      uplink_ipv4_pool: 172.31.251.0/24
+      bgp_defaults:
+      - no bgp default ipv4-unicast
+      - distance bgp 20 200 200
+    node_groups:
+      DC1_LEAF1:
+        nodes:
+          DC1-LEAF1A:
+            uplink_switch_interfaces:
+            - Ethernet1
+            - Ethernet1
+            - Ethernet1
+            - Ethernet1
+      DC1_LEAF2:
+        nodes:
+          DC1-LEAF2A:
+            uplink_switch_interfaces:
+            - Ethernet2
+            - Ethernet2
+            - Ethernet2
+            - Ethernet2
+          DC1-LEAF2B:
+            uplink_switch_interfaces:
+            - Ethernet3
+            - Ethernet3
+            - Ethernet3
+            - Ethernet3
+      DC1_SVC3:
+        nodes:
+          DC1-SVC3A:
+            uplink_switch_interfaces:
+            - Ethernet4
+            - Ethernet4
+            - Ethernet4
+            - Ethernet4
+          DC1-SVC3B:
+            uplink_switch_interfaces:
+            - Ethernet5
+            - Ethernet5
+            - Ethernet5
+            - Ethernet5
+      DC1_BL1:
+        nodes:
+          DC1-BL1A:
+            uplink_switch_interfaces:
+            - Ethernet6
+            - Ethernet6
+            - Ethernet6
+            - Ethernet6
+          DC1-BL1B:
+            uplink_switch_interfaces:
+            - Ethernet7
+            - Ethernet7
+            - Ethernet7
+            - Ethernet7
+  l2leaf:
+    defaults:
+      uplink_switches:
+      - DC1-SVC3A
+      - DC1-SVC3B
+    node_groups:
+      DC1_L2LEAF1:
+        uplink_switches:
+        - DC1-LEAF2A
+        - DC1-LEAF2B
+        nodes:
+          DC1-L2LEAF1A:
+            uplink_switch_interfaces:
+            - Ethernet7
+            - Ethernet7
+      DC1_L2LEAF2:
+        nodes:
+          DC1-L2LEAF2A:
+            uplink_switch_interfaces:
+            - Ethernet7
+            - Ethernet7
+          DC1-L2LEAF2B:
+            uplink_switch_interfaces:
+            - Ethernet8
+            - Ethernet8
 switch:
+  type: l2leaf
+  node_type_key: l2leaf
+  connected_endpoints: true
+  default_evpn_role: none
+  mlag_support: true
+  network_services_l2: true
+  network_services_l3: false
+  underlay_router: false
+  uplink_type: port-channel
+  vtep: false
+  ip_addressing:
+    router_id: designs/l3ls-evpn/ip-addressing/router-id.j2
+    mlag_ip_primary: designs/l3ls-evpn/ip-addressing/mlag-ip-primary.j2
+    mlag_ip_secondary: designs/l3ls-evpn/ip-addressing/mlag-ip-secondary.j2
+    mlag_l3_ip_primary: designs/l3ls-evpn/ip-addressing/mlag-l3-ip-primary.j2
+    mlag_l3_ip_secondary: designs/l3ls-evpn/ip-addressing/mlag-l3-ip-secondary.j2
+    p2p_uplinks_ip: designs/l3ls-evpn/ip-addressing/p2p-uplinks-ip.j2
+    p2p_uplinks_peer_ip: designs/l3ls-evpn/ip-addressing/p2p-uplinks-peer-ip.j2
+    vtep_ip_mlag: designs/l3ls-evpn/ip-addressing/vtep-ip-mlag.j2
+    vtep_ip: designs/l3ls-evpn/ip-addressing/vtep-ip.j2
   underlay_routing_protocol: ebgp
   overlay_routing_protocol: ebgp
   group: DC1_L2LEAF2
   id: 2
   mgmt_ip: 192.168.200.113/24
-  spanning_tree_mode: mstp
-  igmp_snooping_enabled: true
-  spanning_tree_priority: 16384
   platform: vEOS-LAB
   platform_settings:
     platforms:
@@ -477,22 +1072,27 @@ switch:
       non_mlag: 330
     feature_support:
       queue_monitor_length_notify: false
-  configure_tenants: true
   filter_tenants:
   - all
   filter_tags:
   - all
+  spanning_tree_mode: mstp
+  spanning_tree_priority: 16384
+  igmp_snooping_enabled: true
+  max_uplink_switches: 2
+  max_parallel_uplinks: 1
   uplink_switches:
   - DC1-SVC3A
   - DC1-SVC3B
-  uplink_interfaces:
-  - Ethernet1
-  - Ethernet2
   uplink_switch_interfaces:
   - Ethernet7
   - Ethernet7
+  uplink_interfaces:
+  - Ethernet1
+  - Ethernet2
   mlag: true
   mlag_group: DC1_L2LEAF2
+  mlag_ibgp_origin_incomplete: true
   mlag_peer_vlan: 4094
   mlag_dual_primary_detection: false
   mlag_interfaces:
@@ -500,9 +1100,9 @@ switch:
   - Ethernet4
   mlag_role: primary
   mlag_peer: DC1-L2LEAF2B
+  mlag_peer_mgmt_ip: 192.168.200.114
   mlag_ip: 10.255.252.2
   mlag_peer_ip: 10.255.252.3
-  mlag_peer_mgmt_ip: 192.168.200.114
   tenants:
     Tenant_A:
       vrfs:
@@ -514,6 +1114,8 @@ switch:
           svis:
           - 110
           - 111
+          - 112
+          - 113
         Tenant_A_WEB_Zone:
           svis:
           - 120
@@ -526,6 +1128,8 @@ switch:
   - 131
   - 110
   - 111
+  - 112
+  - 113
   - 120
   - 121
   - 160
@@ -571,6 +1175,15 @@ topology:
   peers:
   - DC1-SVC3A
   - DC1-SVC3B
+  vlans:
+  - 130
+  - 131
+  - 110
+  - 111
+  - 120
+  - 121
+  - 160
+  - 161
 local_users:
   admin:
     privilege: 15
@@ -600,10 +1213,10 @@ ansible_become_method: enable
 ansible_httpapi_use_ssl: true
 ansible_httpapi_validate_certs: false
 validation_mode_loose: true
-root_dir: /home/cbuchmann/arista-ansible/ipspace-webinar-september15-2020/inventories/DC1
-playbook_dir: /home/cbuchmann/arista-ansible/ipspace-webinar-september15-2020/playbooks
-ansible_playbook_python: /home/cbuchmann/arista-ansible/.venv/bin/python
-ansible_config_file: /home/cbuchmann/arista-ansible/ipspace-webinar-september15-2020/ansible.cfg
+root_dir: /projects/ipspace-webinar-september15-2020/inventories/DC1
+playbook_dir: /projects/ipspace-webinar-september15-2020/playbooks
+ansible_playbook_python: /usr/local/bin/python
+ansible_config_file: /projects/ipspace-webinar-september15-2020/ansible.cfg
 groups:
   all:
   - CVP-1
@@ -725,18 +1338,18 @@ groups:
   - DC1-SVC3B
   - DC1-BL1A
   - DC1-BL1B
-omit: __omit_place_holder__4fc0de0d2a23e05d6912fadee34ed094d030b188
+omit: __omit_place_holder__7b598f654637b013556840b28db77e8dac51255f
 ansible_version:
-  string: 2.10.8
-  full: 2.10.8
+  string: 2.10.11
+  full: 2.10.11
   major: 2
   minor: 10
-  revision: 8
+  revision: 11
 ansible_check_mode: false
 ansible_diff_mode: false
 ansible_forks: 15
 ansible_inventory_sources:
-- /home/cbuchmann/arista-ansible/ipspace-webinar-september15-2020/inventories/DC1/inventory.yml
+- /projects/ipspace-webinar-september15-2020/inventories/DC1/inventory.yml
 ansible_skip_tags: []
 ansible_run_tags:
 - build

@@ -1,0 +1,126 @@
+l2leaf:
+  defaults:
+    mlag_interfaces: [Ethernet3, Ethernet4]
+    parent_l3leafs: [DC1-SVC3A, DC1-SVC3B]
+    platform: vEOS-LAB
+    spanning_tree_mode: mstp
+    spanning_tree_priority: 16384
+    uplink_interfaces: [Ethernet1, Ethernet2]
+    uplink_switches: [DC1-SVC3A, DC1-SVC3B]
+  node_groups:
+    DC1_L2LEAF1:
+      filter:
+        tags: [opzone, web, app]
+        tenants: [Tenant_A]
+      nodes:
+        DC1-L2LEAF1A:
+          id: 1
+          l3leaf_interfaces: [Ethernet7, Ethernet7]
+          mgmt_ip: 192.168.200.112/24
+          uplink_switch_interfaces: [Ethernet7, Ethernet7]
+      parent_l3leafs: [DC1-LEAF2A, DC1-LEAF2B]
+      uplink_switches: [DC1-LEAF2A, DC1-LEAF2B]
+    DC1_L2LEAF2:
+      nodes:
+        DC1-L2LEAF2A:
+          id: 2
+          l3leaf_interfaces: [Ethernet7, Ethernet7]
+          mgmt_ip: 192.168.200.113/24
+          uplink_switch_interfaces: [Ethernet7, Ethernet7]
+        DC1-L2LEAF2B:
+          id: 3
+          l3leaf_interfaces: [Ethernet8, Ethernet8]
+          mgmt_ip: 192.168.200.114/24
+          uplink_switch_interfaces: [Ethernet8, Ethernet8]
+l3leaf:
+  defaults:
+    bgp_defaults: [no bgp default ipv4-unicast, distance bgp 20 200 200]
+    loopback_ipv4_offset: 4
+    loopback_ipv4_pool: 192.168.251.0/24
+    loopback_network_offset: 4
+    mlag_interfaces: [Ethernet5, Ethernet6]
+    platform: vEOS-LAB
+    spanning_tree_mode: mstp
+    spanning_tree_priority: 4096
+    spines: [DC1-SPINE1, DC1-SPINE2, DC1-SPINE3, DC1-SPINE4]
+    uplink_interfaces: [Ethernet1, Ethernet2, Ethernet3, Ethernet4]
+    uplink_ipv4_pool: 172.31.251.0/24
+    uplink_switches: [DC1-SPINE1, DC1-SPINE2, DC1-SPINE3, DC1-SPINE4]
+    uplink_to_spine_interfaces: [Ethernet1, Ethernet2, Ethernet3, Ethernet4]
+    virtual_router_mac_address: 00:dc:00:00:00:0a
+    vtep_loopback_ipv4_pool: 192.168.252.0/24
+  node_groups:
+    DC1_BL1:
+      bgp_as: 65104
+      filter:
+        tags: [wan]
+        tenants: [all]
+      nodes:
+        DC1-BL1A:
+          id: 6
+          mgmt_ip: 192.168.200.110/24
+          spine_interfaces: [Ethernet6, Ethernet6, Ethernet6, Ethernet6]
+          uplink_switch_interfaces: [Ethernet6, Ethernet6, Ethernet6, Ethernet6]
+        DC1-BL1B:
+          id: 7
+          mgmt_ip: 192.168.200.111/24
+          spine_interfaces: [Ethernet7, Ethernet7, Ethernet7, Ethernet7]
+          uplink_switch_interfaces: [Ethernet7, Ethernet7, Ethernet7, Ethernet7]
+    DC1_LEAF1:
+      bgp_as: 65101
+      filter:
+        tags: [web, app]
+        tenants: [all]
+      nodes:
+        DC1-LEAF1A:
+          id: 1
+          mgmt_ip: 192.168.200.105/24
+          spine_interfaces: [Ethernet1, Ethernet1, Ethernet1, Ethernet1]
+          uplink_switch_interfaces: [Ethernet1, Ethernet1, Ethernet1, Ethernet1]
+    DC1_LEAF2:
+      bgp_as: 65102
+      filter:
+        tags: [opzone, web, app, db, vmotion, nfs]
+        tenants: [Tenant_A]
+      nodes:
+        DC1-LEAF2A:
+          id: 2
+          mgmt_ip: 192.168.200.106/24
+          spine_interfaces: [Ethernet2, Ethernet2, Ethernet2, Ethernet2]
+          uplink_switch_interfaces: [Ethernet2, Ethernet2, Ethernet2, Ethernet2]
+        DC1-LEAF2B:
+          id: 3
+          mgmt_ip: 192.168.200.107/24
+          spine_interfaces: [Ethernet3, Ethernet3, Ethernet3, Ethernet3]
+          uplink_switch_interfaces: [Ethernet3, Ethernet3, Ethernet3, Ethernet3]
+    DC1_SVC3:
+      bgp_as: 65103
+      filter:
+        tags: [opzone, web, app, db, vmotion, nfs]
+        tenants: [Tenant_A]
+      nodes:
+        DC1-SVC3A:
+          id: 4
+          mgmt_ip: 192.168.200.108/24
+          spine_interfaces: [Ethernet4, Ethernet4, Ethernet4, Ethernet4]
+          uplink_switch_interfaces: [Ethernet4, Ethernet4, Ethernet4, Ethernet4]
+        DC1-SVC3B:
+          id: 5
+          mgmt_ip: 192.168.200.109/24
+          spine_interfaces: [Ethernet5, Ethernet5, Ethernet5, Ethernet5]
+          uplink_switch_interfaces: [Ethernet5, Ethernet5, Ethernet5, Ethernet5]
+spine:
+  bgp_as: 65100
+  defaults:
+    bgp_as: 65100
+    bgp_defaults: [no bgp default ipv4-unicast, distance bgp 20 200 200]
+    loopback_ipv4_pool: 192.168.251.0/24
+    platform: vEOS-LAB
+  leaf_as_range: 65101-65132
+  nodes:
+    DC1-SPINE1: {id: 1, mgmt_ip: 192.168.200.101/24}
+    DC1-SPINE2: {id: 2, mgmt_ip: 192.168.200.102/24}
+    DC1-SPINE3: {id: 3, mgmt_ip: 192.168.200.103/24}
+    DC1-SPINE4: {id: 4, mgmt_ip: 192.168.200.104/24}
+  platform: vEOS-LAB
+
