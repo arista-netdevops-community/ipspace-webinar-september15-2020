@@ -65,7 +65,6 @@ l3leaf:
     spanning_tree_mode: mstp
     spanning_tree_priority: 4096
     virtual_router_mac_address : 00:dc:00:00:00:0a
-    loopback_ipv4_offset: 4
   node_groups:
     DC1_LEAF1:
       bgp_as: 65101
