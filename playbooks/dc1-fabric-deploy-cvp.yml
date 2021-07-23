@@ -20,17 +20,17 @@
       import_role:
         name: arista.avd.upgrade_tools
 
-    - name: generate intented variables
+    - name: generate intended variables
       tags: [build]
       import_role:
          name: arista.avd.eos_l3ls_evpn
 
-    - name: generate intented DCI variables
+    - name: generate intended DCI variables
       tags: [build, provision]
       import_role:
          name: eos_dci
 
-    - name: generate device intended config and documention
+    - name: generate device intended config and documentation
       tags: [build]
       import_role:
          name: arista.avd.eos_cli_config_gen

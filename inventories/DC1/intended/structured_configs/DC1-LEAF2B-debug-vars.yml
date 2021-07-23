@@ -137,6 +137,8 @@ spine:
     - no bgp default ipv4-unicast
     - distance bgp 20 200 200
     loopback_ipv4_pool: 192.168.251.0/24
+    mlag_peer_ipv4_pool: 10.255.252.0/24
+    mlag_peer_l3_ipv4_pool: 10.255.251.0/24
     platform: vEOS-LAB
   leaf_as_range: 65101-65132
   nodes:
@@ -163,6 +165,8 @@ l3leaf:
     mlag_interfaces:
     - Ethernet5
     - Ethernet6
+    mlag_peer_ipv4_pool: 10.255.252.0/24
+    mlag_peer_l3_ipv4_pool: 10.255.251.0/24
     platform: vEOS-LAB
     spanning_tree_mode: mstp
     spanning_tree_priority: 4096
@@ -329,6 +333,8 @@ l2leaf:
     mlag_interfaces:
     - Ethernet3
     - Ethernet4
+    mlag_peer_ipv4_pool: 10.255.252.0/24
+    mlag_peer_l3_ipv4_pool: 10.255.251.0/24
     parent_l3leafs:
     - DC1-SVC3A
     - DC1-SVC3B
@@ -407,8 +413,8 @@ cv_configlets:
     DC1-BL1B:
     - DC1-CUSTOM_DCI_DC1-BL1B
 type: l3leaf
-inventory_file: /projects/ipspace-webinar-september15-2020/inventories/DC1/inventory.yml
-inventory_dir: /projects/ipspace-webinar-september15-2020/inventories/DC1
+inventory_file: /home/cbuchmann/arista-ansible/ipspace-webinar-september15-2020/inventories/DC1/inventory.yml
+inventory_dir: /home/cbuchmann/arista-ansible/ipspace-webinar-september15-2020/inventories/DC1
 ansible_host: 192.168.200.107
 inventory_hostname: DC1-LEAF2B
 inventory_hostname_short: DC1-LEAF2B
@@ -430,6 +436,8 @@ ansible_facts:
         bgp_defaults:
         - no bgp default ipv4-unicast
         - distance bgp 20 200 200
+        mlag_peer_ipv4_pool: 10.255.252.0/24
+        mlag_peer_l3_ipv4_pool: 10.255.251.0/24
       nodes: {}
     l3leaf:
       defaults:
@@ -447,6 +455,8 @@ ansible_facts:
         - DC1-SPINE3
         - DC1-SPINE4
         uplink_ipv4_pool: 172.31.251.0/24
+        mlag_peer_ipv4_pool: 10.255.252.0/24
+        mlag_peer_l3_ipv4_pool: 10.255.251.0/24
         bgp_defaults:
         - no bgp default ipv4-unicast
         - distance bgp 20 200 200
@@ -506,6 +516,8 @@ ansible_facts:
         uplink_switches:
         - DC1-SVC3A
         - DC1-SVC3B
+        mlag_peer_ipv4_pool: 10.255.252.0/24
+        mlag_peer_l3_ipv4_pool: 10.255.251.0/24
       node_groups:
         DC1_L2LEAF1:
           uplink_switches:
@@ -531,6 +543,8 @@ ansible_facts:
       mlag_interfaces:
       - Ethernet3
       - Ethernet4
+      mlag_peer_ipv4_pool: 10.255.252.0/24
+      mlag_peer_l3_ipv4_pool: 10.255.251.0/24
       parent_l3leafs:
       - DC1-SVC3A
       - DC1-SVC3B
@@ -598,6 +612,8 @@ ansible_facts:
       mlag_interfaces:
       - Ethernet5
       - Ethernet6
+      mlag_peer_ipv4_pool: 10.255.252.0/24
+      mlag_peer_l3_ipv4_pool: 10.255.251.0/24
       platform: vEOS-LAB
       spanning_tree_mode: mstp
       spanning_tree_priority: 4096
@@ -767,6 +783,8 @@ ansible_facts:
       - no bgp default ipv4-unicast
       - distance bgp 20 200 200
       loopback_ipv4_pool: 192.168.251.0/24
+      mlag_peer_ipv4_pool: 10.255.252.0/24
+      mlag_peer_l3_ipv4_pool: 10.255.251.0/24
       platform: vEOS-LAB
     leaf_as_range: 65101-65132
     nodes:
@@ -969,6 +987,8 @@ upgraded_data_model:
       bgp_defaults:
       - no bgp default ipv4-unicast
       - distance bgp 20 200 200
+      mlag_peer_ipv4_pool: 10.255.252.0/24
+      mlag_peer_l3_ipv4_pool: 10.255.251.0/24
     nodes: {}
   l3leaf:
     defaults:
@@ -986,6 +1006,8 @@ upgraded_data_model:
       - DC1-SPINE3
       - DC1-SPINE4
       uplink_ipv4_pool: 172.31.251.0/24
+      mlag_peer_ipv4_pool: 10.255.252.0/24
+      mlag_peer_l3_ipv4_pool: 10.255.251.0/24
       bgp_defaults:
       - no bgp default ipv4-unicast
       - distance bgp 20 200 200
@@ -1045,6 +1067,8 @@ upgraded_data_model:
       uplink_switches:
       - DC1-SVC3A
       - DC1-SVC3B
+      mlag_peer_ipv4_pool: 10.255.252.0/24
+      mlag_peer_l3_ipv4_pool: 10.255.251.0/24
     node_groups:
       DC1_L2LEAF1:
         uplink_switches:
@@ -1271,10 +1295,10 @@ ansible_become_method: enable
 ansible_httpapi_use_ssl: true
 ansible_httpapi_validate_certs: false
 validation_mode_loose: true
-root_dir: /projects/ipspace-webinar-september15-2020/inventories/DC1
-playbook_dir: /projects/ipspace-webinar-september15-2020/playbooks
-ansible_playbook_python: /usr/local/bin/python
-ansible_config_file: /projects/ipspace-webinar-september15-2020/ansible.cfg
+root_dir: /home/cbuchmann/arista-ansible/ipspace-webinar-september15-2020/inventories/DC1
+playbook_dir: /home/cbuchmann/arista-ansible/ipspace-webinar-september15-2020/playbooks
+ansible_playbook_python: /home/cbuchmann/arista-ansible/.venv/bin/python
+ansible_config_file: /home/cbuchmann/arista-ansible/ipspace-webinar-september15-2020/ansible.cfg
 groups:
   all:
   - CVP-1
@@ -1396,18 +1420,18 @@ groups:
   - DC1-SVC3B
   - DC1-BL1A
   - DC1-BL1B
-omit: __omit_place_holder__f923077728342c8a893a2b2913d7dfb8a35087f7
+omit: __omit_place_holder__f05948c2adbabb5ef8e1ebc7dc0c184dda940c45
 ansible_version:
-  string: 2.10.11
-  full: 2.10.11
+  string: 2.10.8
+  full: 2.10.8
   major: 2
   minor: 10
-  revision: 11
+  revision: 8
 ansible_check_mode: false
 ansible_diff_mode: false
 ansible_forks: 15
 ansible_inventory_sources:
-- /projects/ipspace-webinar-september15-2020/inventories/DC1/inventory.yml
+- /home/cbuchmann/arista-ansible/ipspace-webinar-september15-2020/inventories/DC1/inventory.yml
 ansible_skip_tags: []
 ansible_run_tags:
 - build
