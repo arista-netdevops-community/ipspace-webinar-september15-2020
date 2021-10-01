@@ -25,6 +25,7 @@
   - [Ethernet Interfaces](#ethernet-interfaces)
   - [Port-Channel Interfaces](#port-channel-interfaces)
 - [Routing](#routing)
+  - [Service Routing Protocols Model](#service-routing-protocols-model)
   - [IP Routing](#ip-routing)
   - [IPv6 Routing](#ipv6-routing)
   - [Static Routes](#static-routes)
@@ -97,14 +98,18 @@ ip name-server vrf MGMT 192.168.200.5
 
 ### NTP Summary
 
-- Local Interface: Management1
+#### NTP Local Interface
 
-- VRF: MGMT
+| Interface | VRF |
+| --------- | --- |
+| Management1 | MGMT |
 
-| Node | Primary |
-| ---- | ------- |
-| 0.north-america.pool.ntp.org | true |
-| 1.north-america.pool.ntp.org | - |
+#### NTP Servers
+
+| Server | VRF | Preferred | Burst | iBurst | Version | Min Poll | Max Poll | Local-interface | Key |
+| ------ | --- | --------- | ----- | ------ | ------- | -------- | -------- | --------------- | --- |
+| 0.north-america.pool.ntp.org | MGMT | True | - | - | - | - | - | - | - |
+| 1.north-america.pool.ntp.org | MGMT | - | - | - | - | - | - | - | - |
 
 ### NTP Device Configuration
 
@@ -167,16 +172,16 @@ username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAW
 
 ### TerminAttr Daemon Summary
 
-| CV Compression | Ingest gRPC URL | Ingest Authentication Key | Smash Excludes | Ingest Exclude | Ingest VRF |  NTP VRF | AAA Disabled |
-| -------------- | --------------- | ------------------------- | -------------- | -------------- | ---------- | -------- | ------ |
-| gzip | 192.168.200.11:9910 | telarista | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | MGMT | MGMT | False |
+| CV Compression | CloudVision Servers | VRF | Authentication | Smash Excludes | Ingest Exclude | Bypass AAA |
+| -------------- | ------------------- | --- | -------------- | -------------- | -------------- | ---------- |
+| gzip | 192.168.200.11:9910 | MGMT | key,telarista | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | False |
 
 ### TerminAttr Daemon Device Configuration
 
 ```eos
 !
 daemon TerminAttr
-   exec /usr/bin/TerminAttr -ingestgrpcurl=192.168.200.11:9910 -cvcompression=gzip -ingestauth=key,telarista -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs
+   exec /usr/bin/TerminAttr -cvaddr=192.168.200.11:9910 -cvauth=key,telarista -cvvrf=MGMT -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs
    no shutdown
 ```
 
@@ -224,12 +229,12 @@ vlan internal order ascending range 1006 1199
 
 | VLAN ID | Name | Trunk Groups |
 | ------- | ---- | ------------ |
-| 110 | Tenant_A_OP_Zone_1 | none  |
-| 111 | Tenant_A_OP_Zone_2 | none  |
-| 120 | Tenant_A_WEB_Zone_1 | none  |
-| 121 | Tenant_A_WEBZone_2 | none  |
-| 130 | Tenant_A_APP_Zone_1 | none  |
-| 131 | Tenant_A_APP_Zone_2 | none  |
+| 110 | Tenant_A_OP_Zone_1 | - |
+| 111 | Tenant_A_OP_Zone_2 | - |
+| 120 | Tenant_A_WEB_Zone_1 | - |
+| 121 | Tenant_A_WEBZone_2 | - |
+| 130 | Tenant_A_APP_Zone_1 | - |
+| 131 | Tenant_A_APP_Zone_2 | - |
 
 ## VLANs Device Configuration
 
@@ -315,6 +320,14 @@ interface Port-Channel1
 ```
 
 # Routing
+## Service Routing Protocols Model
+
+Multi agent routing protocol model enabled
+
+```eos
+!
+service routing protocols model multi-agent
+```
 
 ## IP Routing
 

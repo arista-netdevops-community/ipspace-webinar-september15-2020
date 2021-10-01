@@ -1,5 +1,5 @@
 router_bgp:
-  as: 65102
+  as: '65102'
   router_id: 192.168.251.6
   bgp_defaults:
   - no bgp default ipv4-unicast
@@ -8,7 +8,7 @@ router_bgp:
   peer_groups:
     MLAG-IPv4-UNDERLAY-PEER:
       type: ipv4
-      remote_as: 65102
+      remote_as: '65102'
       next_hop_self: true
       password: vnEaG8gMeQf3d3cN6PktXQ==
       maximum_routes: 12000
@@ -16,10 +16,10 @@ router_bgp:
       route_map_in: RM-MLAG-PEER-IN
     IPv4-UNDERLAY-PEERS:
       type: ipv4
-      remote_as: 65100
       password: AQQvKeimxJu+uGQ/yYvv9w==
       maximum_routes: 12000
       send_community: all
+      remote_as: 65100
     EVPN-OVERLAY-PEERS:
       type: evpn
       update_source: Loopback0
@@ -28,6 +28,7 @@ router_bgp:
       password: q+VNViP5i4rVjW1cxFv2wA==
       send_community: all
       maximum_routes: 0
+      remote_as: 65100
   address_family_ipv4:
     peer_groups:
       MLAG-IPv4-UNDERLAY-PEER:
@@ -42,32 +43,36 @@ router_bgp:
       description: DC1-LEAF2B
     172.31.251.8:
       peer_group: IPv4-UNDERLAY-PEERS
+      remote_as: '65100'
       description: DC1-SPINE1_Ethernet2
     172.31.251.10:
       peer_group: IPv4-UNDERLAY-PEERS
+      remote_as: '65100'
       description: DC1-SPINE2_Ethernet2
     172.31.251.12:
       peer_group: IPv4-UNDERLAY-PEERS
+      remote_as: '65100'
       description: DC1-SPINE3_Ethernet2
     172.31.251.14:
       peer_group: IPv4-UNDERLAY-PEERS
+      remote_as: '65100'
       description: DC1-SPINE4_Ethernet2
     192.168.251.1:
       peer_group: EVPN-OVERLAY-PEERS
       description: DC1-SPINE1
-      remote_as: 65100
+      remote_as: '65100'
     192.168.251.2:
       peer_group: EVPN-OVERLAY-PEERS
       description: DC1-SPINE2
-      remote_as: 65100
+      remote_as: '65100'
     192.168.251.3:
       peer_group: EVPN-OVERLAY-PEERS
       description: DC1-SPINE3
-      remote_as: 65100
+      remote_as: '65100'
     192.168.251.4:
       peer_group: EVPN-OVERLAY-PEERS
       description: DC1-SPINE4
-      remote_as: 65100
+      remote_as: '65100'
   redistribute_routes:
     connected:
       route_map: RM-CONN-2-BGP
@@ -171,12 +176,12 @@ static_routes:
 service_routing_protocols_model: multi-agent
 ip_routing: true
 daemon_terminattr:
-  ingestgrpcurl:
-    ips:
-    - 192.168.200.11
-    port: 9910
-  ingestauth_key: telarista
-  ingestvrf: MGMT
+  cvaddrs:
+  - 192.168.200.11:9910
+  cvauth:
+    method: key
+    key: telarista
+  cvvrf: MGMT
   smashexcludes: ale,flexCounter,hardware,kni,pulse,strata
   ingestexclude: /Sysdb/cell/1/agent,/Sysdb/cell/2/agent
   disable_aaa: false
@@ -190,13 +195,6 @@ name_server:
     vrf: MGMT
   nodes:
   - 192.168.200.5
-ntp_server:
-  local_interface:
-    vrf: MGMT
-    interface: Management1
-  nodes:
-  - 0.north-america.pool.ntp.org
-  - 1.north-america.pool.ntp.org
 spanning_tree:
   mode: mstp
   mst_instances:
@@ -236,6 +234,13 @@ management_api_http:
   enable_vrfs:
     MGMT: {}
   enable_https: true
+struct_cfg:
+  router_bgp:
+    peer_groups:
+      EVPN-OVERLAY-PEERS:
+        remote_as: 65100
+      IPv4-UNDERLAY-PEERS:
+        remote_as: 65100
 vlans:
   4093:
     tenant: system
@@ -487,7 +492,6 @@ ethernet_interfaces:
     channel_group:
       id: 8
       mode: active
-    profile: TENANT_A_ALL
 mlag_configuration:
   domain_id: DC1_LEAF2
   local_interface: Vlan4094
@@ -538,14 +542,13 @@ router_bfd:
     multiplier: 3
 ip_igmp_snooping:
   globally_enabled: true
-vxlan_tunnel_interface:
+vxlan_interface:
   Vxlan1:
     description: DC1-LEAF2A_VTEP
-    source_interface: Loopback1
-    virtual_router:
-      encapsulation_mac_address: mlag-system-id
-    vxlan_udp_port: 4789
-    vxlan_vni_mappings:
+    vxlan:
+      source_interface: Loopback1
+      virtual_router_encapsulation_mac_address: mlag-system-id
+      udp_port: 4789
       vlans:
         130:
           vni: 10130
@@ -576,3 +579,13 @@ virtual_source_nat_vrfs:
   Tenant_A_OP_Zone:
     ip_address: 10.255.1.6
 ip_virtual_router_mac_address: 00:dc:00:00:00:0a
+ntp:
+  local_interface:
+    name: Management1
+    vrf: MGMT
+  servers:
+  - name: 0.north-america.pool.ntp.org
+    preferred: true
+    vrf: MGMT
+  - name: 1.north-america.pool.ntp.org
+    vrf: MGMT

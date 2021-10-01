@@ -5,12 +5,12 @@ static_routes:
 service_routing_protocols_model: multi-agent
 ip_routing: true
 daemon_terminattr:
-  ingestgrpcurl:
-    ips:
-    - 192.168.200.11
-    port: 9910
-  ingestauth_key: telarista
-  ingestvrf: MGMT
+  cvaddrs:
+  - 192.168.200.11:9910
+  cvauth:
+    method: key
+    key: telarista
+  cvvrf: MGMT
   smashexcludes: ale,flexCounter,hardware,kni,pulse,strata
   ingestexclude: /Sysdb/cell/1/agent,/Sysdb/cell/2/agent
   disable_aaa: false
@@ -24,13 +24,6 @@ name_server:
     vrf: MGMT
   nodes:
   - 192.168.200.5
-ntp_server:
-  local_interface:
-    vrf: MGMT
-    interface: Management1
-  nodes:
-  - 0.north-america.pool.ntp.org
-  - 1.north-america.pool.ntp.org
 spanning_tree:
   mode: mstp
   mst_instances:
@@ -90,7 +83,6 @@ ethernet_interfaces:
     shutdown: false
     mode: access
     vlans: 110
-    profile: TENANT_A_OPZone
 port_channel_interfaces:
   Port-Channel1:
     description: DC1_LEAF2_Po7
@@ -98,8 +90,6 @@ port_channel_interfaces:
     shutdown: false
     vlans: 110-111,120-121,130-131
     mode: trunk
-ip_igmp_snooping:
-  globally_enabled: true
 vlans:
   130:
     tenant: Tenant_A
@@ -119,3 +109,15 @@ vlans:
   121:
     tenant: Tenant_A
     name: Tenant_A_WEBZone_2
+ip_igmp_snooping:
+  globally_enabled: true
+ntp:
+  local_interface:
+    name: Management1
+    vrf: MGMT
+  servers:
+  - name: 0.north-america.pool.ntp.org
+    preferred: true
+    vrf: MGMT
+  - name: 1.north-america.pool.ntp.org
+    vrf: MGMT
