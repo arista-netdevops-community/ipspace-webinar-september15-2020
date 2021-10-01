@@ -7,6 +7,7 @@
   tasks:
 
     - name: include global_vars
+      tags: [always]
       include_vars: "{{ item }}"
       with_items:
         - "../global_vars/AVD_LAB.yml"
@@ -14,7 +15,7 @@
 
     - name: Run AVD eos_designs
       import_role:
-        tasks_from: upgrade
+        tasks_from: upgrade-and-run
         name: arista.avd.eos_designs
 
     - name: generate intented DCI variables
