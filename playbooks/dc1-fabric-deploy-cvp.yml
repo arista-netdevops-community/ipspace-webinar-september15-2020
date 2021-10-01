@@ -7,24 +7,21 @@
   tasks:
 
     - name: include global_vars
-      tags: [build, provision]
       include_vars: "{{ item }}"
       with_items:
         - "../global_vars/AVD_LAB.yml"
         - "../global_vars/EOS.yml"
 
-    - name: generate intented variables
-      tags: [build]
+    - name: Run AVD eos_designs
       import_role:
-         name: arista.avd.eos_l3ls_evpn
+        tasks_from: upgrade
+        name: arista.avd.eos_designs
 
     - name: generate intented DCI variables
-      tags: [build, provision]
       import_role:
          name: eos_dci
 
     - name: generate device intended config and documention
-      tags: [build]
       import_role:
          name: arista.avd.eos_cli_config_gen
 

@@ -1,5 +1,7 @@
 ---
 
+avd_eos_designs_upgrade: '2.x-to-3.0'
+
 # L3LS Fabric Values - update these values with caution, some changes could be disruptive.
 
 fabric_name: DC1_FABRIC
